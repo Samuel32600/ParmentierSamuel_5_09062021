@@ -7,6 +7,7 @@
     <title>les petits plats</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="fontawesome/css/all.css" />
     <link rel="stylesheet" href="CSS/style.css" />
 </head>
 
@@ -19,25 +20,28 @@
     <form>
         <input type="search" value="Rechercher un ingrédient, appareil, ustensiles ou une recette">
         <button>
-            <img src="Logo&&icone/search.png" alt="bouton rechercher">
+            <a href="#"><img src="Logo&&icone/search.png" alt="bouton rechercher"></a>
         </button>
     </form>
 
     <nav>
-        <ul>
+        <ul class="boxfilter">
             <li class="filter box1">
-                <p class="box1__text">Ingredients</p>
+                <p class="box1__text">Ingredients</p>                
+                <a href="#"><i class="fas fa-chevron-down"></i></a>
             </li>
             <li class="filter box2">
                 <p class="box2__text">Appareil</p>
+                <a href="#"><i class="fas fa-chevron-down"></i></a>
             </li>
             <li class="filter box3">
                 <p class="box3__text">Ustensiles</p>
+                <a href="#"><i class="fas fa-chevron-down"></i></a>
             </li>
         </ul>
     </nav>
 
-    
+
 
 
 
