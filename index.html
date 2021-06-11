@@ -7,6 +7,8 @@
     <title>les petits plats</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2? family= Roboto & display=swap" rel="stylesheet ">
     <link rel="stylesheet" href="fontawesome/css/all.css" />
     <link rel="stylesheet" href="CSS/style.css" />
 </head>
@@ -19,15 +21,15 @@
 
     <form>
         <input type="search" value="Rechercher un ingrédient, appareil, ustensiles ou une recette">
-        <button>
-            <a href="#"><img src="Logo&&icone/search.png" alt="bouton rechercher"></a>
+        <button type="submit">
+            <img src="Logo&&icone/search.png" alt="bouton rechercher">
         </button>
     </form>
 
     <nav>
         <ul class="boxfilter">
             <li class="filter box1">
-                <p class="box1__text">Ingredients</p>                
+                <p class="box1__text">Ingredients</p>
                 <a href="#"><i class="fas fa-chevron-down"></i></a>
             </li>
             <li class="filter box2">
@@ -41,11 +43,40 @@
         </ul>
     </nav>
 
+    <main>
+        <figure>
+            <img class="recette">
+            <figcaption>
+                <aside class="title">
+                    <p class="name">Limonade de Coco</p>
+                    <div class="duration">
+                        <i class="far fa-clock"></i>
+                        <p class="time">10min</p>
+                    </div>
+                </aside>
+                <div class="text">
+                    <p class="ingredients"> Lait de coco: 400ml
+                        Jus de citron: 2
+                        Créme de coco: 4
+                        cuillères Sucre: 20g
+                        Glaçons: 2
+                    </p>
+                    <p class="description"> Mettre les glaçons à votre goût dans le blender, ajouter le lait, la crème
+                        de coco, le jus de 2
+                        citrons et le sucre. Mixer jusqu'à avoir la consistence désirée
+                    </p>
+                </div>
+            </figcaption>
+        </figure>
+
+    </main>
 
 
 
 
 
+    <!--code Java script-->
+    <script src="JavaScript/recipes.js"></script>
 </body>
 
 </html>
