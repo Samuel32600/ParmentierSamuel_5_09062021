@@ -1722,3 +1722,10 @@ const recipes = [
         "ustensils":["rouleau à patisserie","fouet"]
     }
 ]
+
+
+
+
+
+recipes.forEach(test => console.log(test.ingredients));
+ingredients.forEach(toto =>console.log(toto.ingredient));
