@@ -59,7 +59,7 @@ const recipes = [
                 "quantity": 5
             },
             {
-                "ingredient": "Lait de Coco",
+                "ingredient": "Lait de coco",
                 "quantity": 100,
                 "unit": "ml"
             }
@@ -160,12 +160,12 @@ const recipes = [
                 "quantity": 2
             },
             {
-                "ingredient": "Crème fraiche",
+                "ingredient": "Crème fraîche",
                 "quantity": 2,
                 "unit": "cuillères à soupe"
             },
             {
-                "ingredient": "gruyère râpé",
+                "ingredient": "Gruyère râpé",
                 "quantity": 100,
                 "unit": "grammes"
             },
@@ -176,7 +176,7 @@ const recipes = [
             }
         ],
         "time": 45,
-        "description": "Etaler la pâte feuilleté aux dimensions du moule, étaler la moutarde sur la pâte feuilleté, ajouter le thon. Découper les tomates en rondelles et les poser sur le poisson, ajouter un peu de crème fraiche sur toute la tarte et recouvrez de gruyère râpé. Cuire au four 30 minutes",
+        "description": "Etaler la pâte feuilleté aux dimensions du moule, étaler la moutarde sur la pâte feuilleté, ajouter le thon. Découper les tomates en rondelles et les poser sur le poisson, ajouter un peu de crème fraîche sur toute la tarte et recouvrez de gruyère râpé. Cuire au four 30 minutes",
         "appliance": "Four",
         "ustensils": ["moule à tarte", "râpe à fromage", "couteau"]
     },
@@ -198,12 +198,12 @@ const recipes = [
                 "quantity": "2"
             },
             {
-                "ingredient": "Crème fraiche",
+                "ingredient": "Crème fraîche",
                 "quantity": 25,
                 "unit": "cl"
             },
             {
-                "ingredient": "Sucre en Poudre",
+                "ingredient": "Sucre en poudre",
                 "quantity": 100,
                 "unit": "grammes"
             },
@@ -215,7 +215,7 @@ const recipes = [
             }
         ],
         "time": 50,
-        "description": "Commencez par mélanger les oeufs le sucre et le sucre vanillé dans un saladier, découper les pommes en tranches, ajouter la crème fraiche aux oeufs. Une fois que tout est pret, étalez la tarte dans le moule. N'oubliez pas de piquer le fond avec une fourchette avant depositionner les pommes sur la tarte. Finallement verser la préparation à base d'oeufs et de crême fraiche. Laisser cuire au four pendant 30 minutes",
+        "description": "Commencez par mélanger les oeufs le sucre et le sucre vanillé dans un saladier, découper les pommes en tranches, ajouter la crème fraîche aux oeufs. Une fois que tout est pret, étalez la tarte dans le moule. N'oubliez pas de piquer le fond avec une fourchette avant depositionner les pommes sur la tarte. Finallement verser la préparation à base d'oeufs et de crême fraiche. Laisser cuire au four pendant 30 minutes",
         "appliance": "Four",
         "ustensils": ["moule à tarte", "saladier", "fourchette"]
     }, {
@@ -276,12 +276,12 @@ const recipes = [
                 "quantity": 2
             },
             {
-                "ingredient": "Sucre en Poudre",
+                "ingredient": "Sucre en poudre",
                 "quantity": "110",
                 "unit": "grammes"
             },
             {
-                "ingredient": "farine",
+                "ingredient": "Farine",
                 "quantity": 90,
                 "unit": "grammes"
             }
@@ -320,7 +320,7 @@ const recipes = [
             }
         ],
         "time": 15,
-        "description": "Peler le concombre le couper 2, retirer les pépins. Couper les olives en morceaux, ainsi que le fromage de chèvre. Ajouter le basilic ainsi que le vinaigre balsamic et l'huile d'olives à votre gout.",
+        "description": "Peler le concombre le couper 2, retirer les pépins. Couper les olives en morceaux, ainsi que le fromage de chèvre. Ajouter le basilic ainsi que le vinaigre balsamic et l'huile d'olive à votre gout.",
         "appliance": "Saladier",
         "ustensils": ["cuillère en bois", "couteau"]
     },
@@ -357,7 +357,7 @@ const recipes = [
         "time": 60,
         "description": "Commencer par cuire les pommes de terre dans l'eau bouillante. Puis epluchez les et coupez les en rondelles. Emincer les oignons puis les faire dorer dans du beurre. Ajouter le jambon fumé coupé en en morceaux ainsi que les pommes de terres. Salez, poivrez à votre gout ( et celui de vos convives ) Laissez cuisiner durant environ 10 minutes puis ajouter le vin blanc. Après 5 minutes, mettre le tout dans un plat à gratin. Coupez le rebelochon, soit en tranches, soit le couper en 2 dans le sens de l'épaisseur et recouvrir les pommes de terre. Cuire au four (environ 220°) durant 25 minutes. C'est prêt !",
         "appliance": "Four",
-        "ustensils": ["plat à gratin", "couteau", "Économe"]
+        "ustensils": ["plat à gratin", "couteau", "économe"]
     }, {
         "id": 11,
         "name": "Salade tomate, mozzarella et pommes",
@@ -442,7 +442,7 @@ const recipes = [
                 "unit": "grammes"
             },
             {
-                "ingredient": "Échalote",
+                "ingredient": "Echalote",
                 "quantity": 2
 
             },
@@ -452,7 +452,7 @@ const recipes = [
                 "unit": "cuillère à soupe"
             },
             {
-                "ingredient": "huile d'olive",
+                "ingredient": "Huile d'olive",
                 "quantity": 2,
                 "unit": "cuillère à soupe"
             }
@@ -567,7 +567,7 @@ const recipes = [
                 "unit": "tiges"
             },
             {
-                "ingredient": "huile d'olives",
+                "ingredient": "Huile d'olive",
                 "quantity": 2,
                 "unit": "cuillère à soupe"
             }
@@ -683,7 +683,7 @@ const recipes = [
                 "unit": "grammes"
             },
             {
-                "ingredient": "Crème fraiche",
+                "ingredient": "Crème fraîche",
                 "quantity": 200,
                 "unit": "grammes"
             },
@@ -693,7 +693,7 @@ const recipes = [
                 "unit": "grammes"
             },
             {
-                "ingredient": "huile d'olive",
+                "ingredient": "Huile d'olive",
                 "quantity": 1,
                 "unit": "cuillères à soupe"
             }
@@ -733,15 +733,15 @@ const recipes = [
                 "unit": "cl"
             },
             {
-                "ingredient": "Crème Fraiche",
+                "ingredient": "Crème fraîche",
                 "quantity": 1,
                 "unit": "cuillères à soupe"
             }
         ],
         "time": 30,
-        "description": "Cuisiner la viande hachée dans une poelle à frire. Dans une autre faire cuire les oignons découpés en fins dés avec un peu de beurre. Ajouter du vin rouge. Mélanger les oigons avec la viande hachée. Faire cuire les pates le temps indiqué sur le paquet. Ajouter le coulis de tomates à la viande hachée. Une fois que les pates sont cuites, ajouter la crème fraiche à la viande hachée. Serivir.",
+        "description": "Cuisiner la viande hachée dans une poelle à frire. Dans une autre faire cuire les oignons découpés en fins dés avec un peu de beurre. Ajouter du vin rouge. Mélanger les oigons avec la viande hachée. Faire cuire les pates le temps indiqué sur le paquet. Ajouter le coulis de tomates à la viande hachée. Une fois que les pates sont cuites, ajouter la crème fraîche à la viande hachée. Serivir.",
         "appliance": "Casserole",
-        "ustensils": ["Cuillère en bois", "louche", "couteau"]
+        "ustensils": ["cuillère en bois", "louche", "couteau"]
     },
     {
         "id": 22,
@@ -803,7 +803,7 @@ const recipes = [
                 "quantity": 3
             },
             {
-                "ingredient": "Crème Fraîche",
+                "ingredient": "Crème fraîche",
                 "quantity": 20,
                 "unit": "cl"
             },
@@ -906,7 +906,7 @@ const recipes = [
                 "quantity": 1
             },
             {
-                "ingredient": "Huile d'olives"
+                "ingredient": "Huile d'olive"
             },
             {
                 "ingredient": "Oignon",
@@ -953,7 +953,7 @@ const recipes = [
             }
         ],
         "time": 15,
-        "description": "Faire fondre l'oseille avec du beurre demi sel, ajouter un litre d'eau. Ajouter les vermicelles. Laisser cuire. une foit prêt, sortir du feu et après 5 minutes ajouter le jaune d'oeuf et la crême fraîche",
+        "description": "Faire fondre l'oseille avec du beurre demi sel, ajouter un litre d'eau. Ajouter les vermicelles. Laisser cuire. une foit prêt, sortir du feu et après 5 minutes ajouter le jaune d'oeuf et la crème fraîche",
         "appliance": "Casserole",
         "ustensils": ["couteau", "cuillère en bois"]
     },
@@ -982,7 +982,7 @@ const recipes = [
                 "unit": "grammes"
             },
             {
-                "ingredient": "Crême fraîche",
+                "ingredient": "Crème fraîche",
                 "quantity": 10,
                 "unit": "cl"
             }
@@ -1080,7 +1080,7 @@ const recipes = [
         "time": 60,
         "description": "Découper en cubes les carottes et pommes de terre. Faire revenir dans du beurre. Ajouter les lardons, une fois les lardons dorés, ajouter un grand verre d'eau. Ajouter les petit poids et les haricots verts ( tous deux pré cuits ). Ajouter Sel, poivre, thyms et laurier",
         "appliance": "Poële",
-        "ustensils": ["Couteau", "économe"]
+        "ustensils": ["couteau", "économe"]
     },
     {
         "id": 32,
@@ -1279,7 +1279,7 @@ const recipes = [
                 "unit": "grammes"
             },
             {
-                "ingredient": "Huile d'olives",
+                "ingredient": "Huile d'olive",
                 "quantity": 25,
                 "unit": "cl"
             },
@@ -1332,7 +1332,7 @@ const recipes = [
         "time": 20,
         "description": "Fouettez les oeufs, le sucre et le lait. tremper les tranches de pain. Le cuire au four pendant environ 10 minutes à 180°. Servir",
         "appliance": "Four",
-        "ustensils": ["fouet", "bol", "Cuillère à Soupe"]
+        "ustensils": ["fouet", "bol", "cuillère à Soupe"]
     },
     {
         "id": 39,
@@ -1507,7 +1507,7 @@ const recipes = [
                 "unit": "grammes"
             },
             {
-                "ingredient": "farine",
+                "ingredient": "Farine",
                 "quantity": 40,
                 "unit": "grammes"
             }
@@ -1608,13 +1608,13 @@ const recipes = [
                 "unit": "grammes"
             },
             {
-                "ingredient": "Crème Fraîche",
+                "ingredient": "Crème fraîche",
                 "quantity": 20,
                 "unit": "cl"
             }
         ],
         "time": 5,
-        "description": "Mélanger le jus de citron avec le sucre et la mascarpone. Ajouter la crème fraiche. Mélanger le tout et mettre au congélateur pendant 1 heure. Servir",
+        "description": "Mélanger le jus de citron avec le sucre et la mascarpone. Ajouter la crème fraîche. Mélanger le tout et mettre au congélateur pendant 1 heure. Servir",
         "appliance": "Saladier",
         "ustensils": ["fouet", "verres", "cuillère en bois"]
     },
@@ -1723,4 +1723,115 @@ const recipes = [
     }
 ]
 
+//------Ingredients-----
+//extraire les appareils du tableau recette
+function getAllIngredientFromRecipes() {
+    let allIngredients = []
+    recipes.forEach(recipe => {
+        // console.log("Voici les ingrédients de la recette : ", recipe.name)
+        recipe.ingredients.forEach(oneIngredient => {
+            // console.log(oneIngredient.ingredient)
+            let newIngredientToAdd = oneIngredient.ingredient
+            allIngredients.push(newIngredientToAdd)
+        })
+    })
+    return allIngredients
+}
+//supprimer les doublons
+function removeDuplicateIngredients() {
+    let uniqueIngredient = [];
+    allIngredients.forEach(ingredient => {
+        if (!uniqueIngredient.includes(ingredient)) {
+            uniqueIngredient.push(ingredient)
+        }
+    })
+    return uniqueIngredient
+}
+//trier par ordre alphabetique
+function sortByAlphabetAllIngredients() {
+    return uniqueIngredient.sort()
+}
+//faire apparaitre dans la console la liste finale
+function seeAllIngredient(uniqueIngredient) {
+    console.log("voici la liste des ingrédients")
+    console.table(uniqueIngredient)
+}
+//appel des functions
+let allIngredients = getAllIngredientFromRecipes()
+let uniqueIngredient = removeDuplicateIngredients()
+uniqueIngredient = sortByAlphabetAllIngredients()
+seeAllIngredient(uniqueIngredient)
 
+
+//------Appliance-----
+//extraire les appareils du tableau recette
+function getAllApplianceFromRecipes() {
+    let allAppliance = []
+    recipes.forEach(recipe => {
+        //console.table(recipe.appliance)
+        let newAppliancetoAdd = recipe.appliance
+        allAppliance.push(newAppliancetoAdd)
+    })
+    return allAppliance
+}
+//supprimer les doublons
+function removeDuplicateAppliance() {
+    let uniqueAppliance = [];
+    allAppliance.forEach(appliance => {
+        if (!uniqueAppliance.includes(appliance)) {
+            uniqueAppliance.push(appliance)
+        }
+    })
+    return uniqueAppliance
+}
+//trier par ordre alphabetique
+function sortByAlphabetAllAppliance() {
+    return uniqueAppliance.sort()
+}
+//faire apparaitre dans la console la liste finale
+function seeAllAppliance(uniqueAppliance) {
+    console.log("voici la liste des appareils")
+    console.table(uniqueAppliance)
+}
+//appel des funtions
+let allAppliance = getAllApplianceFromRecipes()
+let uniqueAppliance = removeDuplicateAppliance()
+uniqueAppliance = sortByAlphabetAllAppliance()
+seeAllAppliance(uniqueAppliance)
+
+
+//------Ustensils-----
+//extraire les appareils du tableau recette
+function getAllUstensilsFromRecipes() {
+    let allUstensils = []
+    recipes.forEach(recipe => {
+        //console.table(recipe.ustensils)
+        let newUstensilstoAdd = recipe.ustensils
+        allUstensils.push(newUstensilstoAdd)
+    })
+    return allUstensils
+}
+//supprimer les doublons
+function removeDuplicateUstensils() {
+    let uniqueUstensil = [];
+    allUstensils.flat().forEach(ustensil => {
+        if (!uniqueUstensil.includes(ustensil)) {
+            uniqueUstensil.push(ustensil)
+        }
+    })
+    return uniqueUstensil
+}
+//trier par ordre alphabetique
+function sortByAlphabetAllUstensils() {
+    return uniqueUstensil.sort()
+}
+//faire apparaitre dans la console la liste finale
+function seeAllUstensils(uniqueUstensil) {
+    console.log("voici la liste des ustensiles")
+    console.table(uniqueUstensil)
+}
+//appel des funtions
+let allUstensils = getAllUstensilsFromRecipes()
+let uniqueUstensil = removeDuplicateUstensils()
+uniqueUstensil = sortByAlphabetAllUstensils()
+seeAllUstensils(uniqueUstensil)
