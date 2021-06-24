@@ -1,7 +1,7 @@
 import {recipes} from './recipes.js';
 
 //------Ingredients-----
-//extraire les appareils du tableau recette
+//extraire les ingredients du tableau recette
 function getAllIngredientFromRecipes() {
     let allIngredients = []
     recipes.forEach(recipe => {
@@ -16,28 +16,28 @@ function getAllIngredientFromRecipes() {
 }
 //supprimer les doublons
 function removeDuplicateIngredients() {
-    let uniqueIngredient = [];
+    let listingIngredient = [];
     allIngredients.forEach(ingredient => {
-        if (!uniqueIngredient.includes(ingredient)) {
-            uniqueIngredient.push(ingredient)
+        if (!listingIngredient.includes(ingredient)) {
+            listingIngredient.push(ingredient)
         }
     })
-    return uniqueIngredient
+    return listingIngredient
 }
 //trier par ordre alphabetique
 function sortByAlphabetAllIngredients() {
-    return uniqueIngredient.sort()
+    return listingIngredient.sort()
 }
 //faire apparaitre dans la console la liste finale
-function seeAllIngredient(uniqueIngredient) {
+function seeAllIngredient(listingIngredient) {
     console.log("voici la liste des ingrédients")
-    console.table(uniqueIngredient)
+    console.table(listingIngredient)
 }
 //appel des functions
 let allIngredients = getAllIngredientFromRecipes()
-let uniqueIngredient = removeDuplicateIngredients()
-uniqueIngredient = sortByAlphabetAllIngredients()
-seeAllIngredient(uniqueIngredient)
+let listingIngredient = removeDuplicateIngredients()
+listingIngredient = sortByAlphabetAllIngredients()
+seeAllIngredient(listingIngredient)
 
 
 //------Appliance-----
@@ -53,28 +53,28 @@ function getAllApplianceFromRecipes() {
 }
 //supprimer les doublons
 function removeDuplicateAppliance() {
-    let uniqueAppliance = [];
+    let listingAppliance = [];
     allAppliance.forEach(appliance => {
-        if (!uniqueAppliance.includes(appliance)) {
-            uniqueAppliance.push(appliance)
+        if (!listingAppliance.includes(appliance)) {
+            listingAppliance.push(appliance)
         }
     })
-    return uniqueAppliance
+    return listingAppliance
 }
 //trier par ordre alphabetique
 function sortByAlphabetAllAppliance() {
-    return uniqueAppliance.sort()
+    return listingAppliance.sort()
 }
 //faire apparaitre dans la console la liste finale
-function seeAllAppliance(uniqueAppliance) {
+function seeAllAppliance(listingAppliance) {
     console.log("voici la liste des appareils")
-    console.table(uniqueAppliance)
+    console.table(listingAppliance)
 }
 //appel des funtions
 let allAppliance = getAllApplianceFromRecipes()
-let uniqueAppliance = removeDuplicateAppliance()
-uniqueAppliance = sortByAlphabetAllAppliance()
-seeAllAppliance(uniqueAppliance)
+let listingAppliance = removeDuplicateAppliance()
+listingAppliance = sortByAlphabetAllAppliance()
+seeAllAppliance(listingAppliance)
 
 
 //------Ustensils-----
@@ -90,28 +90,140 @@ function getAllUstensilsFromRecipes() {
 }
 //supprimer les doublons
 function removeDuplicateUstensils() {
-    let uniqueUstensil = [];
+    let listingUstensil = [];
     allUstensils.flat().forEach(ustensil => {
-        if (!uniqueUstensil.includes(ustensil)) {
-            uniqueUstensil.push(ustensil)
+        if (!listingUstensil.includes(ustensil)) {
+            listingUstensil.push(ustensil)
         }
     })
-    return uniqueUstensil
+    return listingUstensil
 }
 //trier par ordre alphabetique
 function sortByAlphabetAllUstensils() {
-    return uniqueUstensil.sort()
+    return listingUstensil.sort()
 }
 //faire apparaitre dans la console la liste finale
-function seeAllUstensils(uniqueUstensil) {
+function seeAllUstensils(listingUstensil) {
     console.log("voici la liste des ustensiles")
-    console.table(uniqueUstensil)
+    console.table(listingUstensil)
 }
 //appel des funtions
 let allUstensils = getAllUstensilsFromRecipes()
-let uniqueUstensil = removeDuplicateUstensils()
-uniqueUstensil = sortByAlphabetAllUstensils()
-seeAllUstensils(uniqueUstensil)
+let listingUstensil = removeDuplicateUstensils()
+listingUstensil = sortByAlphabetAllUstensils()
+seeAllUstensils(listingUstensil)
 
-let all = [uniqueIngredient + uniqueAppliance + uniqueUstensil]
-console.table(all)
+//addition des 3 tableaux
+//let all = [listingIngredient + listingAppliance + listingUstensil]
+//console.table(all)
+
+//affichage de la liste des ingrédients
+let isIngredientDisplayed = false
+document.getElementById("box1-display-content").addEventListener("click", function showHide () {
+    if (isIngredientDisplayed === false) {
+        //console.log("On affiche la liste d'éléments")
+        document.getElementById("box1-indegredients").classList.remove("hidden")
+        document.getElementById("chevron-up-1").classList.remove("hidden")
+        document.getElementById("chevron-down-1").classList.add("hidden")
+    } else {
+        //console.log("On cache la liste d'éléments")
+        document.getElementById("box1-indegredients").classList.add("hidden")
+        document.getElementById("chevron-up-1").classList.add("hidden")
+        document.getElementById("chevron-down-1").classList.remove("hidden")        
+    }
+    //
+    return isIngredientDisplayed = !isIngredientDisplayed
+})
+
+//remplissage du tableau des ingredients
+let listOfIngredientClicked = []
+const ingredientContainer = document.getElementById("box1-indegredients")
+listingIngredient.forEach(Ingredient => {
+    let newElement = document.createElement("p")
+    newElement.classList.add("ingredient")
+    newElement.setAttribute("data-element", Ingredient)
+    newElement.innerText = Ingredient
+    newElement.addEventListener("click", function (event) {
+        console.log("On a clické sur l'élément", Ingredient)
+        listOfIngredientClicked.push(Ingredient)
+        displayAllIngredientClicked()
+    })
+    ingredientContainer.appendChild(newElement)
+})
+function displayAllIngredientClicked() {
+    console.table(listOfIngredientClicked)
+}
+
+//affichage de la liste des appareils
+let isApplianceDisplayed = false
+document.getElementById("box2-display-content").addEventListener("click", function showHide() {
+    if (isApplianceDisplayed === false) {
+        //console.log("On affiche la liste d'éléments")
+        document.getElementById("box2-appliance").classList.remove("hidden")
+        document.getElementById("chevron-up-2").classList.remove("hidden")
+        document.getElementById("chevron-down-2").classList.add("hidden")
+    } else {
+        //console.log("On cache la liste d'éléments")
+        document.getElementById("box2-appliance").classList.add("hidden")
+        document.getElementById("chevron-up-2").classList.add("hidden")
+        document.getElementById("chevron-down-2").classList.remove("hidden")        
+    }
+    
+    return isApplianceDisplayed = !isApplianceDisplayed
+})
+
+//remplissage du tableau des appareils
+const applianceContainer = document.getElementById("box2-appliance")
+listingAppliance.forEach(Appliance => {
+    let newElement = document.createElement("p")
+    newElement.classList.add("appliance")
+    newElement.setAttribute("data-element", Appliance)
+    newElement.innerText = Appliance
+    newElement.addEventListener("click", function (event) {
+        console.log("On a clické sur l'élément", Appliance)
+        listOfIngredientClicked.push(Appliance)
+        displayAllApplianceClicked()
+    })
+    applianceContainer.appendChild(newElement)
+})
+let listOfApplianceClicked = []
+function displayAllApplianceClicked() {
+    console.table(listOfApplianceClicked)
+}
+
+//affichage de la liste des ustensiles
+let isUstensilsDisplayed = false
+document.getElementById("box3-display-content").addEventListener("click", function showHide() {
+    if (isApplianceDisplayed === false) {
+        //console.log("On affiche la liste d'éléments")
+        document.getElementById("box3-ustensils").classList.remove("hidden")
+        document.getElementById("chevron-up-3").classList.remove("hidden")
+        document.getElementById("chevron-down-3").classList.add("hidden")
+    } else {
+        //console.log("On cache la liste d'éléments")
+        document.getElementById("box3-ustensils").classList.add("hidden")
+        document.getElementById("chevron-up-3").classList.add("hidden")
+        document.getElementById("chevron-down-3").classList.remove("hidden")        
+    }
+    
+    return isApplianceDisplayed = !isApplianceDisplayed
+})
+
+//remplissage du tableau des ustensiles
+let listOfUstensilsClicked = []
+const UstensilContainer = document.getElementById("box3-ustensils")
+listingUstensil.forEach(Ustensil => {
+    let newElement = document.createElement("p")
+    newElement.classList.add("ustensil")
+    newElement.setAttribute("data-element", Ustensil)
+    newElement.innerText = Ustensil
+    newElement.addEventListener("click", function (event) {
+        console.log("On a clické sur l'élément", Ustensil)
+        listOfIngredientClicked.push(Ustensil)
+        displayAllUstensilClicked()
+    })
+    UstensilContainer.appendChild(newElement)
+})
+function displayAllUstensilClicked() {
+    console.table(listOfUstensilsClicked)
+}

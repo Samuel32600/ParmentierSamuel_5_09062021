@@ -26,7 +26,7 @@ form {
     justify-content: space-between;
 }
 
-input {
+.search {
     width: 500px;
     height: 22px;
     opacity: 25%;
@@ -59,42 +59,104 @@ button img {
     display: flex;
     margin: 15px 0 25px 100px;
     padding: 0;
+    position: relative;
 }
 
+/*definition des 3 box filtres*/
 .filter {
     width: 170px;
     height: 69px;
     margin-right: 20px;
-    list-style: none;
     border-radius: 5px;
     color: #FFFFFF;
     display: flex;
     justify-content: space-around;
     align-items: center;
-    font-size: 18px;
-    font-family: 'Lato', sans-serif;
+    position:relative     
 }
 
+/* specificité de chaque boite*/
 .box1 {
     background-color: #3282F7;
+    
 }
 
 .box2 {
     background-color: #68D9A4;
+   
 }
 
 .box3 {
     background-color: #ED6454;
+    
 }
 
-a .fas {
-    width: 16px;
-    height: 9.88px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #FFFFFF;
+/*texte boite filtre*/
+.box__text{
+    width: 100%;
+    border: none;   
+    margin-left: 10px;
+    color: white;    
+    outline:none;
 }
+
+/*fleche basse du filtre*/
+#chevron-down-1, #chevron-down-2, #chevron-down-3{  
+    margin-right: 18px;   
+}
+
+/*fleche haute du filtre*/
+#chevron-up-1, #chevron-up-2, #chevron-up-3 {
+    position: absolute;
+    right: 18px;    
+}
+
+
+/*box de la liste du filtre*/
+/*ingredient*/
+#box1-indegredients{
+    width: auto;
+    height: auto;
+    background-color: #3282F7;
+    color: #FFFFFF;
+    position: absolute;
+    top: 70px;
+}
+
+/*appareils*/
+#box2-appliance{
+    width: auto;
+    height: auto;
+    background-color: #68D9A4;
+    color: #FFFFFF;
+    position: absolute;
+    top: 70px;
+    left: 190px;
+}
+
+/*Ustensiles*/
+#box3-ustensils{
+    width: auto;
+    height: auto;
+    background-color: #ED6454;
+    color: #FFFFFF;
+    position: absolute;
+    top: 70px;
+    left: 380px;
+}
+
+/*montrer cacher la liste du filtre*/
+.hidden{
+    display: none;
+}
+
+
+
+
+
+
+
+
 
 /*-----menu area-----*/
 

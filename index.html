@@ -16,31 +16,55 @@
     </header>
 
     <form>
-        <input type="text" placeholder="Rechercher un ingrédient, appareil, ustensiles ou une recette">
+        <input class="search" type="text" placeholder="Rechercher un ingrédient, appareil, ustensiles ou une recette">
         <button type="button">
             <img src="Logo&&icone/search.png" alt="bouton rechercher">
         </button>
     </form>
 
-    <div id="Ustensils">
-
-    </div>
-
     <nav>
-        <ul class="boxfilter">
-            <li class="filter box1">
-                <p class="box1__text">Ingredients</p>
-                <a href="#"><i class="fas fa-chevron-down" id="sam"></i></a>
-            </li>
-            <li class="filter box2" id="Appliance">
-                <p class="box2__text">Appareil</p>
-                <a href="#"><i class="fas fa-chevron-down"></i></a>
-            </li>
-            <li class="filter box3">
-                <p class="box3__text">Ustensiles</p>
-                <a href="#"><i class="fas fa-chevron-down"></i></a>
-            </li>
-        </ul>
+        <div class="boxfilter">
+
+            <!--Ingredients-->
+            <div class="filter box1" id="box1-display-content">
+                <input class="box__text box1" type="text" placeholder="Ingredients">
+                <span id="chevron-down-1">
+                    <i class="fas fa-chevron-down"></i>
+                </span>
+                <span id="chevron-up-1" class="hidden">
+                    <i class="fas fa-chevron-up"></i>
+                </span>
+            </div>
+            <div id="box1-indegredients" class="hidden">
+            </div>
+
+            <!--Appareils-->
+            <div class="filter box2" id="box2-display-content">
+                <input class="box__text box2" type="text" placeholder="Appareil">
+                <span id="chevron-down-2">
+                    <i class="fas fa-chevron-down"></i>
+                </span>
+                <span id="chevron-up-2" class="hidden">
+                    <i class="fas fa-chevron-up"></i>
+                </span>
+            </div>
+            <div id="box2-appliance" class="hidden">
+            </div>
+
+            <!--Ustensiles-->
+            <div class="filter box3" id="box3-display-content">
+                <input class="box__text box3" type="text" placeholder="Ustensiles">
+                <span id="chevron-down-3">
+                    <i class="fas fa-chevron-down"></i>
+                </span>
+                <span id="chevron-up-3" class="hidden">
+                    <i class="fas fa-chevron-up"></i>
+                </span>
+            </div>
+            <div id="box3-ustensils" class="hidden">
+            </div>
+            
+        </div>
     </nav>
 
     <main>
