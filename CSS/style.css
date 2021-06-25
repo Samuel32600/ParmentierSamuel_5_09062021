@@ -57,9 +57,39 @@ button img {
 /*-----filter area-----*/
 .boxfilter {
     display: flex;
+    flex-direction: column;
     margin: 15px 0 25px 100px;
     padding: 0;
     position: relative;
+}
+/*3 filtres suite aux selections*/
+/*boite generale des 3 filtres de selections*/
+#box-select{
+    display: flex;
+    flex-direction: row;
+}
+
+/*boite pour chacun des  3 filtres*/
+.box1-select-ingredients, .box2-select-appliance, .box3-select-ustensils{
+    width: 137px;
+    height: 37px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+    margin-bottom: 20px;
+}
+
+/*logo de fermeture*/
+.fa-times-circle{
+    margin-right: 22px;
+}
+
+/*definition generale des 3 filtres de choix*/
+.box-choice{
+    display: flex;
+    flex-direction: row;
 }
 
 /*definition des 3 box filtres*/
@@ -77,18 +107,15 @@ button img {
 
 /* specificité de chaque boite*/
 .box1 {
-    background-color: #3282F7;
-    
+    background-color: #3282F7;    
 }
 
 .box2 {
-    background-color: #68D9A4;
-   
+    background-color: #68D9A4;   
 }
 
 .box3 {
-    background-color: #ED6454;
-    
+    background-color: #ED6454;    
 }
 
 /*texte boite filtre*/
@@ -98,6 +125,11 @@ button img {
     margin-left: 10px;
     color: white;    
     outline:none;
+}
+
+/*champ input*/
+input::placeholder {
+    color: white;
 }
 
 /*fleche basse du filtre*/
@@ -111,16 +143,14 @@ button img {
     right: 18px;    
 }
 
-
 /*box de la liste du filtre*/
 /*ingredient*/
-#box1-indegredients{
+#box1-ingredients{
     width: auto;
     height: auto;
-    background-color: #3282F7;
     color: #FFFFFF;
     position: absolute;
-    top: 70px;
+    top: 130px;
 }
 
 /*appareils*/
@@ -130,7 +160,7 @@ button img {
     background-color: #68D9A4;
     color: #FFFFFF;
     position: absolute;
-    top: 70px;
+    top: 130px;
     left: 190px;
 }
 
@@ -141,7 +171,7 @@ button img {
     background-color: #ED6454;
     color: #FFFFFF;
     position: absolute;
-    top: 70px;
+    top: 130px;
     left: 380px;
 }
 
@@ -150,16 +180,7 @@ button img {
     display: none;
 }
 
-
-
-
-
-
-
-
-
 /*-----menu area-----*/
-
 figure {
     width: 380px;
     height: 364px;
