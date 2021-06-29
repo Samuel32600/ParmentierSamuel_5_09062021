@@ -40,7 +40,7 @@ listingIngredient = sortByAlphabetAllIngredients()
 seeAllIngredient(listingIngredient)
 
 
-//------Appliance-----
+//------Appareils-----
 //extraire les appareils du tableau recette
 function getAllApplianceFromRecipes() {
     let allAppliance = []
@@ -117,7 +117,7 @@ seeAllUstensils(listingUstensil)
 //let all = [listingIngredient + listingAppliance + listingUstensil]
 //console.table(all)
 
-//affichage de la liste des ingrédients
+//-----affichage de la liste des ingrédients
 let isIngredientDisplayed = false
 document.getElementById("box1-display-content").addEventListener("click", function showHide() {
     if (isIngredientDisplayed === false) {
@@ -154,7 +154,7 @@ function displayAllIngredientClicked() {
     console.table(listOfIngredientClicked)
 }
 
-//affichage de la liste des appareils
+//-----affichage de la liste des appareils
 let isApplianceDisplayed = false
 document.getElementById("box2-display-content").addEventListener("click", function showHide() {
     if (isApplianceDisplayed === false) {
@@ -191,7 +191,7 @@ function displayAllApplianceClicked() {
     console.table(listOfApplianceClicked)
 }
 
-//affichage de la liste des ustensiles
+//-----affichage de la liste des ustensiles
 let isUstensilsDisplayed = false
 document.getElementById("box3-display-content").addEventListener("click", function showHide() {
     if (isUstensilsDisplayed === false) {
@@ -228,17 +228,26 @@ listingUstensil.forEach(Ustensil => {
 //selection des elements filtrés
 const selectContainer = document.getElementById("box-select")
 function displayAllUstensilClicked() {
-    console.table(listOfUstensilsClicked)    
-    listOfUstensilsClicked.forEach(array => {
-        let newDivSelect = document.createElement("div")
-        newDivSelect.classList.add("box3-select-ustensils")
-        selectContainer.appendChild(newDivSelect)
-        let newElementSelect = document.createElement("p")
-        newElementSelect.classList.add("box3")
-        newElementSelect.innerText = listOfUstensilsClicked
-        newDivSelect.appendChild(newElementSelect)  
+    console.table(listOfUstensilsClicked);
+    listOfUstensilsClicked.forEach(divHtml => {
+        //creation de la div
+        let newDivSelect = document.createElement("div");
+        newDivSelect.classList.add("box3-select-ustensils", "box3");
+        selectContainer.appendChild(newDivSelect);
+        //creation du texte
+        let newElementSelect = document.createElement("p");
+        newElementSelect.classList.add("box__text");
+        newElementSelect.innerText = listOfUstensilsClicked;
+        newDivSelect.appendChild(newElementSelect);
+        //creation de l'icone
+        let newIconSelect = document.createElement("i")
+        newIconSelect.classList.add("far", "fa-times-circle");
+        newDivSelect.appendChild(newIconSelect);
     })
-    
-    
+    document.querySelector(".far", ".fa-times-circle").addEventListener("click", fermer)
 }
 
+function fermer() {
+    let tags = document.getElementsByClassName("box3-select-ustensils", "box3")
+    tags.style.display = "none";
+}
