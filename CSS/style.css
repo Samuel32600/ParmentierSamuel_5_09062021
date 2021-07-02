@@ -70,7 +70,7 @@ button img {
 }
 
 /*boite pour chacun des  3 filtres*/
-.box1-select-ingredients, .box2-select-appliance, .box3-select-ustensils{
+.box1-select-ingredients, .box2-select-appliances, .box3-select-ustensils{
     width: 137px;
     height: 37px;
     border-radius: 5px;
