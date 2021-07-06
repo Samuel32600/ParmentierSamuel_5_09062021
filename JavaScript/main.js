@@ -1,7 +1,7 @@
 import { recipes } from './recipes.js';
 
 
-//-----------Ingredients----------
+//---------------------Ingredients--------------------
 
 //extraire les ingredients du tableau recette
 let allIngredients = getAllIngredientFromRecipes()
@@ -96,17 +96,17 @@ function displayAllIngredientClicked() {
         newIconSelect.classList.add("far", "fa-times-circle");
         newIconSelect.addEventListener("click", closeIngredient)
         newDivSelect.appendChild(newIconSelect);
-    })     
+    })
 }
 
 //fermeture des tags Ustensils
 function closeIngredient() {
-    document.getElementById("box-tag-ingredient").remove();    
+    document.getElementById("box-tag-ingredient").remove();
 }
 
 
 
-//-----------Appareils----------
+//---------------------Appareils--------------------
 
 //extraire les appareils du tableau recette
 let allAppliance = getAllApplianceFromRecipes()
@@ -199,15 +199,16 @@ function displayAllApplianceClicked() {
         newIconSelect.classList.add("far", "fa-times-circle");
         newIconSelect.addEventListener("click", closeAppliance)
         newDivSelect.appendChild(newIconSelect);
-    })     
+    })
 }
 
 //fermeture des tags Ustensils
 function closeAppliance() {
-    document.getElementById("box-tag-appliance").remove();    
+    document.getElementById("box-tag-appliance").remove();
 }
 
-//----------Ustensils----------
+
+//--------------------Ustensils--------------------
 
 //extraire les appareils du tableau recette
 let allUstensils = getAllUstensilsFromRecipes()
@@ -287,22 +288,23 @@ function displayAllUstensilClicked() {
         //creation de la div
         let newDivSelect = document.createElement("div");
         newDivSelect.setAttribute("id", "box-tag-ustensil")
-        newDivSelect.classList.add("box3-select-ustensils", "box3");        
+        newDivSelect.classList.add("box3-select-ustensils", "box3");
         selectContainerUstensils.appendChild(newDivSelect);
         //creation du texte
         let newElementSelect = document.createElement("p");
         newElementSelect.classList.add("box__text");
         newElementSelect.innerText = listOfUstensilsClicked;
-        newDivSelect.appendChild(newElementSelect);
+        newDivSelect.appendChild(newElementSelect);        
         //creation de l'icone
         let newIconSelect = document.createElement("i")
         newIconSelect.classList.add("far", "fa-times-circle");
         newIconSelect.addEventListener("click", closeUstensil)
         newDivSelect.appendChild(newIconSelect);
-    })     
+    })
 }
 
 //fermeture des tags Ustensils
 function closeUstensil() {
-    document.getElementById("box-tag-ustensil").remove();    
+    document.getElementById("box-tag-ustensil").remove();
 }
+

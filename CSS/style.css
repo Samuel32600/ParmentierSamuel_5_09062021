@@ -60,7 +60,7 @@ button img {
     flex-direction: column;
     margin: 15px 0 25px 100px;
     padding: 0;
-    position: relative;
+     position: relative;
 }
 /*3 filtres suite aux selections*/
 /*boite generale des 3 filtres de selections*/
@@ -71,7 +71,7 @@ button img {
 
 /*boite pour chacun des  3 filtres*/
 .box1-select-ingredients, .box2-select-appliances, .box3-select-ustensils{
-    width: 137px;
+    width: auto;
     height: 37px;
     border-radius: 5px;
     display: flex;
@@ -149,7 +149,7 @@ input::placeholder {
     width: auto;
     height: auto;
     color: #FFFFFF;
-    position: absolute;
+     position: absolute;
     top: 130px;
 }
 
