@@ -60,18 +60,22 @@ button img {
     flex-direction: column;
     margin: 15px 0 25px 100px;
     padding: 0;
-     position: relative;
+    position: relative;
 }
+
 /*3 filtres suite aux selections*/
 /*boite generale des 3 filtres de selections*/
-#box-select{
+#box-select {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
 }
 
 /*boite pour chacun des  3 filtres*/
-.box1-select-ingredients, .box2-select-appliances, .box3-select-ustensils{
-    width: auto;
+.box1-select-ingredients,
+.box2-select-appliances,
+.box3-select-ustensils {
+    width: 107px;
     height: 37px;
     border-radius: 5px;
     display: flex;
@@ -79,15 +83,16 @@ button img {
     justify-content: space-between;
     color: white;
     margin-bottom: 20px;
+    margin-right: 10px;
 }
 
 /*logo de fermeture*/
-.fa-times-circle{
-    margin-right: 22px;
+.fa-times-circle {
+    margin-right: 5px;
 }
 
 /*definition generale des 3 filtres de choix*/
-.box-choice{
+.box-choice {
     display: flex;
     flex-direction: row;
 }
@@ -102,29 +107,39 @@ button img {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    position:relative     
+    position: relative
 }
 
 /* specificité de chaque boite*/
 .box1 {
-    background-color: #3282F7;    
+    background-color: #3282F7;
 }
 
 .box2 {
-    background-color: #68D9A4;   
+    background-color: #68D9A4;
 }
 
 .box3 {
-    background-color: #ED6454;    
+    background-color: #ED6454;
 }
 
 /*texte boite filtre*/
-.box__text{
+.box__text {
     width: 100%;
-    border: none;   
-    margin-left: 10px;
-    color: white;    
-    outline:none;
+    border: none;
+    margin-left: 5px;
+    color: white;
+    outline: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.box__text:hover {
+    white-space:unset;
+    overflow:unset;
+    text-overflow:unset;
+    line-height:12px;
 }
 
 /*champ input*/
@@ -133,28 +148,32 @@ input::placeholder {
 }
 
 /*fleche basse du filtre*/
-#chevron-down-1, #chevron-down-2, #chevron-down-3{  
-    margin-right: 18px;   
+#chevron-down-1,
+#chevron-down-2,
+#chevron-down-3 {
+    margin-right: 18px;
 }
 
 /*fleche haute du filtre*/
-#chevron-up-1, #chevron-up-2, #chevron-up-3 {
+#chevron-up-1,
+#chevron-up-2,
+#chevron-up-3 {
     position: absolute;
-    right: 18px;    
+    right: 18px;
 }
 
 /*box de la liste du filtre*/
 /*ingredient*/
-#box1-ingredients{
+#box1-ingredients {
     width: auto;
     height: auto;
     color: #FFFFFF;
-     position: absolute;
+    position: absolute;
     top: 130px;
 }
 
 /*appareils*/
-#box2-appliance{
+#box2-appliance {
     width: auto;
     height: auto;
     background-color: #68D9A4;
@@ -165,7 +184,7 @@ input::placeholder {
 }
 
 /*Ustensiles*/
-#box3-ustensils{
+#box3-ustensils {
     width: auto;
     height: auto;
     background-color: #ED6454;
@@ -176,7 +195,7 @@ input::placeholder {
 }
 
 /*montrer cacher la liste du filtre*/
-.hidden{
+.hidden {
     display: none;
 }
 
@@ -184,7 +203,7 @@ input::placeholder {
 figure {
     width: 380px;
     height: 364px;
-    background-color: #E7E7E7;    
+    background-color: #E7E7E7;
     margin-left: 100px;
     border-radius: 5px;
 }
@@ -198,7 +217,7 @@ figure img {
 
 figcaption {
     width: 380px;
-    height: 186px;    
+    height: 186px;
 }
 
 .title {
