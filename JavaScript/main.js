@@ -43,38 +43,46 @@ function seeAllIngredient(listingIngredient) {
     //console.table(listingIngredient)
 }
 
-//-----affichage de la liste des ingrédients
+//-----affiché et caché de la liste des ingrédients
 const IngredientContainer = document.getElementById("box1-ingredients")
+const box1Extended = document.getElementById("box1-display-content")
 const down1 = document.getElementById("chevron-down-1")
 const up1 = document.getElementById("chevron-up-1")
 
+// affiche la liste
 let isIngredientDisplayed = false
 down1.addEventListener("click", function () {
     if (isApplianceDisplayed === false) {
         // console.log("On affiche la liste d'éléments")
         IngredientContainer.classList.remove("hidden")
+        box1Extended.classList.add("box-extend")
         up1.classList.remove("hidden")
         down1.classList.add("hidden")
+        document.getElementsByName('INGREDIENT')[0].placeholder='Recherche un ingrédient';
     }
 })
 
+//cache la liste
 up1.addEventListener("click", function () {
     if (isIngredientDisplayed === false) {
         // console.log("On cache la liste d'éléments")
         IngredientContainer.classList.add("hidden")
+        box1Extended.classList.remove("box-extend")
         up1.classList.add("hidden")
         down1.classList.remove("hidden")
+        document.getElementsByName('INGREDIENT')[0].placeholder='Ingredients';
     }
 })
 
 //remplissage du tableau des ingredients
 
 let listOfIngredientClicked = []
-listingIngredient.forEach(Ingredient => {
+listingIngredient.slice(0,30).forEach(Ingredient => {
     let newElement = document.createElement("p")
     newElement.classList.add("ingredient")
     newElement.setAttribute("data-element", Ingredient)
     newElement.innerText = Ingredient
+
     newElement.addEventListener("click", function (event) {
         //console.log("On a clické sur l'élément", Ingredient)
         listOfIngredientClicked.push(Ingredient)
@@ -171,6 +179,7 @@ function seeAllAppliance(listingAppliance) {
 
 //-----affichage de la liste des appareils
 const ApplianceContainer = document.getElementById("box2-appliance")
+const box2Extended = document.getElementById("box2-display-content")
 const down2 = document.getElementById("chevron-down-2")
 const up2 = document.getElementById("chevron-up-2")
 
@@ -179,8 +188,10 @@ down2.addEventListener("click", function () {
     if (isApplianceDisplayed === false) {
         // console.log("On affiche la liste d'éléments")
         ApplianceContainer.classList.remove("hidden")
+        box2Extended.classList.add("box-extend")
         up2.classList.remove("hidden")
         down2.classList.add("hidden")
+        document.getElementsByName('APPAREIL')[0].placeholder='Recherche un appareil';
     }
 })
 
@@ -188,8 +199,10 @@ up2.addEventListener("click", function () {
     if (isApplianceDisplayed === false) {
         // console.log("On cache la liste d'éléments")
         ApplianceContainer.classList.add("hidden")
+        box2Extended.classList.remove("box-extend")
         up2.classList.add("hidden")
         down2.classList.remove("hidden")
+        document.getElementsByName('APPAREIL')[0].placeholder='Appareil';
     }
 })
 
@@ -297,23 +310,27 @@ function seeAllUstensils(listingUstensil) { // je lance la fonction pour voir le
 const UstensilContainer = document.getElementById("box3-ustensils") // const container Ustensil = je vais chercher l'id box3-ustensils
 const down3 = document.getElementById("chevron-down-3") // const bas = je vais chercher l'id du chevron bas
 const up3 = document.getElementById("chevron-up-3") // const haut = je vais chercher l'id du chevron haut
-
+const box3Extended = document.getElementById("box3-display-content")
 let isUstensilsDisplayed = false    // est l'ustensil affiché = faux
 down3.addEventListener("click", function () { //sur le chevron bas à l'ecoute du click je lance la fonction anonyme
     if (isUstensilsDisplayed === false) {   // si est l'ustensil affiché === faux
         //  console.log("On affiche la liste d'éléments")
         UstensilContainer.classList.remove("hidden") //suppression de la class caché sur  l'element box3-ustensils
+        box3Extended.classList.add("box-extend")
         up3.classList.remove("hidden") //suppression de la class caché sur l'element chevron-haut-3
         down3.classList.add("hidden") //ajout de la class caché sur l'element chevron-bas-3
+        document.getElementsByName('USTENSIL')[0].placeholder='Recherche un ustensil';
+        
     }
 })
-
 up3.addEventListener("click", function () { //sur le chevron haut à l'ecoute du click je lance la fonction anonyme
     if (isUstensilsDisplayed === false) { // si est l'ustensil affiché === faux
         // console.log("On cache la liste d'éléments")
         UstensilContainer.classList.add("hidden") //ajout de la class caché sur  l'element box3-ustensils
+        box3Extended.classList.remove("box-extend")
         up3.classList.add("hidden") //ajout de la class caché sur l'element chevron-haut-3
         down3.classList.remove("hidden") //suppression de la class caché sur l'element chevron-bas-3
+        document.getElementsByName('USTENSIL')[0].placeholder='Ustensiles';
     }
 })
 
@@ -383,9 +400,6 @@ function displayNewUstensil(newUstensil) { //fonction affiche le nouveau ustensi
 }
 
 //Je cherche un ustensile dans le champ de recherche
-const searchUstensil = document.getElementById('ustensil-search').value; // const recherche ustensil = je vais chercher l'id du champ d'ecriture
-
-
-
-
+const inputUstensil = document.getElementById('ustensil-search') // const recherche ustensil = je vais chercher l'id du champ d'ecriture
+inputUstensil.addEventListener("change", searchUstensil)
 

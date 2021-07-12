@@ -18,7 +18,7 @@ form {
     width: 1240px;
     height: 69px;
     margin-top: 17px;
-    margin-left: 100px;
+    margin: auto;
     background: #E7E7E7;
     border-radius: 5px;
     display: flex;
@@ -99,28 +99,35 @@ button img {
 
 /*definition des 3 box filtres*/
 .filter {
-    width: 170px;
+    width: 165px;
     height: 69px;
-    margin-right: 20px;
+    margin-right: 15px;
     border-radius: 5px;
     color: #FFFFFF;
     display: flex;
     justify-content: space-around;
     align-items: center;
-    position: relative
 }
 
 /* specificité de chaque boite*/
 .box1 {
     background-color: #3282F7;
+    position: relative;
 }
 
 .box2 {
     background-color: #68D9A4;
+    position: relative;
 }
 
 .box3 {
     background-color: #ED6454;
+    position: relative;
+}
+
+.box-extend {
+    width: 450px;
+    border-radius: 5px 5px 0 0;
 }
 
 /*texte boite filtre*/
@@ -136,14 +143,14 @@ button img {
 }
 
 .box__text:hover {
-    white-space:unset;
-    overflow:unset;
-    text-overflow:unset;
-    line-height:12px;
+    white-space: unset;
+    overflow: unset;
+    text-overflow: unset;
+    line-height: 12px;
 }
 
-/*champ input*/
-input::placeholder {
+/* champ input*/ 
+::placeholder {
     color: white;
 }
 
@@ -169,7 +176,11 @@ input::placeholder {
     height: auto;
     color: #FFFFFF;
     position: absolute;
-    top: 130px;
+    top: 69px;
+    left: 0px;
+    display: grid;
+    grid-template-columns: repeat(3, 150px);
+    border-radius: 0 0 5px 5px;
 }
 
 /*appareils*/
@@ -179,8 +190,11 @@ input::placeholder {
     background-color: #68D9A4;
     color: #FFFFFF;
     position: absolute;
-    top: 130px;
-    left: 190px;
+    top: 69px;
+    left: 0px;
+    display: grid;
+    grid-template-columns: repeat(3, 150px);
+    border-radius: 0 0 5px 5px;
 }
 
 /*Ustensiles*/
@@ -190,14 +204,29 @@ input::placeholder {
     background-color: #ED6454;
     color: #FFFFFF;
     position: absolute;
-    top: 130px;
-    left: 380px;
+    top: 69px;
+    left: 0px;
+    display: grid;
+    grid-template-columns: repeat(3, 150px);
+    border-radius: 0 0 5px 5px;
+}
+
+/* texte dans les 3 filtres*/
+.ingredient,
+.appliance,
+.ustensil {
+    margin: 5px 0 5px 15px;
 }
 
 /*montrer cacher la liste du filtre*/
 .hidden {
-    display: none;
+    visibility: hidden;
 }
+
+
+
+
+
 
 /*-----menu area-----*/
 figure {
