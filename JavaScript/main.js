@@ -58,7 +58,7 @@ down1.addEventListener("click", function () {
         box1Extended.classList.add("box-extend")
         up1.classList.remove("hidden")
         down1.classList.add("hidden")
-        document.getElementsByName('INGREDIENT')[0].placeholder='Recherche un ingrédient';
+        document.getElementsByName('INGREDIENT')[0].placeholder = 'Recherche un ingrédient';
     }
 })
 
@@ -70,14 +70,14 @@ up1.addEventListener("click", function () {
         box1Extended.classList.remove("box-extend")
         up1.classList.add("hidden")
         down1.classList.remove("hidden")
-        document.getElementsByName('INGREDIENT')[0].placeholder='Ingredients';
+        document.getElementsByName('INGREDIENT')[0].placeholder = 'Ingredients';
     }
 })
 
 //remplissage du tableau des ingredients
 
 let listOfIngredientClicked = []
-listingIngredient.slice(0,30).forEach(Ingredient => {
+listingIngredient.slice(0, 30).forEach(Ingredient => {
     let newElement = document.createElement("p")
     newElement.classList.add("ingredient")
     newElement.setAttribute("data-element", Ingredient)
@@ -191,7 +191,7 @@ down2.addEventListener("click", function () {
         box2Extended.classList.add("box-extend")
         up2.classList.remove("hidden")
         down2.classList.add("hidden")
-        document.getElementsByName('APPAREIL')[0].placeholder='Recherche un appareil';
+        document.getElementsByName('APPAREIL')[0].placeholder = 'Recherche un appareil';
     }
 })
 
@@ -202,7 +202,7 @@ up2.addEventListener("click", function () {
         box2Extended.classList.remove("box-extend")
         up2.classList.add("hidden")
         down2.classList.remove("hidden")
-        document.getElementsByName('APPAREIL')[0].placeholder='Appareil';
+        document.getElementsByName('APPAREIL')[0].placeholder = 'Appareil';
     }
 })
 
@@ -319,8 +319,7 @@ down3.addEventListener("click", function () { //sur le chevron bas à l'ecoute d
         box3Extended.classList.add("box-extend")
         up3.classList.remove("hidden") //suppression de la class caché sur l'element chevron-haut-3
         down3.classList.add("hidden") //ajout de la class caché sur l'element chevron-bas-3
-        document.getElementsByName('USTENSIL')[0].placeholder='Recherche un ustensil';
-        
+        document.getElementsByName('USTENSIL')[0].placeholder = 'Recherche un ustensil';
     }
 })
 up3.addEventListener("click", function () { //sur le chevron haut à l'ecoute du click je lance la fonction anonyme
@@ -330,7 +329,7 @@ up3.addEventListener("click", function () { //sur le chevron haut à l'ecoute du
         box3Extended.classList.remove("box-extend")
         up3.classList.add("hidden") //ajout de la class caché sur l'element chevron-haut-3
         down3.classList.remove("hidden") //suppression de la class caché sur l'element chevron-bas-3
-        document.getElementsByName('USTENSIL')[0].placeholder='Ustensiles';
+        document.getElementsByName('USTENSIL')[0].placeholder = 'Ustensiles';
     }
 })
 
@@ -398,8 +397,28 @@ function displayNewUstensil(newUstensil) { //fonction affiche le nouveau ustensi
     })
 
 }
-
+// .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
 //Je cherche un ustensile dans le champ de recherche
 const inputUstensil = document.getElementById('ustensil-search') // const recherche ustensil = je vais chercher l'id du champ d'ecriture
-inputUstensil.addEventListener("change", searchUstensil)
+inputUstensil.addEventListener("input", searchUstensil);
 
+function searchUstensil() {
+
+    if ((listingUstensil).includes(inputUstensil.value)) {        
+        console.log("l'ustensil trouvé est " + (inputUstensil.value))
+        
+        // let allRecipesfromUstensil = getAllRecipesFromUstensils()
+        // function getAllRecipesFromUstensils() {
+            // let allRecipes = []
+            // recipes.forEach(recipe => {              
+            //     let newNametoAdd = recipe.name
+            //     allRecipes.push(newNametoAdd)
+            //     console.table(newNametoAdd)
+            // })
+        // }
+        // return allRecipesfromUstensil        
+    }
+    else {
+        console.log("aucun ustensil n'est present dans la liste")
+    }
+}
