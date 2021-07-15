@@ -8,7 +8,7 @@ body {
 /*-----header-----*/
 header img {
     width: 268px;
-    height: 93px;
+    height: 93px;   
     margin-left: 588px;
     margin-top: 42px;
 }
@@ -127,7 +127,7 @@ button img {
 
 .box-extend {
     width: 450px;
-    border-radius: 5px 5px 0 0;
+    border-radius: 5px 5px 0 0;   
 }
 
 /*texte boite filtre*/
@@ -149,7 +149,7 @@ button img {
     line-height: 12px;
 }
 
-/* champ input*/ 
+/* champ input*/
 ::placeholder {
     color: white;
 }
@@ -173,7 +173,7 @@ button img {
 /*ingredient*/
 #box1-ingredients {
     width: auto;
-    height: auto;
+    height: 325px;
     color: #FFFFFF;
     position: absolute;
     top: 69px;
@@ -181,7 +181,14 @@ button img {
     display: grid;
     grid-template-columns: repeat(3, 150px);
     border-radius: 0 0 5px 5px;
+    overflow-y: scroll;    
 }
+
+::-webkit-scrollbar{
+    width:0px;   
+}
+
+
 
 /*appareils*/
 #box2-appliance {
@@ -216,6 +223,14 @@ button img {
 .appliance,
 .ustensil {
     margin: 5px 0 5px 15px;
+}
+
+.ingredient-hide,
+.appliance-hide,
+.ustensil-hide {
+    text-decoration: line-through white;
+    color:black;
+    user-select: none;
 }
 
 /*montrer cacher la liste du filtre*/

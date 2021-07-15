@@ -77,7 +77,7 @@ up1.addEventListener("click", function () {
 //remplissage du tableau des ingredients
 
 let listOfIngredientClicked = []
-listingIngredient.slice(0, 30).forEach(Ingredient => {
+listingIngredient.forEach(Ingredient => {
     let newElement = document.createElement("p")
     newElement.classList.add("ingredient")
     newElement.setAttribute("data-element", Ingredient)
@@ -91,7 +91,7 @@ listingIngredient.slice(0, 30).forEach(Ingredient => {
         Array.from(allIngredientsOnDom).forEach(function (oneIngredient) {
             let oneIngredientAttribute = oneIngredient.getAttribute("data-element")
             if (oneIngredientAttribute === Ingredient) {
-                oneIngredient.classList.add("hidden")
+                oneIngredient.classList.add("ingredient-hide")
             }
         })
         displayNewIngredient(Ingredient)
@@ -130,7 +130,7 @@ function displayNewIngredient(newIngredient) {
         Array.from(allIngredientsOnDom).forEach(function (oneIngredient) {
             let oneIngredientAttribute = oneIngredient.getAttribute("data-element")
             if (oneIngredientAttribute === newIngredient) {
-                oneIngredient.classList.remove("hidden")
+                oneIngredient.classList.remove("ingredient-hide")
             }
         })
     })
@@ -221,7 +221,7 @@ listingAppliance.forEach(Appliance => {
         Array.from(allAppliancesOnDom).forEach(function (oneAppliance) {
             let oneApplianceAttribute = oneAppliance.getAttribute("data-element")
             if (oneApplianceAttribute === Appliance) {
-                oneAppliance.classList.add("hidden")
+                oneAppliance.classList.add("appliance-hide")
             }
         })
         displayNewAppliance(Appliance)
@@ -259,7 +259,7 @@ function displayNewAppliance(newAppliance) {
         Array.from(allAppliancesOnDom).forEach(function (oneAppliance) {
             let oneApplianceAttribute = oneAppliance.getAttribute("data-element");
             if (oneApplianceAttribute === newAppliance) {
-                oneAppliance.classList.remove("hidden");
+                oneAppliance.classList.remove("appliance-hide");
             }
         })
     })
@@ -270,155 +270,166 @@ function displayNewAppliance(newAppliance) {
 //--------------------Ustensils--------------------
 
 //extraire les appareils du tableau recette
-let allUstensils = getAllUstensilsFromRecipes() //variable tous ustensiles = appel de la fonction obtenir les ustensiles des recettes
-function getAllUstensilsFromRecipes() { // je lance la fonction obtenir les ustensiles des recettes
-    let allUstensils = []   // je declare un tableau vide tous ustensiles
-    recipes.forEach(recipe => { //dans le fichier Recipes pour chaque element je lance la fonction Recette
-        // console.table(recipe.name)   j'affiche le nom de chaque recette du fichier recipes 
-        let newUstensilstoAdd = recipe.ustensils    //nouveau ustensil a ajouter = fonction recette + ustensils du fichier recipes
-        allUstensils.push(newUstensilstoAdd)    //j'ajoute les nouveaux ustensils dans le tableau de tous les ustensiles 
+let allUstensils = getAllUstensilsFromRecipes()
+function getAllUstensilsFromRecipes() {
+    let allUstensils = []
+    recipes.forEach(recipe => {
+        // console.table(recipe.name)
+        let newUstensilstoAdd = recipe.ustensils
+        allUstensils.push(newUstensilstoAdd)
     })
-    return allUstensils // je retourne la valeur du tableau de tous les ustensiles
+    return allUstensils
 }
 
 //supprimer les doublons et deconcaténation
 let listingUstensil = removeDuplicateUstensils()
 function removeDuplicateUstensils() {
-    let listingUstensil = [];   // je declare un tableau vide pour le listing des ustensiles
-    allUstensils.flat().forEach(ustensil => {   //dans le tableau des ustensiles pour chaque element je lance la fonction Ustensil
-        if (!listingUstensil.includes(ustensil)) {  //si diferent de listing Ustensil, j'inclus le nouvel ustensil
-            listingUstensil.push(ustensil) // j'ajoute l'ensenble des nouveaux ustensiles dans le tableau listing Ustensil
+    let listingUstensil = [];
+    allUstensils.flat().forEach(ustensil => {
+        if (!listingUstensil.includes(ustensil)) {
+            listingUstensil.push(ustensil)
         }
     })
-    return listingUstensil  // je retourne la valeur du tableau du listing des ustensils
+    return listingUstensil
 }
 
 //trier par ordre alphabetique
-listingUstensil = sortByAlphabetAllUstensils()  // le listing des ustensils = l'appel de la fonction du tri alphabetique
-function sortByAlphabetAllUstensils() { // je lance la fonction du tri
-    return listingUstensil.sort()   // je retourne le listing des ustensiles trier
+listingUstensil = sortByAlphabetAllUstensils()
+function sortByAlphabetAllUstensils() {
+    return listingUstensil.sort()
 }
 
 //faire apparaitre dans la console la liste finale
 seeAllUstensils(listingUstensil)
-function seeAllUstensils(listingUstensil) { // je lance la fonction pour voir le listing des ustensiles
+function seeAllUstensils(listingUstensil) {
     // console.log("voici la liste des ustensiles")
-    // console.table(listingUstensil)   j'affiche sous forme de tableau le listing ustensiles
-}
+    // console.table(listingUstensil)
 
-//-----affichage de la liste des ustensiles
-const UstensilContainer = document.getElementById("box3-ustensils") // const container Ustensil = je vais chercher l'id box3-ustensils
-const down3 = document.getElementById("chevron-down-3") // const bas = je vais chercher l'id du chevron bas
-const up3 = document.getElementById("chevron-up-3") // const haut = je vais chercher l'id du chevron haut
-const box3Extended = document.getElementById("box3-display-content")
-let isUstensilsDisplayed = false    // est l'ustensil affiché = faux
-down3.addEventListener("click", function () { //sur le chevron bas à l'ecoute du click je lance la fonction anonyme
-    if (isUstensilsDisplayed === false) {   // si est l'ustensil affiché === faux
-        //  console.log("On affiche la liste d'éléments")
-        UstensilContainer.classList.remove("hidden") //suppression de la class caché sur  l'element box3-ustensils
-        box3Extended.classList.add("box-extend")
-        up3.classList.remove("hidden") //suppression de la class caché sur l'element chevron-haut-3
-        down3.classList.add("hidden") //ajout de la class caché sur l'element chevron-bas-3
-        document.getElementsByName('USTENSIL')[0].placeholder = 'Recherche un ustensil';
-    }
-})
-up3.addEventListener("click", function () { //sur le chevron haut à l'ecoute du click je lance la fonction anonyme
-    if (isUstensilsDisplayed === false) { // si est l'ustensil affiché === faux
-        // console.log("On cache la liste d'éléments")
-        UstensilContainer.classList.add("hidden") //ajout de la class caché sur  l'element box3-ustensils
-        box3Extended.classList.remove("box-extend")
-        up3.classList.add("hidden") //ajout de la class caché sur l'element chevron-haut-3
-        down3.classList.remove("hidden") //suppression de la class caché sur l'element chevron-bas-3
-        document.getElementsByName('USTENSIL')[0].placeholder = 'Ustensiles';
-    }
-})
+    //-----affichage de la liste complete des ustensiles
+    const UstensilContainer = document.getElementById("box3-ustensils")
+    const down3 = document.getElementById("chevron-down-3")
+    const up3 = document.getElementById("chevron-up-3")
+    const box3Extended = document.getElementById("box3-display-content")
+    let isUstensilsDisplayed = false
 
-//remplissage du tableau des ustensiles
-let listOfUstensilsClicked = [] // variable liste des ustensiles cliqués = tableau vide
-listingUstensil.forEach(Ustensil => { // pour chaque element du listing Ustensil je lance la fonction Ustensil
-    let newElement = document.createElement("p") // variable nouveau element = creation d'un paragraphe
-    newElement.classList.add("ustensil") // ajout de la classe Ustensil sur l'element 
-    newElement.setAttribute("data-element", Ustensil) // ajout pour chaque element d'un attribut au nom de la fonction ustensil
-    newElement.innerText = Ustensil // ajout du texte de chaque ustensil pour chaque element de la fonction
-
-    newElement.addEventListener("click", function (event) { // pour chaque ustensil a l'ecoute au click je lance la fonction anonyme 
-        // console.log("On a clické sur l'élément", Ustensil)
-        listOfUstensilsClicked.push(Ustensil) // dans le tableau liste des ustensiles cliqués, j'integre l'ustensil cliqué
-
-        // suppresion dans le listing ustensil de l'élément cliqué
-        let allUstensilsOnDom = document.getElementsByClassName("ustensil") // variable tous les ustensils du DOM = la paragraphe de chaque Ustensil a la classe Ustensil
-        Array.from(allUstensilsOnDom).forEach(function (oneUstensil) { //  pour le tableau venant des ustensils du DOM, pour chaque element je lance la fonction un ustensil
-            let oneUstensilAttribute = oneUstensil.getAttribute("data-element") // variable un ustensil attribut = un ustensil avec l'attribut data element
-            if (oneUstensilAttribute === Ustensil) { // si un ustensil attribut = un ustensil
-                oneUstensil.classList.add("hidden") // j'ajoute la class caché a l'element ustensil attribut
-            }
-        })
-        displayNewUstensil(Ustensil) // appel de la fonction affiche le nouveau ustensil
-    })
-    UstensilContainer.appendChild(newElement) // j'ajoute le nouvel element dans le container ustensil
-})
-
-//selection des elements filtrés
-const selectContainerUstensils = document.getElementById("box-select"); // container selection Utsensil = je vais chercher l'id box-select
-
-function displayNewUstensil(newUstensil) { //fonction affiche le nouveau ustensil
-    // console.table(listOfUstensilsClicked);
-    //creation de la div
-    let newDivSelect = document.createElement("div"); // creation de la div tag selection Ustensil
-    newDivSelect.setAttribute("id", "box-tag-ustensil-" + newUstensil) // ajout de l'id box-tag-ustensil-" + newUstensil
-    newDivSelect.classList.add("box3-select-ustensils", "box3"); // ajout de la class box3-select-ustensils et box3
-    selectContainerUstensils.appendChild(newDivSelect); // ajout de la nouvelle div dans le container box select
-    //creation du texte
-    let newElementSelect = document.createElement("p"); // creation du paragraphe
-    newElementSelect.classList.add("box__text"); // ajout de la class box__text
-    newElementSelect.innerText = newUstensil; // ajout du texte de l'element selectionné
-    newDivSelect.appendChild(newElementSelect); // ajout du paragraphe a la div parent tag selection Ustensil
-    //creation de l'icone
-    let newIconSelect = document.createElement("i") // creation de l'icone 
-    newIconSelect.classList.add("far", "fa-times-circle"); // ajout de la class avec Font Awesome
-    newDivSelect.appendChild(newIconSelect); // ajout de l'icone a la div parent tag selection Ustensil
-    // fermeture des tags filtrés
-    newIconSelect.addEventListener("click", () => { // j'ecoute l'evenement au clic sur l'icone de fermeture
-        // console.log("L'ustensil à supprimer est : ", newUstensil);
-        document.getElementById("box-tag-ustensil-" + newUstensil).remove(); //suppression de la div de l'id box-tag-ustensil-" + newUstensil
-        listOfUstensilsClicked.forEach(function (element, key) { // pour chaque ustensil cliqués je lance la fonction avec pour argument l'element et la clé
-            if (element === newUstensil) { // si l'element = le nouveau ustensil
-                listOfUstensilsClicked.splice(key, 1); // liste ustensil cliqué retiré avec la clé de valeur 1???
-            }
-        })
-        // ajout dans la liste de l'élément cliqué
-        let allUstensilsOnDom = document.getElementsByClassName("ustensil"); // variable tous les ustensils du DOM = la paragraphe de chaque Ustensil a la classe Ustensil
-        Array.from(allUstensilsOnDom).forEach(function (oneUstensil) { //pour le tableau venant des ustensils du DOM, pour chaque element je lance la fonction un ustensil
-            let oneUstensilAttribute = oneUstensil.getAttribute("data-element"); // variable un ustensil attribut = un ustensil avec l'attribut data element
-            if (oneUstensilAttribute === newUstensil) { //si un ustensil attribut = un ustensil
-                oneUstensil.classList.remove("hidden");//j'ajoute la class caché a l'element ustensil attribut
-            }
-        })
+    // fonction au clic sur le chevron bas
+    down3.addEventListener("click", function () {
+        if (isUstensilsDisplayed === false) {
+            //  console.log("On affiche la liste d'éléments")
+            UstensilContainer.classList.remove("hidden")
+            box3Extended.classList.add("box-extend")
+            up3.classList.remove("hidden")
+            down3.classList.add("hidden")
+            document.getElementsByName('USTENSIL')[0].placeholder = 'Recherche un ustensil';
+        }
     })
 
-}
-// .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-//Je cherche un ustensile dans le champ de recherche
-const inputUstensil = document.getElementById('ustensil-search') // const recherche ustensil = je vais chercher l'id du champ d'ecriture
-inputUstensil.addEventListener("input", searchUstensil);
+    // fonction au clic sur le chevron haut
+    up3.addEventListener("click", function () {
+        if (isUstensilsDisplayed === false) {
+            // console.log("On cache la liste d'éléments")
+            UstensilContainer.classList.add("hidden")
+            box3Extended.classList.remove("box-extend")
+            up3.classList.add("hidden")
+            down3.classList.remove("hidden")
+            document.getElementsByName('USTENSIL')[0].placeholder = 'Ustensiles';
+        }
+    })
 
-function searchUstensil() {
+    //-----remplissage du tableau des ustensiles
+    let listOfUstensilsClicked = []
+    // fonction creation des chaque elements paragraphe de la liste 
+    listingUstensil.forEach(Ustensil => {
+        let newElement = document.createElement("p")
+        newElement.classList.add("ustensil")
+        newElement.setAttribute("data-element", Ustensil)
+        newElement.innerText = Ustensil
 
-    if ((listingUstensil).includes(inputUstensil.value)) {        
-        console.log("l'ustensil trouvé est " + (inputUstensil.value))
-        
-        // let allRecipesfromUstensil = getAllRecipesFromUstensils()
-        // function getAllRecipesFromUstensils() {
-            // let allRecipes = []
-            // recipes.forEach(recipe => {              
-            //     let newNametoAdd = recipe.name
-            //     allRecipes.push(newNametoAdd)
-            //     console.table(newNametoAdd)
+        //fonction ajout de l'ustensil dans le tableau ustensil cliqué
+        newElement.addEventListener("click", function (event) {
+            // console.log("On a clické sur l'élément", Ustensil)
+            listOfUstensilsClicked.push(Ustensil)
+
+            // suppresion dans le listing ustensil de l'élément cliqué
+            let allUstensilsOnDom = document.getElementsByClassName("ustensil")
+            Array.from(allUstensilsOnDom).forEach(function (oneUstensil) {
+                let oneUstensilAttribute = oneUstensil.getAttribute("data-element")
+                if (oneUstensilAttribute === Ustensil) {
+                    oneUstensil.classList.add("ustensil-hide")
+                    oneUstensil.setAttribute("id", "UstnsilSelected-" + Ustensil)
+                }
+            })
+            displayNewUstensil(Ustensil)
+
+            //fermeture en recliquant sur l'element
+            // let newElementSelected = document.getElementById("UstnsilSelected-" + Ustensil)
+            // newElementSelected.addEventListener("click", function (event) {
+            //     document.getElementById("box-tag-ustensil-" + Ustensil).remove();
+            //     newElement.classList.remove("ustensil-hide");                
             // })
-        // }
-        // return allRecipesfromUstensil        
-    }
-    else {
-        console.log("aucun ustensil n'est present dans la liste")
+        })
+
+        UstensilContainer.appendChild(newElement)
+    })
+
+
+    //selection des elements filtrés + creation du tag
+    const selectContainerUstensils = document.getElementById("box-select");
+
+    function displayNewUstensil(newUstensil) {
+        // console.table(listOfUstensilsClicked);
+
+        //creation de la div
+        let newDivSelect = document.createElement("div");
+        newDivSelect.setAttribute("id", "box-tag-ustensil-" + newUstensil);
+        newDivSelect.classList.add("box3-select-ustensils", "box3");
+        selectContainerUstensils.appendChild(newDivSelect);
+
+        //creation du texte
+        let newElementSelect = document.createElement("p");
+        newElementSelect.classList.add("box__text");
+        newElementSelect.innerText = newUstensil;
+        newDivSelect.appendChild(newElementSelect);
+
+        //creation de l'icone
+        let newIconSelect = document.createElement("i")
+        newIconSelect.classList.add("far", "fa-times-circle");
+        newDivSelect.appendChild(newIconSelect);
+
+        // fermeture des tags filtrés
+        newIconSelect.addEventListener("click", () => {
+            // console.log("L'ustensil à supprimer est : ", newUstensil);
+            document.getElementById("box-tag-ustensil-" + newUstensil).remove();
+
+            listOfUstensilsClicked.forEach(function (element, key) {
+                if (element === newUstensil) {
+                    listOfUstensilsClicked.splice(key, 1);
+                }
+            })
+
+            // remettre dans le listing Ustensil l'élément cliqué
+            let allUstensilsOnDom = document.getElementsByClassName("ustensil");
+            Array.from(allUstensilsOnDom).forEach(function (oneUstensil) {
+                let oneUstensilAttribute = oneUstensil.getAttribute("data-element");
+                if (oneUstensilAttribute === newUstensil) {
+                    oneUstensil.classList.remove("ustensil-hide");
+                }
+            })
+        })
     }
 }
+
+    // .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+
+    //Je cherche un ustensile dans le champ de recherche
+    const inputUstensil = document.getElementById('ustensil-search');
+    // inputUstensil.addEventListener("input", searchUstensil);
+
+    // function searchUstensil() {
+    //     for(var i =0; i<listingUstensil.length; i++)
+    //     if (!listingUstensil[i].includes(inputUstensil.value)){
+    //         listingUstensil.splice(listingUstensil[i])
+    //         console.log("ok")
+    //     }
+        
+    // }
