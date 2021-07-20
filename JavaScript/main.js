@@ -68,6 +68,7 @@ function upIngredient() {
 //creation du tag Ingredient + fermeture
 //fonction tag
 function tagIngredient() {
+    this.removeEventListener("click", tagIngredient)
     //creation de la div
     let newDivSelect = document.createElement("div");
     newDivSelect.setAttribute("id", "box-tag-ingredient");
@@ -75,8 +76,9 @@ function tagIngredient() {
     selectContainerIngredient.appendChild(newDivSelect);
     //creation du texte
     let newElementSelect = document.createElement("p");
+    let ingredientName = this.innerText
     newElementSelect.classList.add("box__text");
-    newElementSelect.innerText = this.innerText;
+    newElementSelect.innerText = ingredientName;
     newDivSelect.appendChild(newElementSelect);
     //texte barré
     this.classList.add("ingredient-hide");
@@ -87,10 +89,13 @@ function tagIngredient() {
     //fermeture du tag par la croix  
     newIconSelect.addEventListener("click", function () {
         newDivSelect.remove();
+        let newElement = document.querySelector(`[data-element="${ingredientName}"]`)
+        newElement.addEventListener("click", tagIngredient)
+        newElement.classList.remove("ingredient-hide")
     })
 }
 
-
+//------------------------------------------------------------------------------------------
 //---------------------Appareils--------------------
 //extraire les appareils du tableau recette
 let listingAppliance = [];
@@ -120,6 +125,7 @@ const box2Extended = document.getElementById("box2-display-content");
 const down2 = document.getElementById("chevron-down-2");
 const up2 = document.getElementById("chevron-up-2");
 const selectContainerAppliance = document.getElementById("box-select");
+const inputAppliance = document.getElementById("appliance-search");
 
 down2.addEventListener("click", downAppliance);
 up2.addEventListener("click", upAppliance);
@@ -139,8 +145,19 @@ function downAppliance() {
         newElement.setAttribute("data-element", Appliance);
         newElement.innerText = Appliance;
         ApplianceContainer.appendChild(newElement);
+
         //ecoute pour la creation du tag
         newElement.addEventListener("click", tagAppliance);
+
+        //ecoute de l'input
+        inputAppliance.addEventListener("input", function () {
+            if (!Appliance.includes(inputAppliance.value)) {
+                ApplianceContainer.removeChild(newElement);
+            }
+            if (Appliance.includes(inputAppliance.value)) {
+                ApplianceContainer.appendChild(newElement);
+            }
+        })
     })
 }
 
@@ -156,6 +173,7 @@ function upAppliance() {
 
 //creation du tag Appareil + fermeture
 function tagAppliance() {
+    this.removeEventListener("click", tagAppliance)
     //creation de la div
     let newDivSelect = document.createElement("div");
     newDivSelect.setAttribute("id", "box-tag-appliance");
@@ -163,8 +181,9 @@ function tagAppliance() {
     selectContainerAppliance.appendChild(newDivSelect);
     //creation du texte
     let newElementSelect = document.createElement("p");
+    let applianceName = this.innerText
     newElementSelect.classList.add("box__text");
-    newElementSelect.innerText = this.innerText;
+    newElementSelect.innerText = applianceName;
     newDivSelect.appendChild(newElementSelect);
     //texte barré
     this.classList.add("appliance-hide");
@@ -172,15 +191,16 @@ function tagAppliance() {
     let newIconSelect = document.createElement("i");
     newIconSelect.classList.add("far", "fa-times-circle");
     newDivSelect.appendChild(newIconSelect);
-
-    //fermeture du tag    
+    //fermeture du tag par la croix  
     newIconSelect.addEventListener("click", function () {
         newDivSelect.remove();
-        innerText.classList.remove("appliance-hide");
+        let newElement = document.querySelector(`[data-element="${applianceName}"]`)
+        newElement.addEventListener("click", tagAppliance)
+        newElement.classList.remove("appliance-hide")
     })
 }
 
-
+//------------------------------------------------------------------------------------------
 //--------------------Ustensils--------------------
 //extraire les appareils du tableau recette
 let listingUstensil = [];
@@ -225,25 +245,36 @@ function downUstensil() {
 
     //creation de chaque paragraphe venant du listing
     listingUstensil.forEach(Ustensil => {
-        let newElement = document.createElement("p");
-        newElement.classList.add("ustensil");
-        newElement.setAttribute("data-element", Ustensil);
-        newElement.innerText = Ustensil;
-        UstensilContainer.appendChild(newElement);
+        createUstensilElement(Ustensil)
+    })
 
-        //ecoute pour la creation du tag
-        newElement.addEventListener("click", tagUstensil);
-
-        //ecoute de l'input
-        inputUstensil.addEventListener("input", function () {
+    //ecoute de l'input
+    let listingUstensilActive = listingUstensil
+    inputUstensil.addEventListener("input", function () {
+        listingUstensilActive.forEach(Ustensil => {
             if (!Ustensil.includes(inputUstensil.value)) {
+                console.log(Ustensil)
+                let newElement = document.querySelector(`[data-element="${Ustensil}"]`)
                 UstensilContainer.removeChild(newElement);
+                //ici il faut retirer Ustensil de listing Ustensil Active
             }
-            if (Ustensil.includes(inputUstensil.value)) {
-                UstensilContainer.appendChild(newElement);
+            else {
+                createUstensilElement(Ustensil)
+                //ici ajout de Ustensil dans le listing Ustensil Active
             }
         })
     })
+}
+
+function createUstensilElement(Ustensil) {
+    let newElement = document.createElement("p");
+    newElement.classList.add("ustensil");
+    newElement.setAttribute("data-element", Ustensil);
+    newElement.innerText = Ustensil;
+    UstensilContainer.appendChild(newElement);
+
+    //ecoute pour la creation du tag
+    newElement.addEventListener("click", tagUstensil);
 }
 
 // fonction au clic sur le chevron haut
@@ -259,6 +290,7 @@ function upUstensil() {
 //creation du tag Ustensil + fermeture
 //fonction tag
 function tagUstensil() {
+    this.removeEventListener("click", tagUstensil)
     //creation de la div
     let newDivSelect = document.createElement("div");
     newDivSelect.setAttribute("id", "box-tag-ustensil");
@@ -266,8 +298,9 @@ function tagUstensil() {
     selectContainerUstensils.appendChild(newDivSelect);
     //creation du texte
     let newElementSelect = document.createElement("p");
+    let ustensilName = this.innerText
     newElementSelect.classList.add("box__text");
-    newElementSelect.innerText = this.innerText;
+    newElementSelect.innerText = ustensilName;
     newDivSelect.appendChild(newElementSelect);
     //texte barré
     this.classList.add("ustensil-hide");
@@ -278,6 +311,9 @@ function tagUstensil() {
     //fermeture du tag par la croix  
     newIconSelect.addEventListener("click", function () {
         newDivSelect.remove();
+        let newElement = document.querySelector(`[data-element="${ustensilName}"]`)
+        newElement.addEventListener("click", tagUstensil)
+        newElement.classList.remove("ustensil-hide")
     })
 }
 
@@ -285,14 +321,13 @@ function tagUstensil() {
 // .toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
 
 //Extraire les elements du fichiers Recipes
-for (var i = 0; i < recipes.length; i++) {
-    let recipesName = recipes[i].name
-    // console.table(recipesName)
-    let ingredients = recipes[i].ingredients
-    // console.table(ingredients)
-    let appliance = recipes[i].appliance
-    // console.table(appliance)
-    let ustensils = recipes[i].ustensils;
-    // console.table(ustensils)
-
-}
+// for (var i = 0; i < recipes.length; i++) {
+//     let recipesName = recipes[i].name
+//     // console.table(recipesName)
+//     let ingredients = recipes[i].ingredients
+//     // console.table(ingredients)
+//     let appliance = recipes[i].appliance
+//     // console.table(appliance)
+//     let ustensils = recipes[i].ustensils;
+//     // console.table(ustensils)
+// }
