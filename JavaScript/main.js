@@ -1,10 +1,22 @@
 import { recipes } from './recipes.js';
 
-//---------------------Ingredients--------------------
-//extraire les ingredients du tableau recette
+//------------------------------------------------------------------------------------------
+//---------------------Ingredients----------------------------------------------------------
+//------------------------------------------------------------------------------------------
+const IngredientContainer = document.getElementById("box1-ingredients");
+const box1Extended = document.getElementById("box1-display-content");
+const down1 = document.getElementById("chevron-down-1");
+const up1 = document.getElementById("chevron-up-1");
+const selectContainerIngredient = document.getElementById("box-select");
+const inputIngredient = document.getElementById("ingredient-search")
+
+down1.addEventListener("click", downIngredient);
+up1.addEventListener("click", upIngredient);
+
 let listingIngredient = [];
 getAllIngredientFromRecipes();
 
+//extraire les ingredients du tableau recette
 function getAllIngredientFromRecipes() {
     let allIngredients = [];
     recipes.forEach(recipe => {
@@ -12,8 +24,6 @@ function getAllIngredientFromRecipes() {
             let newIngredientToAdd = oneIngredient.ingredient;
             allIngredients.push(newIngredientToAdd);
         })
-        // console.log("l'ensemble des tableaux ingredients");
-        // console.log(allIngredients);
     })
     allIngredients.forEach(ingredient => {
         if (!listingIngredient.includes(ingredient)) {
@@ -24,16 +34,6 @@ function getAllIngredientFromRecipes() {
     // console.log("l'ensemble des ingredients triés");
     // console.table(listingIngredient);
 }
-
-//-----affichage de la liste complete des ingredients
-const IngredientContainer = document.getElementById("box1-ingredients");
-const box1Extended = document.getElementById("box1-display-content");
-const down1 = document.getElementById("chevron-down-1");
-const up1 = document.getElementById("chevron-up-1");
-const selectContainerIngredient = document.getElementById("box-select");
-
-down1.addEventListener("click", downIngredient);
-up1.addEventListener("click", upIngredient);
 
 // fonction au clic sur le chevron bas
 function downIngredient() {
@@ -50,19 +50,22 @@ function downIngredient() {
         newElement.setAttribute("data-element", Ingredient);
         newElement.innerText = Ingredient;
         IngredientContainer.appendChild(newElement);
+        
         //ecoute pour la creation du tag
         newElement.addEventListener("click", tagIngredient);
+    
+        //ecoute de l'input
+        inputIngredient.addEventListener("input", function () {
+            if (!Ingredient.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(inputIngredient.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
+                newElement.remove()
+                IngredientContainer.setAttribute("id", "box1-ingredient-min")
+            }
+            else {
+                IngredientContainer.appendChild(newElement)
+                
+            }
+        })
     })
-}
-
-// fonction au clic sur le chevron haut
-function upIngredient() {
-    IngredientContainer.classList.add("hidden");
-    box1Extended.classList.remove("box-extend");
-    up1.classList.add("hidden");
-    down1.classList.remove("hidden");
-    document.getElementsByName('INGREDIENT')[0].placeholder = 'Ingredients';
-    listingIngredient = [];
 }
 
 //creation du tag Ingredient + fermeture
@@ -95,31 +98,19 @@ function tagIngredient() {
     })
 }
 
-//------------------------------------------------------------------------------------------
-//---------------------Appareils--------------------
-//extraire les appareils du tableau recette
-let listingAppliance = [];
-getAllApplianceFromRecipes();
-
-function getAllApplianceFromRecipes() {
-    let allAppliance = [];
-    recipes.forEach(recipe => {
-        let newAppliancetoAdd = recipe.appliance;
-        allAppliance.push(newAppliancetoAdd);
-    })
-    // console.log("l'ensemble des tableaux appareils")
-    // console.log(allAppliance)
-    allAppliance.forEach(appliance => {
-        if (!listingAppliance.includes(appliance)) {
-            listingAppliance.push(appliance);
-            listingAppliance.sort();
-        }
-    })
-    // console.log("l'ensemble des appareils triés");
-    // console.log(listingAppliance);
+// fonction au clic sur le chevron haut
+function upIngredient() {
+    IngredientContainer.classList.add("hidden");
+    box1Extended.classList.remove("box-extend");
+    up1.classList.add("hidden");
+    down1.classList.remove("hidden");
+    document.getElementsByName('INGREDIENT')[0].placeholder = 'Ingredients';
+    listingIngredient = [];
 }
 
-//-----affichage de la liste complete des appareils
+//------------------------------------------------------------------------------------------
+//---------------------Appareils------------------------------------------------------------
+//------------------------------------------------------------------------------------------
 const ApplianceContainer = document.getElementById("box2-appliance");
 const box2Extended = document.getElementById("box2-display-content");
 const down2 = document.getElementById("chevron-down-2");
@@ -129,6 +120,26 @@ const inputAppliance = document.getElementById("appliance-search");
 
 down2.addEventListener("click", downAppliance);
 up2.addEventListener("click", upAppliance);
+
+let listingAppliance = [];
+getAllApplianceFromRecipes();
+
+//extraire les appareils du tableau recette
+function getAllApplianceFromRecipes() {
+    let allAppliance = [];
+    recipes.forEach(recipe => {
+        let newAppliancetoAdd = recipe.appliance;
+        allAppliance.push(newAppliancetoAdd);
+    })
+    allAppliance.forEach(appliance => {
+        if (!listingAppliance.includes(appliance)) {
+            listingAppliance.push(appliance);
+            listingAppliance.sort();
+        }
+    })
+    // console.log("l'ensemble des appareils triés");
+    // console.log(listingAppliance);
+}
 
 // fonction au clic sur le chevron bas
 function downAppliance() {
@@ -151,24 +162,14 @@ function downAppliance() {
 
         //ecoute de l'input
         inputAppliance.addEventListener("input", function () {
-            if (!Appliance.includes(inputAppliance.value)) {
-                ApplianceContainer.removeChild(newElement);
+            if (!Appliance.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(inputAppliance.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
+                newElement.remove()
             }
-            if (Appliance.includes(inputAppliance.value)) {
-                ApplianceContainer.appendChild(newElement);
+            else {
+                ApplianceContainer.appendChild(newElement)
             }
         })
     })
-}
-
-// fonction au clic sur le chevron haut
-function upAppliance() {
-    ApplianceContainer.classList.add("hidden");
-    box2Extended.classList.remove("box-extend");
-    up2.classList.add("hidden");
-    down2.classList.remove("hidden");
-    document.getElementsByName('APPAREIL')[0].placeholder = 'Appareil';
-    listingAppliance = [];
 }
 
 //creation du tag Appareil + fermeture
@@ -200,31 +201,20 @@ function tagAppliance() {
     })
 }
 
-//------------------------------------------------------------------------------------------
-//--------------------Ustensils--------------------
-//extraire les appareils du tableau recette
-let listingUstensil = [];
-getAllUstensilsFromRecipes();
-
-function getAllUstensilsFromRecipes() {
-    let allUstensils = [];
-    recipes.forEach(recipe => {
-        let newUstensilstoAdd = recipe.ustensils;
-        allUstensils.push(newUstensilstoAdd);
-    })
-    // console.log("l'ensemble des tableaux ustensiles")
-    // console.log(allUstensils)
-    allUstensils.flat().forEach(ustensil => {
-        if (!listingUstensil.includes(ustensil)) {
-            listingUstensil.push(ustensil);
-            listingUstensil.sort();
-        }
-    })
-    // console.log("l'ensemble des ustensiles triés")
-    // console.table(listingUstensil)
+// fonction au clic sur le chevron haut
+function upAppliance() {
+    ApplianceContainer.classList.add("hidden");
+    box2Extended.classList.remove("box-extend");
+    up2.classList.add("hidden");
+    down2.classList.remove("hidden");
+    document.getElementsByName('APPAREIL')[0].placeholder = 'Appareil';
+    listingAppliance = [];
 }
 
-//-----affichage de la liste complete des ustensiles
+//------------------------------------------------------------------------------------------
+//--------------------Ustensils-------------------------------------------------------------
+//------------------------------------------------------------------------------------------
+
 const UstensilContainer = document.getElementById("box3-ustensils");
 const box3Extended = document.getElementById("box3-display-content");
 const down3 = document.getElementById("chevron-down-3");
@@ -235,6 +225,26 @@ const inputUstensil = document.getElementById("ustensil-search");
 down3.addEventListener("click", downUstensil);
 up3.addEventListener("click", upUstensil);
 
+let listingUstensil = [];
+getAllUstensilsFromRecipes();
+
+//extraire les appareils du tableau recette
+function getAllUstensilsFromRecipes() {
+    let allUstensils = [];
+    recipes.forEach(recipe => {
+        let newUstensilstoAdd = recipe.ustensils;
+        allUstensils.push(newUstensilstoAdd);
+    })
+    allUstensils.flat().forEach(ustensil => {
+        if (!listingUstensil.includes(ustensil)) {
+            listingUstensil.push(ustensil);
+            listingUstensil.sort();
+        }
+    })
+    // console.log("l'ensemble des ustensiles triés")
+    // console.table(listingUstensil)
+}
+
 // fonction au clic sur le chevron bas
 function downUstensil() {
     UstensilContainer.classList.remove("hidden");
@@ -243,52 +253,30 @@ function downUstensil() {
     down3.classList.add("hidden");
     document.getElementsByName('USTENSIL')[0].placeholder = 'Recherche un ustensil';
 
-    //creation de chaque paragraphe venant du listing
+    //suite au listing, lancement de la creation de chaque element
     listingUstensil.forEach(Ustensil => {
-        createUstensilElement(Ustensil)
-    })
+        let newElement = document.createElement("p");
+        newElement.classList.add("ustensil");
+        newElement.setAttribute("data-element", Ustensil);
+        newElement.innerText = Ustensil;
+        UstensilContainer.appendChild(newElement);
 
-    //ecoute de l'input
-    let listingUstensilActive = listingUstensil
-    inputUstensil.addEventListener("input", function () {
-        listingUstensilActive.forEach(Ustensil => {
-            if (!Ustensil.includes(inputUstensil.value)) {
-                console.log(Ustensil)
-                let newElement = document.querySelector(`[data-element="${Ustensil}"]`)
-                UstensilContainer.removeChild(newElement);
-                //ici il faut retirer Ustensil de listing Ustensil Active
+        //ecoute pour la creation du tag
+        newElement.addEventListener("click", tagUstensil);
+
+        //ecoute de l'input
+        inputUstensil.addEventListener("input", function () {
+            if (!Ustensil.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(inputUstensil.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
+                newElement.remove()
             }
             else {
-                createUstensilElement(Ustensil)
-                //ici ajout de Ustensil dans le listing Ustensil Active
+                UstensilContainer.appendChild(newElement)
             }
         })
     })
 }
 
-function createUstensilElement(Ustensil) {
-    let newElement = document.createElement("p");
-    newElement.classList.add("ustensil");
-    newElement.setAttribute("data-element", Ustensil);
-    newElement.innerText = Ustensil;
-    UstensilContainer.appendChild(newElement);
-
-    //ecoute pour la creation du tag
-    newElement.addEventListener("click", tagUstensil);
-}
-
-// fonction au clic sur le chevron haut
-function upUstensil() {
-    UstensilContainer.classList.add("hidden");
-    box3Extended.classList.remove("box-extend");
-    up3.classList.add("hidden");
-    down3.classList.remove("hidden");
-    document.getElementsByName('USTENSIL')[0].placeholder = 'Ustensiles';
-    listingUstensil = [];
-}
-
 //creation du tag Ustensil + fermeture
-//fonction tag
 function tagUstensil() {
     this.removeEventListener("click", tagUstensil)
     //creation de la div
@@ -317,17 +305,36 @@ function tagUstensil() {
     })
 }
 
+// fonction au clic sur le chevron haut
+function upUstensil() {
+    UstensilContainer.classList.add("hidden");
+    box3Extended.classList.remove("box-extend");
+    up3.classList.add("hidden");
+    down3.classList.remove("hidden");
+    document.getElementsByName('USTENSIL')[0].placeholder = 'Ustensiles';
+    listingUstensil = [];
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 //Pour Normer les recherches
 // .toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
 
-//Extraire les elements du fichiers Recipes
-// for (var i = 0; i < recipes.length; i++) {
-//     let recipesName = recipes[i].name
-//     // console.table(recipesName)
-//     let ingredients = recipes[i].ingredients
-//     // console.table(ingredients)
-//     let appliance = recipes[i].appliance
-//     // console.table(appliance)
-//     let ustensils = recipes[i].ustensils;
-//     // console.table(ustensils)
-// }
+class Recette {
+    constructor(name, ingredient, appliance, ustensil) {
+        this.name = name
+        this.ingredient = ingredient
+        this.appliance = appliance
+        this.ustensil = ustensil
+    }
+}
