@@ -14,7 +14,26 @@ down1.addEventListener("click", downIngredient);
 up1.addEventListener("click", upIngredient);
 
 let listingIngredient = [];
+getAllIngredientFromRecipes();
 
+// //extraire les ingredients du tableau recette
+function getAllIngredientFromRecipes() {
+    let allIngredients = [];
+    recipes.forEach(recipe => {
+        recipe.ingredients.forEach(oneIngredient => {
+            let newIngredientToAdd = oneIngredient.ingredient;
+            allIngredients.push(newIngredientToAdd);
+        })
+    })
+    allIngredients.forEach(ingredient => {
+        if (!listingIngredient.includes(ingredient)) {
+            listingIngredient.push(ingredient);
+            listingIngredient.sort();
+        }
+    })
+    console.log("l'ensemble des ingredients triés");
+    console.table(listingIngredient);
+}
 
 // fonction au clic sur le chevron bas
 function downIngredient() {
@@ -101,7 +120,24 @@ down2.addEventListener("click", downAppliance);
 up2.addEventListener("click", upAppliance);
 
 let listingAppliance = [];
+getAllApplianceFromRecipes();
 
+// extraire les appareils du tableau recette
+function getAllApplianceFromRecipes() {
+    let allAppliance = [];
+    recipes.forEach(recipe => {
+        let newAppliancetoAdd = recipe.appliance;
+        allAppliance.push(newAppliancetoAdd);
+    })
+    allAppliance.forEach(appliance => {
+        if (!listingAppliance.includes(appliance)) {
+            listingAppliance.push(appliance);
+            listingAppliance.sort();
+        }
+    })
+    // console.log("l'ensemble des appareils triés");
+    // console.log(listingAppliance);
+}
 
 // fonction au clic sur le chevron bas
 function downAppliance() {
@@ -188,7 +224,24 @@ down3.addEventListener("click", downUstensil);
 up3.addEventListener("click", upUstensil);
 
 let listingUstensil = [];
+getAllUstensilsFromRecipes();
 
+//extraire les appareils du tableau recette
+function getAllUstensilsFromRecipes() {
+    let allUstensils = [];
+    recipes.forEach(recipe => {
+        let newUstensilstoAdd = recipe.ustensils;
+        allUstensils.push(newUstensilstoAdd);
+    })
+    allUstensils.flat().forEach(ustensil => {
+        if (!listingUstensil.includes(ustensil)) {
+            listingUstensil.push(ustensil);
+            listingUstensil.sort();
+        }
+    })
+    // console.log("l'ensemble des ustensiles triés")
+    // console.table(listingUstensil)
+}
 
 // fonction au clic sur le chevron bas
 function downUstensil() {
@@ -259,139 +312,3 @@ function upUstensil() {
     document.getElementsByName('USTENSIL')[0].placeholder = 'Ustensiles';
     listingUstensil = [];
 }
-
-//------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------
-
-let allRecipesOfObject = []
-let allIngredients = []
-let allAppliances = []
-let allUstensils = []
-
-let IngredientNameUnique = []
-let ApplianceNameUnique = []
-let UstensilNameUnique = []
-
-class Recipe {
-    constructor(name, time, description) {
-        this.name = name
-        this.time = time
-        this.description = description
-        this.ingredients = []
-        this.appliances = []
-        this.ustensils = []
-        this.hasFilters = 0;
-    }
-
-    //ajout des ingredients
-    _addIngredient(IngredientAdded) {
-        this.ingredients.push(IngredientAdded)
-    }
-
-    //ajout des appareils
-    _addAppliance(ApplianceAdded) {
-        this.appliances.push(ApplianceAdded)
-    }
-
-    //ajout des ustensils
-    _addUstensil(UstensilAdded) {
-        this.ustensils.push(UstensilAdded)
-    }
-}
-
-class Ingredient {
-    constructor(name, quantity, unit) {
-        this.name = name;
-        this.quantity = quantity
-        this.unit = unit
-        this.isChecked = false;
-    }
-}
-
-class Appliance {
-    constructor(name) {
-        this.name = name;
-        this.isChecked = false;
-    }
-}
-
-class Ustensil {
-    constructor(name) {
-        this.name = name;
-        this.isChecked = false;
-    }
-}
-//extraire les elements de chaque recette (le nom, le temps et la description)
-recipes.forEach(oneOfRecipe => {
-    let newRecipe = new Recipe(oneOfRecipe.name, oneOfRecipe.time, oneOfRecipe.description)
-
-    //-----extraire les ingredients de recipes + sous tableaux ingredients-----
-    oneOfRecipe.ingredients.forEach(oneOfIngredient => {
-        let newIngredient = new Ingredient(oneOfIngredient.ingredient, oneOfIngredient.quantity, oneOfIngredient.unit)
-        allIngredients.push(newIngredient)
-        //console.log("L'ingredient créé est : ", newIngredient.name)
-        //fonction pour rajouter les ingredients dans la classe principale Recipe
-        newRecipe._addIngredient(newIngredient)
-
-        //trier et supprimer les doublons
-        IngredientNameUnique.push(newIngredient.name)
-        IngredientNameUnique.forEach(ingredient => {
-            if (!listingIngredient.includes(ingredient)) {
-                listingIngredient.push(ingredient);
-                listingIngredient.sort();
-            }
-        })
-    })
-
-
-    //-----extraire les appareils de recipes-----
-    recipes.forEach(oneOfAppliance => {
-        let newAppliance = new Appliance(oneOfAppliance.appliance)
-        allAppliances.push(newAppliance)
-        // console.log("L'appareil créé est : ", newAppliance.name)
-        //fonction pour rajouter les ustensiles dans la classe principale Recipe
-        newRecipe._addAppliance(newAppliance)
-
-        //trier et supprimer les doublons
-        ApplianceNameUnique.push(newAppliance.name)
-        ApplianceNameUnique.forEach(appliance => {
-            if (!listingAppliance.includes(appliance)) {
-                listingAppliance.push(appliance);
-                listingAppliance.sort();
-            }
-        })
-    })
-    //-----extraire les ustensiles de recipes-----
-    oneOfRecipe.ustensils.forEach(oneOfUstensil => {
-        let newUstensil = new Ustensil(oneOfUstensil)
-        allUstensils.push(newUstensil)
-        // console.log("L'ustensil créé est : ", newUstensil.name)
-        //fonction pour rajouter les ustensiles dans la classe principale Recipe
-        newRecipe._addUstensil(newUstensil)
-
-        //trier et supprimer les doublons
-        UstensilNameUnique.push(newUstensil.name)
-        UstensilNameUnique.flat().forEach(ustensil => {
-            if (!listingUstensil.includes(ustensil)) {
-                listingUstensil.push(ustensil);
-                listingUstensil.sort();
-            }
-        })
-    })
-    //-----affichage des 3 tableaux pour chacune des recettes-----
-    // console.log("La recette créé est : ", newRecipe.name)
-    // console.table(newRecipe.ingredients)
-    // console.table(newRecipe.appliances)
-    // console.table(newRecipe.ustensils)
-
-    allRecipesOfObject.push(newRecipe)
-
-})
-console.log("listing final des ingredients triés")
-console.table(listingIngredient)
-
-console.log("listing final des appareils triés")
-console.table(listingAppliance)
-
-console.log("listing final des ustensiles triés")
-console.table(listingUstensil)
