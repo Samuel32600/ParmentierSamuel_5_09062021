@@ -239,6 +239,11 @@ button img {
 
 
 /*-----menu area-----*/
+#allRecipes{
+    display: flex;
+    flex-wrap: wrap;
+}
+
 figure {
     width: 380px;
     height: 364px;
