@@ -1,14 +1,10 @@
 import { recipes } from './recipes.js';
-
+//tableau avec l'ensemble des données
 let allRecipesOfObject = []
 let allIngredients = []
 let allAppliances = []
 let allUstensils = []
-
-let IngredientNameUnique = []
-let ApplianceNameUnique = []
-let UstensilNameUnique = []
-
+// tableau avec données triées et doublon supprimé
 let listingIngredient = [];
 let listingAppliance = [];
 let listingUstensil = [];
@@ -26,67 +22,78 @@ class Recipe {
         this.ustensils = []
         this.hasFilters = 0;
     }
-
-    //-----ajout des ingredients
+    //------------------------------------
+    //-----ajout des ingredients----------
+    //------------------------------------
     _addIngredient(IngredientAdded) {
         this.ingredients.push(IngredientAdded)
     }
 
-    //-----ajout des appareils
+    //incrementation du nombre de filtre
+    _addIngredientFilter(ingredientName) {
+        this.ingredients.forEach((oneOfIngredient) => {
+            if (oneOfIngredient.name === ingredientName) {
+                oneOfIngredient.isChecked = true
+                this.hasFilters += 1
+                console.log(this.name)
+            }
+        })
+    }
+    _removeIngredientFilter(ingredientName) {
+        this.ingredients.forEach((oneOfIngredient) => {
+            if (oneOfIngredient.name === ingredientName) {
+                oneOfIngredient.isChecked = false
+                this.hasFilters -= 1
+            }
+        })
+    }
+    //----------------------------------
+    //-----ajout des appareils----------
+    //----------------------------------
     _addAppliance(ApplianceAdded) {
         this.appliances.push(ApplianceAdded)
     }
-
     //incrementation du nombre de filtre
     _addApplianceFilter(applianceName) {
-        this.appliances.forEach((oneAppliance) => {
-            if (oneAppliance.name === applianceName) {
-                oneAppliance.isChecked = true
+        this.appliances.forEach((oneOfAppliance) => {
+            if (oneOfAppliance.name === applianceName) {
+                oneOfAppliance.isChecked = true
                 this.hasFilters += 1
                 console.log(this.name)
             }
-
         })
     }
     _removeApplianceFilter(applianceName) {
-        this.appliances.forEach((oneAppliance) => {
-            if (oneAppliance.name === applianceName) {
-                oneAppliance.isChecked = false
+        this.appliances.forEach((oneOfAppliance) => {
+            if (oneOfAppliance.name === applianceName) {
+                oneOfAppliance.isChecked = false
                 this.hasFilters -= 1
             }
         })
     }
-
-    //-----ajout des ustensils
+    //----------------------------------
+    //-----ajout des ustensils----------
+    //----------------------------------
     _addUstensil(UstensilAdded) {
         this.ustensils.push(UstensilAdded)
     }
-
     //incrementation du nombre de filtre
     _addUstensilFilter(ustensilName) {
-        this.ustensils.forEach((oneUstensil) => {
-            if (oneUstensil.name === ustensilName) {
-                oneUstensil.isChecked = true
+        this.ustensils.forEach((oneOfUstensil) => {
+            if (oneOfUstensil.name === ustensilName) {
+                oneOfUstensil.isChecked = true
                 this.hasFilters += 1
                 console.log(this.name)
             }
-
         })
     }
     _removeUstensilFilter(ustensilName) {
-        this.ustensils.forEach((oneUstensil) => {
-            if (oneUstensil.name === ustensilName) {
-                oneUstensil.isChecked = false
+        this.ustensils.forEach((oneOfUstensil) => {
+            if (oneOfUstensil.name === ustensilName) {
+                oneOfUstensil.isChecked = false
                 this.hasFilters -= 1
             }
         })
-    }
-
-    _displayAllInformations() {
-        // console.log("Voici les informations de ", this.name)
-        // console.table(this.ingredients)
-        // console.table(this.ustensils)
-        // console.table(this.appliances)
     }
 }
 
@@ -119,14 +126,12 @@ recipes.forEach(oneOfRecipe => {
     //-----extraire les ingredients de recipes + sous tableaux ingredients-----
     oneOfRecipe.ingredients.forEach(oneOfIngredient => {
         let newIngredient = new Ingredient(oneOfIngredient.ingredient, oneOfIngredient.quantity, oneOfIngredient.unit)
-        allIngredients.push(newIngredient)
+        allIngredients.push(newIngredient.name)
         //console.log("L'ingredient créé est : ", newIngredient.name)
         //fonction pour rajouter les ingredients dans la classe principale Recipe
         newRecipe._addIngredient(newIngredient)
-
-        //trier et supprimer les doublons
-        IngredientNameUnique.push(newIngredient.name)
-        IngredientNameUnique.forEach(ingredient => {
+        //trier et supprimer les doublons        
+        allIngredients.forEach(ingredient => {
             if (!listingIngredient.includes(ingredient)) {
                 listingIngredient.push(ingredient);
                 listingIngredient.sort();
@@ -135,34 +140,30 @@ recipes.forEach(oneOfRecipe => {
     })
 
     //-----extraire les appareils de recipes-----
-    recipes.forEach(oneOfAppliance => {
-        let newAppliance = new Appliance(oneOfAppliance.appliance)
-        allAppliances.push(newAppliance)
+    
+        let newAppliance = new Appliance(oneOfRecipe.appliance)
+        allAppliances.push(newAppliance.name)
         // console.log("L'appareil créé est : ", newAppliance.name)
-        //fonction pour rajouter les ustensiles dans la classe principale Recipe
+        //fonction pour rajouter les appareils dans la classe principale Recipe
         newRecipe._addAppliance(newAppliance)
-
-        //trier et supprimer les doublons
-        ApplianceNameUnique.push(newAppliance.name)
-        ApplianceNameUnique.forEach(appliance => {
+        //trier et supprimer les doublons        
+        allAppliances.forEach(appliance => {
             if (!listingAppliance.includes(appliance)) {
                 listingAppliance.push(appliance);
                 listingAppliance.sort();
             }
         })
-    })
+    
 
     //-----extraire les ustensiles de recipes-----
     oneOfRecipe.ustensils.forEach(oneOfUstensil => {
         let newUstensil = new Ustensil(oneOfUstensil)
-        allUstensils.push(newUstensil)
+        allUstensils.push(newUstensil.name)
         // console.log("L'ustensil créé est : ", newUstensil.name)
         //fonction pour rajouter les ustensiles dans la classe principale Recipe
         newRecipe._addUstensil(newUstensil)
-
-        //trier et supprimer les doublons
-        UstensilNameUnique.push(newUstensil.name)
-        UstensilNameUnique.flat().forEach(ustensil => {
+        //trier et supprimer les doublons        
+        allUstensils.flat().forEach(ustensil => {
             if (!listingUstensil.includes(ustensil)) {
                 listingUstensil.push(ustensil);
                 listingUstensil.sort();
@@ -178,6 +179,7 @@ recipes.forEach(oneOfRecipe => {
 
     allRecipesOfObject.push(newRecipe)
 })
+
 
 
 //------------------------------------------------------------------------------------------
@@ -245,12 +247,16 @@ function tagIngredient() {
     let newIconSelect = document.createElement("i");
     newIconSelect.classList.add("far", "fa-times-circle");
     newDivSelect.appendChild(newIconSelect);
+    //lancement de la fonction pour selection une recette en fonction de l'ingredient cliqué
+    addIngredient(ingredientName)
     //fermeture du tag par la croix  
     newIconSelect.addEventListener("click", function () {
         newDivSelect.remove();
         let newElement = document.querySelector(`[data-element="${ingredientName}"]`)
         newElement.addEventListener("click", tagIngredient)
         newElement.classList.remove("ingredient-hide")
+        // lancement de la fonction pour supprimer la selection de l'ingredient cliqué
+        removeIngredient(ingredientName)
     })
 }
 
@@ -262,6 +268,22 @@ function upIngredient() {
     down1.classList.remove("hidden");
     document.getElementsByName('INGREDIENT')[0].placeholder = 'Ingredients';
     listingIngredient = [];
+}
+
+function addIngredient(ingredientName) {
+    totalFilters += 1
+    console.log("L'utilisateur a cliqué sur ", ingredientName, "et on a maintenant", totalFilters, "filtres actifs")
+    allRecipesOfObject.forEach((oneOfRecipe) => {
+        oneOfRecipe._addIngredientFilter(ingredientName)
+    })
+}
+
+function removeIngredient(ingredientName) {
+    totalFilters -= 1
+    console.log("L'utilisateur a supprimé ", ingredientName, "et on a maintenant", totalFilters, "filtres actifs")
+    allRecipesOfObject.forEach((oneOfRecipe) => {
+        oneOfRecipe._removeIngredientFilter(ingredientName)
+    })
 }
 
 //------------------------------------------------------------------------------------------
@@ -348,13 +370,12 @@ function upAppliance() {
     listingAppliance = [];
 }
 
-
 function addAppliance(applianceName) {
     totalFilters += 1
     console.log("L'utilisateur a cliqué sur ", applianceName, "et on a maintenant", totalFilters, "filtres actifs")
     allRecipesOfObject.forEach((oneOfRecipe) => {
         oneOfRecipe._addApplianceFilter(applianceName)
-        // oneOfRecipe._displayAllInformations()
+
     })
 }
 
@@ -363,7 +384,6 @@ function removeAppliance(applianceName) {
     console.log("L'utilisateur a supprimé ", applianceName, "et on a maintenant", totalFilters, "filtres actifs")
     allRecipesOfObject.forEach((oneOfRecipe) => {
         oneOfRecipe._removeApplianceFilter(applianceName)
-        // oneRecipe._displayAllInformations()
     })
 }
 
@@ -379,8 +399,6 @@ const inputUstensil = document.getElementById("ustensil-search");
 down3.addEventListener("click", downUstensil);
 up3.addEventListener("click", upUstensil);
 
-
-
 // fonction au clic sur le chevron bas
 function downUstensil() {
     UstensilContainer.classList.remove("hidden");
@@ -389,7 +407,7 @@ function downUstensil() {
     down3.classList.add("hidden");
     document.getElementsByName('USTENSIL')[0].placeholder = 'Recherche un ustensile';
 
-    //suite au listing, lancement de la creation de chaque element
+    //creation de chaque paragraphe venant du listing
     listingUstensil.forEach(Ustensil => {
         let newElement = document.createElement("p");
         newElement.classList.add("ustensil");
@@ -442,7 +460,6 @@ function tagUstensil() {
         // lancement de la fonction pour supprimer la selection de l'ustensil cliqué
         removeUstensil(ustensilName)
     })
-
 }
 
 // fonction au clic sur le chevron haut
@@ -473,6 +490,7 @@ function removeUstensil(ustensilName) {
     })
 }
 
+//creation de la carte recette
 // let recipeTemplate;
 // recipeTemplate = 
 // `<figure>
