@@ -84,7 +84,8 @@ class Recipe {
             if (oneOfUstensil.name === ustensilName) {
                 oneOfUstensil.isChecked = true
                 this.hasFilters += 1
-                // console.log(this.name)
+                console.log(this.name)
+                card()                               
             }
         })
     }
@@ -95,7 +96,7 @@ class Recipe {
                 this.hasFilters -= 1
             }
         })
-    }    
+    }
 }
 
 class Ingredient {
@@ -130,42 +131,21 @@ recipes.forEach((oneOfRecipe) => {
         let newIngredient = new Ingredient(oneOfIngredient.ingredient, oneOfIngredient.quantity, oneOfIngredient.unit)
         allIngredients.push(newIngredient.name)
         //fonction pour rajouter les ingredients dans la classe principale Recipe
-        newRecipe._addIngredient(newIngredient)
-        //trier et supprimer les doublons        
-        allIngredients.forEach((ingredient) => {
-            if (!listingIngredient.includes(ingredient)) {
-                listingIngredient.push(ingredient);
-                listingIngredient.sort();
-            }
-        })
+        newRecipe._addIngredient(newIngredient)        
     })
 
     //-----extraire les appareils de recipes-----    
     let newAppliance = new Appliance(oneOfRecipe.appliance)
     allAppliances.push(newAppliance.name)
     //fonction pour rajouter les appareils dans la classe principale Recipe
-    newRecipe._addAppliance(newAppliance)
-    //trier et supprimer les doublons        
-    allAppliances.forEach((appliance) => {
-        if (!listingAppliance.includes(appliance)) {
-            listingAppliance.push(appliance);
-            listingAppliance.sort();
-        }
-    })
+    newRecipe._addAppliance(newAppliance)    
 
     //-----extraire les ustensiles de recipes-----
     oneOfRecipe.ustensils.forEach((oneOfUstensil) => {
         let newUstensil = new Ustensil(oneOfUstensil)
         allUstensils.push(newUstensil.name)
         //fonction pour rajouter les ustensiles dans la classe principale Recipe
-        newRecipe._addUstensil(newUstensil)
-        //trier et supprimer les doublons        
-        allUstensils.flat().forEach((ustensil) => {
-            if (!listingUstensil.includes(ustensil)) {
-                listingUstensil.push(ustensil);
-                listingUstensil.sort();
-            }
-        })
+        newRecipe._addUstensil(newUstensil)        
     })
 
     allRecipesOfObject.push(newRecipe)
@@ -182,6 +162,10 @@ const selectContainerIngredient = document.getElementById("box-select");
 const inputIngredient = document.getElementById("ingredient-search")
 down1.addEventListener("click", downIngredient);
 up1.addEventListener("click", upIngredient);
+
+//suppression doublon + trier alphabetiquement
+listingIngredient = [...new Set(allIngredients)]
+listingIngredient.sort()
 
 // fonction au clic sur le chevron bas
 function downIngredient() {
@@ -284,6 +268,10 @@ const inputAppliance = document.getElementById("appliance-search");
 down2.addEventListener("click", downAppliance);
 up2.addEventListener("click", upAppliance);
 
+//suppression doublon + trier alphabetiquement
+listingAppliance = [...new Set(allAppliances)]
+listingAppliance.sort()
+
 // fonction au clic sur le chevron bas
 function downAppliance() {
     ApplianceContainer.classList.remove("hidden");
@@ -383,6 +371,11 @@ const inputUstensil = document.getElementById("ustensil-search");
 down3.addEventListener("click", downUstensil);
 up3.addEventListener("click", upUstensil);
 
+//suppression doublon + trier alphabetique
+listingUstensil = [...new Set(allUstensils)]
+listingUstensil.sort()
+console.log(listingUstensil)
+
 // fonction au clic sur le chevron bas
 function downUstensil() {
     UstensilContainer.classList.remove("hidden");
@@ -471,46 +464,46 @@ function removeUstensil(ustensilName) {
     })
 }
 
-getValidRecipe()
-//affichage des recettes en fonction des filtres selectionnés
-function getValidRecipe() {
-    console.log("les recettes disponibles avec les", totalFilters, "filtres selectionnés")
-    allRecipesOfObject.forEach((oneOfRecipe) => {
-        if (oneOfRecipe.hasFilters === totalFilters) {
-            console.log(this.name)
-        }
-    })
+// getValidRecipe()
+// //affichage des recettes en fonction des filtres selectionnés
+// function getValidRecipe() {
+//     console.log("les recettes disponibles avec les", totalFilters, "filtres selectionnés")
+//     allRecipesOfObject.forEach((oneOfRecipe) => {
+//         if (oneOfRecipe.hasFilters === totalFilters) {
+//             console.log(this.name)
+//         }
+//     })
+// }
+
+
+//creation d'une carte recette
+function card() {
+    let CardRecipe = "";    
+    CardRecipe += `<figure>
+    <img class="recette">
+    <figcaption>
+        <aside class="title">
+            <p class="name">${Recipe.name}</p>
+            <div class="duration">
+                <i class="far fa-clock"></i>
+                <p class="time">${Recipe.time}</p>
+            </div>
+        </aside>
+        <div class="text">
+            <p class="ingredients">
+                ${Recipe.ingredients}
+            </p>
+            <p class="description">
+            ${Recipe.description}                 
+            </p>
+        </div>
+    </figcaption>
+</figure>`
+
+    mainRecipes.insertAdjacentHTML('beforeend', CardRecipe)
 }
 
 
-
-//creation de la carte recette
-// function card() {
-//     let recipeTemplate = "";
-//     recipeTemplate =
-//         `<figure>
-//     <img class="recette">
-//     <figcaption>
-//         <aside class="title">
-//             <p class="name">${this.name}</p>
-//             <div class="duration">
-//                 <i class="far fa-clock"></i>
-//                 <p class="time">${this.time}</p>
-//             </div>
-//         </aside>
-//         <div class="text">
-//             <p class="ingredients">
-//                 ${this.ingredients}
-//             </p>
-//             <p class="description">
-//             ${this.description}                 
-//             </p>
-//         </div>
-//     </figcaption>
-// </figure>`
-
-//     mainRecipes.appendChild(recipeTemplate)
-// }
 
 
 
