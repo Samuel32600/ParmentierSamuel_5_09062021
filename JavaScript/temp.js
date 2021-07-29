@@ -1,4 +1,4 @@
-import { recipes } from './recipes.js';
+import {recipes} from './recipes.js';
 //tableau avec l'ensemble des données
 let allRecipesOfObject = []
 let allIngredients = []
@@ -84,7 +84,7 @@ class Recipe {
             if (oneOfUstensil.name === ustensilName) {
                 oneOfUstensil.isChecked = true
                 this.hasFilters += 1
-                // console.log(this.name)
+                console.log(this.name)
             }
         })
     }
@@ -95,7 +95,11 @@ class Recipe {
                 this.hasFilters -= 1
             }
         })
-    }    
+    }
+
+    _displayAllInformations() {
+        console.log("Voici les recettes ", this.name)
+    }
 }
 
 class Ingredient {
@@ -121,18 +125,20 @@ class Ustensil {
     }
 }
 
+
 //extraire les elements de chaque recette (le nom, le temps et la description)
-recipes.forEach((oneOfRecipe) => {
+recipes.forEach(oneOfRecipe => {
     let newRecipe = new Recipe(oneOfRecipe.name, oneOfRecipe.time, oneOfRecipe.description)
 
     //-----extraire les ingredients de recipes + sous tableaux ingredients-----
-    oneOfRecipe.ingredients.forEach((oneOfIngredient) => {
+    oneOfRecipe.ingredients.forEach(oneOfIngredient => {
         let newIngredient = new Ingredient(oneOfIngredient.ingredient, oneOfIngredient.quantity, oneOfIngredient.unit)
         allIngredients.push(newIngredient.name)
+        //console.log("L'ingredient créé est : ", newIngredient.name)
         //fonction pour rajouter les ingredients dans la classe principale Recipe
         newRecipe._addIngredient(newIngredient)
         //trier et supprimer les doublons        
-        allIngredients.forEach((ingredient) => {
+        allIngredients.forEach(ingredient => {
             if (!listingIngredient.includes(ingredient)) {
                 listingIngredient.push(ingredient);
                 listingIngredient.sort();
@@ -143,37 +149,48 @@ recipes.forEach((oneOfRecipe) => {
     //-----extraire les appareils de recipes-----    
     let newAppliance = new Appliance(oneOfRecipe.appliance)
     allAppliances.push(newAppliance.name)
+    // console.log("L'appareil créé est : ", newAppliance.name)
     //fonction pour rajouter les appareils dans la classe principale Recipe
     newRecipe._addAppliance(newAppliance)
     //trier et supprimer les doublons        
-    allAppliances.forEach((appliance) => {
+    allAppliances.forEach(appliance => {
         if (!listingAppliance.includes(appliance)) {
             listingAppliance.push(appliance);
             listingAppliance.sort();
         }
     })
 
+
     //-----extraire les ustensiles de recipes-----
-    oneOfRecipe.ustensils.forEach((oneOfUstensil) => {
+    oneOfRecipe.ustensils.forEach(oneOfUstensil => {
         let newUstensil = new Ustensil(oneOfUstensil)
         allUstensils.push(newUstensil.name)
+        // console.log("L'ustensil créé est : ", newUstensil.name)
         //fonction pour rajouter les ustensiles dans la classe principale Recipe
         newRecipe._addUstensil(newUstensil)
         //trier et supprimer les doublons        
-        allUstensils.flat().forEach((ustensil) => {
+        allUstensils.flat().forEach(ustensil => {
             if (!listingUstensil.includes(ustensil)) {
                 listingUstensil.push(ustensil);
                 listingUstensil.sort();
             }
         })
     })
+    //-----affichage des 3 tableaux pour chacune des recettes-----
+    // console.log("La recette créé est : ", newRecipe.name)
+    // console.table(newRecipe.ingredients)
+    // console.table(newRecipe.appliances)
+    // console.table(newRecipe.ustensils)
 
     allRecipesOfObject.push(newRecipe)
 })
 
+
+
 //------------------------------------------------------------------------------------------
 //---------------------Ingredients----------------------------------------------------------
 //------------------------------------------------------------------------------------------
+
 const IngredientContainer = document.getElementById("box1-ingredients");
 const box1Extended = document.getElementById("box1-display-content");
 const down1 = document.getElementById("chevron-down-1");
@@ -192,14 +209,16 @@ function downIngredient() {
     document.getElementsByName('INGREDIENT')[0].placeholder = 'Recherche un ingrédient';
 
     //creation de chaque paragraphe venant du listing
-    listingIngredient.forEach((Ingredient) => {
+    listingIngredient.forEach(Ingredient => {
         let newElement = document.createElement("p");
         newElement.classList.add("ingredient");
         newElement.setAttribute("data-element", Ingredient);
         newElement.innerText = Ingredient;
         IngredientContainer.appendChild(newElement);
+
         //ecoute pour la creation du tag
         newElement.addEventListener("click", tagIngredient);
+
         //ecoute de l'input
         inputIngredient.addEventListener("input", function () {
             if (!Ingredient.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(inputIngredient.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
@@ -291,8 +310,9 @@ function downAppliance() {
     up2.classList.remove("hidden");
     down2.classList.add("hidden");
     document.getElementsByName('APPAREIL')[0].placeholder = 'Recherche un appareil';
+
     //creation de chaque paragraphe venant du listing
-    listingAppliance.forEach((Appliance) => {
+    listingAppliance.forEach(Appliance => {
         let newElement = document.createElement("p");
         newElement.classList.add("appliance");
         newElement.setAttribute("data-element", Appliance);
@@ -392,7 +412,7 @@ function downUstensil() {
     document.getElementsByName('USTENSIL')[0].placeholder = 'Recherche un ustensile';
 
     //creation de chaque paragraphe venant du listing
-    listingUstensil.forEach((Ustensil) => {
+    listingUstensil.forEach(Ustensil => {
         let newElement = document.createElement("p");
         newElement.classList.add("ustensil");
         newElement.setAttribute("data-element", Ustensil);
@@ -402,6 +422,7 @@ function downUstensil() {
         newElement.addEventListener("click", tagUstensil);
         //ecoute de l'input
         inputUstensil.addEventListener("input", function () {
+
             if (!Ustensil.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(inputUstensil.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
                 newElement.remove()
             }
@@ -477,18 +498,15 @@ function getValidRecipe() {
     console.log("les recettes disponibles avec les", totalFilters, "filtres selectionnés")
     allRecipesOfObject.forEach((oneOfRecipe) => {
         if (oneOfRecipe.hasFilters === totalFilters) {
-            console.log(this.name)
+            oneOfRecipe._displayAllInformations()
         }
     })
 }
 
-
-
 //creation de la carte recette
-// function card() {
-//     let recipeTemplate = "";
-//     recipeTemplate =
-//         `<figure>
+// let recipeTemplate;
+// recipeTemplate = 
+// `<figure>
 //     <img class="recette">
 //     <figcaption>
 //         <aside class="title">
@@ -509,9 +527,7 @@ function getValidRecipe() {
 //     </figcaption>
 // </figure>`
 
-//     mainRecipes.appendChild(recipeTemplate)
-// }
-
+// mainRecipes.appendChild(recipeTemplate)
 
 
 
