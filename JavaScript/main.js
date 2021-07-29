@@ -85,7 +85,6 @@ class Recipe {
                 oneOfUstensil.isChecked = true
                 this.hasFilters += 1
                 console.log(this.name)
-                card()                               
             }
         })
     }
@@ -102,9 +101,30 @@ class Recipe {
 class Ingredient {
     constructor(name, quantity, unit) {
         this.name = name;
-        this.quantity = quantity
-        this.unit = unit
+        // this.quantity = quantity
+        this.quantity = this._validFormatQuantity(quantity);
+        // this.unit = unit
+        this.unit = this._validFormatUnit(unit);
         this.isChecked = false;
+        this._validFormatUnit()
+    }
+
+    //mettre la valeur de quantity en forme
+    _validFormatQuantity(number) {
+        if (typeof number === "undefined") {
+            return number = "";
+        } else {
+            return number;
+        }
+    }
+    //adapté la valeur de l'unité
+    _validFormatUnit(number) {
+        let mesure = this._validFormatQuantity(number);
+        if (mesure.length > 2) {
+            return mesure.substring(9, 0);
+        } else {
+            return mesure;
+        }
     }
 }
 
@@ -131,21 +151,21 @@ recipes.forEach((oneOfRecipe) => {
         let newIngredient = new Ingredient(oneOfIngredient.ingredient, oneOfIngredient.quantity, oneOfIngredient.unit)
         allIngredients.push(newIngredient.name)
         //fonction pour rajouter les ingredients dans la classe principale Recipe
-        newRecipe._addIngredient(newIngredient)        
+        newRecipe._addIngredient(newIngredient)
     })
 
     //-----extraire les appareils de recipes-----    
     let newAppliance = new Appliance(oneOfRecipe.appliance)
     allAppliances.push(newAppliance.name)
     //fonction pour rajouter les appareils dans la classe principale Recipe
-    newRecipe._addAppliance(newAppliance)    
+    newRecipe._addAppliance(newAppliance)
 
     //-----extraire les ustensiles de recipes-----
     oneOfRecipe.ustensils.forEach((oneOfUstensil) => {
         let newUstensil = new Ustensil(oneOfUstensil)
         allUstensils.push(newUstensil.name)
         //fonction pour rajouter les ustensiles dans la classe principale Recipe
-        newRecipe._addUstensil(newUstensil)        
+        newRecipe._addUstensil(newUstensil)
     })
 
     allRecipesOfObject.push(newRecipe)
@@ -246,6 +266,7 @@ function addIngredient(ingredientName) {
     allRecipesOfObject.forEach((oneOfRecipe) => {
         oneOfRecipe._addIngredientFilter(ingredientName)
     })
+    getValidRecipe()
 }
 
 function removeIngredient(ingredientName) {
@@ -254,6 +275,7 @@ function removeIngredient(ingredientName) {
     allRecipesOfObject.forEach((oneOfRecipe) => {
         oneOfRecipe._removeIngredientFilter(ingredientName)
     })
+    getValidRecipe()
 }
 
 //------------------------------------------------------------------------------------------
@@ -349,6 +371,7 @@ function addAppliance(applianceName) {
     allRecipesOfObject.forEach((oneOfRecipe) => {
         oneOfRecipe._addApplianceFilter(applianceName)
     })
+    getValidRecipe()
 }
 
 function removeAppliance(applianceName) {
@@ -357,6 +380,7 @@ function removeAppliance(applianceName) {
     allRecipesOfObject.forEach((oneOfRecipe) => {
         oneOfRecipe._removeApplianceFilter(applianceName)
     })
+    getValidRecipe()
 }
 
 //------------------------------------------------------------------------------------------
@@ -371,10 +395,9 @@ const inputUstensil = document.getElementById("ustensil-search");
 down3.addEventListener("click", downUstensil);
 up3.addEventListener("click", upUstensil);
 
-//suppression doublon + trier alphabetique
+//suppression doublon + trier alphabetiquement
 listingUstensil = [...new Set(allUstensils)]
 listingUstensil.sort()
-console.log(listingUstensil)
 
 // fonction au clic sur le chevron bas
 function downUstensil() {
@@ -454,6 +477,7 @@ function addUstensil(ustensilName) {
     allRecipesOfObject.forEach((oneOfRecipe) => {
         oneOfRecipe._addUstensilFilter(ustensilName)
     })
+    getValidRecipe()
 }
 
 function removeUstensil(ustensilName) {
@@ -462,45 +486,48 @@ function removeUstensil(ustensilName) {
     allRecipesOfObject.forEach((oneOfRecipe) => {
         oneOfRecipe._removeUstensilFilter(ustensilName)
     })
+    getValidRecipe()
 }
 
-// getValidRecipe()
-// //affichage des recettes en fonction des filtres selectionnés
-// function getValidRecipe() {
-//     console.log("les recettes disponibles avec les", totalFilters, "filtres selectionnés")
-//     allRecipesOfObject.forEach((oneOfRecipe) => {
-//         if (oneOfRecipe.hasFilters === totalFilters) {
-//             console.log(this.name)
-//         }
-//     })
-// }
+//affichage des recettes en fonction des filtres selectionnés
+function getValidRecipe() {
+    console.log("les recettes disponibles avec les", totalFilters, "filtres selectionnés")
+    allRecipesOfObject.forEach((oneOfRecipe) => {
+        if (oneOfRecipe.hasFilters === totalFilters) {
+            console.log(oneOfRecipe.name)
+            card(oneOfRecipe)
+        }
+    })
+}
 
-
-//creation d'une carte recette
-function card() {
-    let CardRecipe = "";    
+//création d'une carte recette
+function card(recipe) {
+    let CardRecipe = "";
     CardRecipe += `<figure>
     <img class="recette">
     <figcaption>
         <aside class="title">
-            <p class="name">${Recipe.name}</p>
+            <p class="name">
+                ${recipe.name}
+            </p>
             <div class="duration">
                 <i class="far fa-clock"></i>
-                <p class="time">${Recipe.time}</p>
+                <p class="time">${recipe.time} min</p>
             </div>
         </aside>
         <div class="text">
-            <p class="ingredients">
-                ${Recipe.ingredients}
-            </p>
-            <p class="description">
-            ${Recipe.description}                 
-            </p>
+            <ul class="ingredients">               
+                ${recipe.ingredients.map(elementOfIngredient =>`
+                <li>
+                        <span>${elementOfIngredient.name} : </span>${elementOfIngredient.quantity} ${elementOfIngredient.unit}
+                </li>`).join("")}
+            </ul>
+            <p class="description">${recipe.description}</p>
         </div>
     </figcaption>
 </figure>`
 
-    mainRecipes.insertAdjacentHTML('beforeend', CardRecipe)
+mainRecipes.insertAdjacentHTML('beforeend', CardRecipe)
 }
 
 

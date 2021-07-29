@@ -242,14 +242,18 @@ button img {
 #allRecipes{
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
+    width: 1240px;
+    margin-left:100px ; 
 }
 
 figure {
     width: 380px;
     height: 364px;
-    background-color: #E7E7E7;
-    margin-left: 100px;
+    background-color: #E7E7E7;    
     border-radius: 5px;
+    margin: 0;
+    margin-bottom: 50px;  
 }
 
 figure img {
@@ -270,12 +274,14 @@ figcaption {
     justify-content: space-between;
     font-size: 18px;
     font-family: 'Lato', sans-serif;
+    
 }
 
 .name {
     width: auto;
     height: 22px;
-    margin-left: 20px;
+    margin-left: 20px;    
+    width:220px;
 }
 
 .duration {
@@ -295,7 +301,7 @@ figcaption {
 }
 
 .text {
-    display: flex;
+    display: flex;    
 }
 
 .ingredients {
@@ -305,6 +311,11 @@ figcaption {
     font-size: 12px;
     line-height: 14px;
     font-family: 'Lato', sans-serif;
+    padding: 0;
+    list-style: none;
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;    
 }
 
 .description {
@@ -314,4 +325,8 @@ figcaption {
     font-family: 'Roboto', sans-serif;
     font-size: 12px;
     line-height: 12px;
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    
 }
