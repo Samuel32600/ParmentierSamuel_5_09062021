@@ -10,6 +10,7 @@ let listingAppliance = [];
 let listingUstensil = [];
 
 const mainRecipes = document.getElementById("allRecipes");
+const mainSearch = document.getElementById("main-search");
 let totalFilters = 0;
 
 class Recipe {
@@ -101,9 +102,7 @@ class Recipe {
 class Ingredient {
     constructor(name, quantity, unit) {
         this.name = name;
-        // this.quantity = quantity
         this.quantity = this._validFormatQuantity(quantity);
-        // this.unit = unit
         this.unit = this._validFormatUnit(unit);
         this.isChecked = false;
         this._validFormatUnit()
@@ -259,19 +258,20 @@ function upIngredient() {
     document.getElementsByName('INGREDIENT')[0].placeholder = 'Ingredients';
     listingIngredient = [];
 }
-
+// fonction de selection d'un Ingredient
 function addIngredient(ingredientName) {
     totalFilters += 1
-    console.log("L'utilisateur a cliqué sur ", ingredientName, "et on a maintenant", totalFilters, "filtres actifs")
+    // console.log("L'utilisateur a cliqué sur ", ingredientName, "et on a maintenant", totalFilters, "filtres actifs")
     allRecipesOfObject.forEach((oneOfRecipe) => {
         oneOfRecipe._addIngredientFilter(ingredientName)
     })
     getValidRecipe()
 }
 
+// fonction de déselection d'un Ingredient
 function removeIngredient(ingredientName) {
     totalFilters -= 1
-    console.log("L'utilisateur a supprimé ", ingredientName, "et on a maintenant", totalFilters, "filtres actifs")
+    // console.log("L'utilisateur a supprimé ", ingredientName, "et on a maintenant", totalFilters, "filtres actifs")
     allRecipesOfObject.forEach((oneOfRecipe) => {
         oneOfRecipe._removeIngredientFilter(ingredientName)
     })
@@ -365,18 +365,20 @@ function upAppliance() {
     listingAppliance = [];
 }
 
+// fonction de selection d'un Appareil
 function addAppliance(applianceName) {
     totalFilters += 1
-    console.log("L'utilisateur a cliqué sur ", applianceName, "et on a maintenant", totalFilters, "filtres actifs")
+    // console.log("L'utilisateur a cliqué sur ", applianceName, "et on a maintenant", totalFilters, "filtres actifs")
     allRecipesOfObject.forEach((oneOfRecipe) => {
         oneOfRecipe._addApplianceFilter(applianceName)
     })
     getValidRecipe()
 }
 
+// fonction de déselection d'un Appareil
 function removeAppliance(applianceName) {
     totalFilters -= 1
-    console.log("L'utilisateur a supprimé ", applianceName, "et on a maintenant", totalFilters, "filtres actifs")
+    // console.log("L'utilisateur a supprimé ", applianceName, "et on a maintenant", totalFilters, "filtres actifs")
     allRecipesOfObject.forEach((oneOfRecipe) => {
         oneOfRecipe._removeApplianceFilter(applianceName)
     })
@@ -471,27 +473,31 @@ function upUstensil() {
     listingUstensil = [];
 }
 
+// fonction de selection d'un Ustensil
 function addUstensil(ustensilName) {
     totalFilters += 1
-    console.log("L'utilisateur a cliqué sur ", ustensilName, "et on a maintenant", totalFilters, "filtres actifs")
+    // console.log("L'utilisateur a cliqué sur ", ustensilName, "et on a maintenant", totalFilters, "filtres actifs")
     allRecipesOfObject.forEach((oneOfRecipe) => {
         oneOfRecipe._addUstensilFilter(ustensilName)
     })
     getValidRecipe()
 }
 
+// fonction de déselection d'un Ustensil
 function removeUstensil(ustensilName) {
     totalFilters -= 1
-    console.log("L'utilisateur a supprimé ", ustensilName, "et on a maintenant", totalFilters, "filtres actifs")
+    // console.log("L'utilisateur a supprimé ", ustensilName, "et on a maintenant", totalFilters, "filtres actifs")
     allRecipesOfObject.forEach((oneOfRecipe) => {
         oneOfRecipe._removeUstensilFilter(ustensilName)
     })
     getValidRecipe()
 }
 
+//------------------------------------------------------------------------------------------
+
 //affichage des recettes en fonction des filtres selectionnés
 function getValidRecipe() {
-    console.log("les recettes disponibles avec les", totalFilters, "filtres selectionnés")
+    // console.log("les recettes disponibles avec les", totalFilters, "filtres selectionnés")
     allRecipesOfObject.forEach((oneOfRecipe) => {
         if (oneOfRecipe.hasFilters === totalFilters) {
             console.log(oneOfRecipe.name)
@@ -507,9 +513,7 @@ function card(recipe) {
     <img class="recette">
     <figcaption>
         <aside class="title">
-            <p class="name">
-                ${recipe.name}
-            </p>
+            <p class="name">${recipe.name}</p>
             <div class="duration">
                 <i class="far fa-clock"></i>
                 <p class="time">${recipe.time} min</p>
@@ -517,18 +521,23 @@ function card(recipe) {
         </aside>
         <div class="text">
             <ul class="ingredients">               
-                ${recipe.ingredients.map(elementOfIngredient =>`
+                ${recipe.ingredients.map(elementOfIngredient => `
                 <li>
-                        <span>${elementOfIngredient.name} : </span>${elementOfIngredient.quantity} ${elementOfIngredient.unit}
+                    <span>${elementOfIngredient.name} : </span>${elementOfIngredient.quantity} ${elementOfIngredient.unit}
                 </li>`).join("")}
             </ul>
             <p class="description">${recipe.description}</p>
         </div>
     </figcaption>
 </figure>`
-
-mainRecipes.insertAdjacentHTML('beforeend', CardRecipe)
+    mainRecipes.insertAdjacentHTML('beforeend', CardRecipe)
 }
+
+//recherche dans la barre principale
+mainSearch.addEventListener("input", function () {
+    
+})
+
 
 
 

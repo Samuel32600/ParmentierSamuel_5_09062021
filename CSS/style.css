@@ -54,6 +54,7 @@ button img {
     height: 32px;
 }
 
+
 /*-----filter area-----*/
 .boxfilter {
     display: flex;
@@ -127,6 +128,7 @@ button img {
 
 .box-extend {
     width: 450px;
+   
     border-radius: 5px 5px 0 0;   
 }
 
@@ -149,7 +151,7 @@ button img {
     line-height: 12px;
 }
 
-/* champ input*/
+/* champ input des filtres*/
 ::placeholder {
     color: white;
 }
