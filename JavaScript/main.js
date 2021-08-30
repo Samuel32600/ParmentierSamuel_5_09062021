@@ -4,6 +4,8 @@ let allRecipesOfObject = []
 let allIngredients = []
 let allAppliances = []
 let allUstensils = []
+let recipesfound = []
+
 // tableau avec données triées et doublon supprimé
 let listingIngredient = [];
 let listingAppliance = [];
@@ -30,14 +32,12 @@ class Recipe {
     _addIngredient(IngredientAdded) {
         this.ingredients.push(IngredientAdded)
     }
-
     //incrementation du nombre de filtre
     _addIngredientFilter(ingredientName) {
         this.ingredients.forEach((oneOfIngredient) => {
             if (oneOfIngredient.name === ingredientName) {
                 oneOfIngredient.isChecked = true
                 this.hasFilters += 1
-                // console.log(this.name)
             }
         })
     }
@@ -61,7 +61,6 @@ class Recipe {
             if (oneOfAppliance.name === applianceName) {
                 oneOfAppliance.isChecked = true
                 this.hasFilters += 1
-                // console.log(this.name)
             }
         })
     }
@@ -85,7 +84,6 @@ class Recipe {
             if (oneOfUstensil.name === ustensilName) {
                 oneOfUstensil.isChecked = true
                 this.hasFilters += 1
-                console.log(this.name)
             }
         })
     }
@@ -320,6 +318,7 @@ function downAppliance() {
             }
         })
     })
+
 }
 
 //creation du tag Appareil + fermeture
@@ -418,6 +417,7 @@ function downUstensil() {
         UstensilContainer.appendChild(newElement);
         //ecoute pour la creation du tag
         newElement.addEventListener("click", tagUstensil);
+
         //ecoute de l'input
         inputUstensil.addEventListener("input", function () {
             if (!Ustensil.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(inputUstensil.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
@@ -497,19 +497,82 @@ function removeUstensil(ustensilName) {
 
 //affichage des recettes en fonction des filtres selectionnés
 function getValidRecipe() {
+    document.querySelectorAll('result-recipe').forEach((showCards) => {
+        showCards.remove()
+    })
+
+    let ingredientFilter = []
+    let applianceFilter = []
+    let ustensilFilter = []
+
     // console.log("les recettes disponibles avec les", totalFilters, "filtres selectionnés")
     allRecipesOfObject.forEach((oneOfRecipe) => {
         if (oneOfRecipe.hasFilters === totalFilters) {
-            console.log(oneOfRecipe.name)
+
+            console.log("la recette trouvée est " + oneOfRecipe.name)
             card(oneOfRecipe)
+
+            oneOfRecipe.ingredients.forEach((ingr) => {
+                if (ingredientFilter.includes(ingr.name) === false) {
+                    ingredientFilter.push(ingr.name)
+                }
+            })
+
+            oneOfRecipe.appliances.forEach((appl) => {
+                if (applianceFilter.includes(appl.name) === false) {
+                    applianceFilter.push(appl.name)
+                }
+            })
+
+            oneOfRecipe.ustensils.forEach((ust) => {
+                if (ustensilFilter.includes(ust.name) === false) {
+                    ustensilFilter.push(ust.name)
+                }
+            })
         }
     })
+    console.log("voici les ingredients associés")
+    console.table(ingredientFilter)
+    listingIngredient = []    
+    ingredientFilter.forEach((ingredientFiltered) => {
+        let newElementFiltered = document.createElement("p");
+        newElementFiltered.classList.add("ingredient");
+        newElementFiltered.setAttribute("data-element", ingredientFiltered);
+        newElementFiltered.innerText = ingredientFiltered;
+        IngredientContainer.appendChild(newElementFiltered)
+        newElementFiltered.addEventListener("click", tagIngredient);
+    })
+
+    console.log("voici les appareils associés")
+    console.table(applianceFilter)
+    listingAppliance = []
+    applianceFilter.forEach((applianceFiltered) => {
+        let newElementFiltered = document.createElement("p");
+        newElementFiltered.classList.add("appliance");
+        newElementFiltered.setAttribute("data-element", applianceFiltered);
+        newElementFiltered.innerText = applianceFiltered;
+        ApplianceContainer.appendChild(newElementFiltered)
+        newElementFiltered.addEventListener("click", tagAppliance)
+    })
+
+    console.log("voici les ustensils associés")
+    console.table(ustensilFilter)
+    listingUstensil = []
+    ustensilFilter.forEach((ustensilFiltered) => {
+        let newElementFiltered = document.createElement("p");
+        newElementFiltered.classList.add("ustensil");
+        newElementFiltered.setAttribute("data-element", ustensilFiltered);
+        newElementFiltered.innerText = ustensilFiltered;
+        UstensilContainer.appendChild(newElementFiltered)
+        newElementFiltered.addEventListener("click", tagUstensil)
+    })
+
 }
 
 //création d'une carte recette
 function card(recipe) {
     let CardRecipe = "";
-    CardRecipe += `<figure>
+    CardRecipe += `<figure class="result-recipe>
     <img class="recette">
     <figcaption>
         <aside class="title">
@@ -533,9 +596,27 @@ function card(recipe) {
     mainRecipes.insertAdjacentHTML('beforeend', CardRecipe)
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //recherche dans la barre principale
 mainSearch.addEventListener("input", function () {
-    
 })
 
 

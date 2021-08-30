@@ -228,7 +228,9 @@ button img {
 .ingredient-hide,
 .appliance-hide,
 .ustensil-hide {
-    text-decoration: line-through white;
+    text-decoration: line-through black;
+    background-color: white;
+    border-radius: 5px;
     color:black;
     user-select: none;
 }
