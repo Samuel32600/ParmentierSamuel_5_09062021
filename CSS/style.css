@@ -175,7 +175,7 @@ button img {
 /*ingredient*/
 #box1-ingredients {
     width: auto;
-    height: 325px;
+    /* height: 325px; */
     color: #FFFFFF;
     position: absolute;
     top: 69px;
@@ -245,31 +245,34 @@ button img {
 /*-----menu area-----*/
 #allRecipes{
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    flex-wrap: wrap;    
     width: 1240px;
-    margin-left:100px ; 
+    margin-left:100px ;    
 }
 
 figure {
     width: 380px;
-    height: 364px;
-    background-color: #E7E7E7;    
+    height: 364px;   
     border-radius: 5px;
     margin: 0;
-    margin-bottom: 50px;  
+    margin-bottom: 50px;
+    display: flex;
+    flex-direction: column-reverse;
+    background-color: #C7BEBE;
+    margin-right: 32px;
+    
 }
 
 figure img {
     width: 380px;
-    height: 178px;
-    background-color: #C7BEBE;
+    height: 178px;    
     border-radius: 5px 5px 0 0;
 }
 
 figcaption {
     width: 380px;
-    height: 186px;
+    height: 186px;    
+    background-color: #E7E7E7;
 }
 
 .title {
@@ -277,8 +280,7 @@ figcaption {
     align-items: center;
     justify-content: space-between;
     font-size: 18px;
-    font-family: 'Lato', sans-serif;
-    
+    font-family: 'Lato', sans-serif;    
 }
 
 .name {
@@ -331,6 +333,5 @@ figcaption {
     line-height: 12px;
     white-space: normal;
     overflow: hidden;
-    text-overflow: ellipsis;
-    
+    text-overflow: ellipsis;    
 }

@@ -1,4 +1,5 @@
 import { recipes } from './recipes.js';
+
 //tableau avec l'ensemble des données
 let allRecipesOfObject = []
 let allIngredients = []
@@ -25,6 +26,7 @@ class Recipe {
         this.ustensils = []
         this.hasFilters = 0;
     }
+
 
     //------------------------------------
     //-----ajout des ingredients----------
@@ -494,46 +496,49 @@ function removeUstensil(ustensilName) {
 }
 
 //------------------------------------------------------------------------------------------
+let ingredientFilter = []
+let applianceFilter = []
+let ustensilFilter = []
 
 //affichage des recettes en fonction des filtres selectionnés
 function getValidRecipe() {
-    document.querySelectorAll('result-recipe').forEach((showCards) => {
+    document.querySelectorAll('.result-recipe').forEach((showCards) => {
         showCards.remove()
     })
 
-    let ingredientFilter = []
-    let applianceFilter = []
-    let ustensilFilter = []
-
     // console.log("les recettes disponibles avec les", totalFilters, "filtres selectionnés")
     allRecipesOfObject.forEach((oneOfRecipe) => {
+        
         if (oneOfRecipe.hasFilters === totalFilters) {
-
             console.log("la recette trouvée est " + oneOfRecipe.name)
             card(oneOfRecipe)
 
             oneOfRecipe.ingredients.forEach((ingr) => {
                 if (ingredientFilter.includes(ingr.name) === false) {
                     ingredientFilter.push(ingr.name)
+                    ingredientFilter.sort()
                 }
             })
 
             oneOfRecipe.appliances.forEach((appl) => {
                 if (applianceFilter.includes(appl.name) === false) {
                     applianceFilter.push(appl.name)
+                    applianceFilter.sort()
                 }
             })
 
             oneOfRecipe.ustensils.forEach((ust) => {
                 if (ustensilFilter.includes(ust.name) === false) {
                     ustensilFilter.push(ust.name)
+                    ustensilFilter.sort()
                 }
             })
         }
     })
+
     console.log("voici les ingredients associés")
     console.table(ingredientFilter)
-    listingIngredient = []    
+    listingIngredient = []
     ingredientFilter.forEach((ingredientFiltered) => {
         let newElementFiltered = document.createElement("p");
         newElementFiltered.classList.add("ingredient");
@@ -566,7 +571,6 @@ function getValidRecipe() {
         UstensilContainer.appendChild(newElementFiltered)
         newElementFiltered.addEventListener("click", tagUstensil)
     })
-
 }
 
 //création d'une carte recette
@@ -597,28 +601,20 @@ function card(recipe) {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //recherche dans la barre principale
-mainSearch.addEventListener("input", function () {
-})
+// mainSearch.addEventListener("input", principalSearch)
 
+// function principalSearch() {
+//     allRecipesOfObject.forEach((oneOfRecipe) => {
+//         if (mainSearch.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(oneOfRecipe.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
+//             console.log("une recette est trouvée" + (oneOfRecipe.name))
+//         }
+
+//         else {
+//             console.log("aucune recette n'est disponible")
+//         }
+//     })
+// }
 
 
 

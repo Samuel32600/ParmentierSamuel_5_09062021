@@ -542,16 +542,16 @@ function removeUstensil(ustensilName) {
   });
   getValidRecipe();
 } //------------------------------------------------------------------------------------------
-//affichage des recettes en fonction des filtres selectionnés
 
+
+var ingredientFilter = [];
+var applianceFilter = [];
+var ustensilFilter = []; //affichage des recettes en fonction des filtres selectionnés
 
 function getValidRecipe() {
-  document.querySelectorAll('result-recipe').forEach(function (showCards) {
+  document.querySelectorAll('.result-recipe').forEach(function (showCards) {
     showCards.remove();
-  });
-  var ingredientFilter = [];
-  var applianceFilter = [];
-  var ustensilFilter = []; // console.log("les recettes disponibles avec les", totalFilters, "filtres selectionnés")
+  }); // console.log("les recettes disponibles avec les", totalFilters, "filtres selectionnés")
 
   allRecipesOfObject.forEach(function (oneOfRecipe) {
     if (oneOfRecipe.hasFilters === totalFilters) {
@@ -560,16 +560,19 @@ function getValidRecipe() {
       oneOfRecipe.ingredients.forEach(function (ingr) {
         if (ingredientFilter.includes(ingr.name) === false) {
           ingredientFilter.push(ingr.name);
+          ingredientFilter.sort();
         }
       });
       oneOfRecipe.appliances.forEach(function (appl) {
         if (applianceFilter.includes(appl.name) === false) {
           applianceFilter.push(appl.name);
+          applianceFilter.sort();
         }
       });
       oneOfRecipe.ustensils.forEach(function (ust) {
         if (ustensilFilter.includes(ust.name) === false) {
           ustensilFilter.push(ust.name);
+          ustensilFilter.sort();
         }
       });
     }
@@ -617,6 +620,14 @@ function card(recipe) {
   }).join(""), "\n            </ul>\n            <p class=\"description\">").concat(recipe.description, "</p>\n        </div>\n    </figcaption>\n</figure>");
   mainRecipes.insertAdjacentHTML('beforeend', CardRecipe);
 } //recherche dans la barre principale
-
-
-mainSearch.addEventListener("input", function () {});
+// mainSearch.addEventListener("input", principalSearch)
+// function principalSearch() {
+//     allRecipesOfObject.forEach((oneOfRecipe) => {
+//         if (mainSearch.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(oneOfRecipe.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
+//             console.log("une recette est trouvée" + (oneOfRecipe.name))
+//         }
+//         else {
+//             console.log("aucune recette n'est disponible")
+//         }
+//     })
+// }
