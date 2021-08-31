@@ -553,6 +553,9 @@ function getValidRecipe() {
     showCards.remove();
   }); // console.log("les recettes disponibles avec les", totalFilters, "filtres selectionnés")
 
+  ingredientFilter = [];
+  applianceFilter = [];
+  ustensilFilter = [];
   allRecipesOfObject.forEach(function (oneOfRecipe) {
     if (oneOfRecipe.hasFilters === totalFilters) {
       console.log("la recette trouvée est " + oneOfRecipe.name);

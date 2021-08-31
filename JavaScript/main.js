@@ -507,6 +507,10 @@ function getValidRecipe() {
     })
 
     // console.log("les recettes disponibles avec les", totalFilters, "filtres selectionnés")
+    ingredientFilter =[]
+    applianceFilter= []
+    ustensilFilter = []
+    
     allRecipesOfObject.forEach((oneOfRecipe) => {
         
         if (oneOfRecipe.hasFilters === totalFilters) {
@@ -538,8 +542,8 @@ function getValidRecipe() {
 
     console.log("voici les ingredients associés")
     console.table(ingredientFilter)
-    listingIngredient = []
-    ingredientFilter.forEach((ingredientFiltered) => {
+    listingIngredient = []    
+    ingredientFilter.forEach((ingredientFiltered) => {        
         let newElementFiltered = document.createElement("p");
         newElementFiltered.classList.add("ingredient");
         newElementFiltered.setAttribute("data-element", ingredientFiltered);
