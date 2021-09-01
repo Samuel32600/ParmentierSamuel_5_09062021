@@ -5,7 +5,7 @@ let allRecipesOfObject = []
 let allIngredients = []
 let allAppliances = []
 let allUstensils = []
-let recipesfound = []
+// let recipesfound = []
 
 // tableau avec données triées et doublon supprimé
 let listingIngredient = [];
@@ -417,7 +417,7 @@ function downUstensil() {
         newElement.setAttribute("data-element", Ustensil);
         newElement.innerText = Ustensil;
         UstensilContainer.appendChild(newElement);
-        //ecoute pour la creation du tag
+        // ecoute pour la creation du tag
         newElement.addEventListener("click", tagUstensil);
 
         //ecoute de l'input
@@ -500,6 +500,7 @@ let ingredientFilter = []
 let applianceFilter = []
 let ustensilFilter = []
 
+
 //affichage des recettes en fonction des filtres selectionnés
 function getValidRecipe() {
     document.querySelectorAll('.result-recipe').forEach((showCards) => {
@@ -507,80 +508,84 @@ function getValidRecipe() {
     })
 
     // console.log("les recettes disponibles avec les", totalFilters, "filtres selectionnés")
-    ingredientFilter =[]
-    applianceFilter= []
-    ustensilFilter = []
-    
-    allRecipesOfObject.forEach((oneOfRecipe) => {
-        
-        if (oneOfRecipe.hasFilters === totalFilters) {
-            console.log("la recette trouvée est " + oneOfRecipe.name)
-            card(oneOfRecipe)
+    ingredientFilter = []
+    applianceFilter = []
+    ustensilFilter = []    
 
-            oneOfRecipe.ingredients.forEach((ingr) => {
-                if (ingredientFilter.includes(ingr.name) === false) {
-                    ingredientFilter.push(ingr.name)
-                    ingredientFilter.sort()
-                }
-            })
 
-            oneOfRecipe.appliances.forEach((appl) => {
-                if (applianceFilter.includes(appl.name) === false) {
-                    applianceFilter.push(appl.name)
-                    applianceFilter.sort()
-                }
-            })
+        allRecipesOfObject.forEach((oneOfRecipe) => {
 
-            oneOfRecipe.ustensils.forEach((ust) => {
-                if (ustensilFilter.includes(ust.name) === false) {
-                    ustensilFilter.push(ust.name)
-                    ustensilFilter.sort()
-                }
-            })
-        }
-    })
+            if (oneOfRecipe.hasFilters === totalFilters) {
+                console.log("la recette trouvée est " + oneOfRecipe.name)
+                card(oneOfRecipe)
 
-    console.log("voici les ingredients associés")
-    console.table(ingredientFilter)
-    listingIngredient = []    
-    ingredientFilter.forEach((ingredientFiltered) => {        
-        let newElementFiltered = document.createElement("p");
-        newElementFiltered.classList.add("ingredient");
-        newElementFiltered.setAttribute("data-element", ingredientFiltered);
-        newElementFiltered.innerText = ingredientFiltered;
-        IngredientContainer.appendChild(newElementFiltered)
-        newElementFiltered.addEventListener("click", tagIngredient);
-    })
+                oneOfRecipe.ingredients.forEach((ingr) => {
+                    if (ingredientFilter.includes(ingr.name) === false) {
+                        ingredientFilter.push(ingr.name)
+                        ingredientFilter.sort()
+                    }
+                })
 
-    console.log("voici les appareils associés")
-    console.table(applianceFilter)
-    listingAppliance = []
-    applianceFilter.forEach((applianceFiltered) => {
-        let newElementFiltered = document.createElement("p");
-        newElementFiltered.classList.add("appliance");
-        newElementFiltered.setAttribute("data-element", applianceFiltered);
-        newElementFiltered.innerText = applianceFiltered;
-        ApplianceContainer.appendChild(newElementFiltered)
-        newElementFiltered.addEventListener("click", tagAppliance)
-    })
+                oneOfRecipe.appliances.forEach((appl) => {
+                    if (applianceFilter.includes(appl.name) === false) {
+                        applianceFilter.push(appl.name)
+                        applianceFilter.sort()
+                    }
+                })
 
-    console.log("voici les ustensils associés")
-    console.table(ustensilFilter)
-    listingUstensil = []
-    ustensilFilter.forEach((ustensilFiltered) => {
-        let newElementFiltered = document.createElement("p");
-        newElementFiltered.classList.add("ustensil");
-        newElementFiltered.setAttribute("data-element", ustensilFiltered);
-        newElementFiltered.innerText = ustensilFiltered;
-        UstensilContainer.appendChild(newElementFiltered)
-        newElementFiltered.addEventListener("click", tagUstensil)
-    })
+                oneOfRecipe.ustensils.forEach((ust) => {
+                    if (ustensilFilter.includes(ust.name) === false) {
+                        ustensilFilter.push(ust.name)
+                        ustensilFilter.sort()
+                    }
+                })
+            }
+        })
+
+        console.log("voici les ingredients associés")
+        console.table(ingredientFilter)
+        listingIngredient = []
+        document.querySelectorAll("#box1-ingredients p").forEach(e => e.remove())
+        ingredientFilter.forEach((ingredientFiltered) => {
+            let newElementFiltered = document.createElement("p");
+            newElementFiltered.classList.add("ingredient");
+            newElementFiltered.setAttribute("data-element", ingredientFiltered);
+            newElementFiltered.innerText = ingredientFiltered;
+            IngredientContainer.appendChild(newElementFiltered)
+            newElementFiltered.addEventListener("click", tagIngredient);
+        })
+
+        console.log("voici les appareils associés")
+        console.table(applianceFilter)
+        listingAppliance = []
+        document.querySelectorAll("#box2-appliance p").forEach(e => e.remove())
+        applianceFilter.forEach((applianceFiltered) => {
+            let newElementFiltered = document.createElement("p");
+            newElementFiltered.classList.add("appliance");
+            newElementFiltered.setAttribute("data-element", applianceFiltered);
+            newElementFiltered.innerText = applianceFiltered;
+            ApplianceContainer.appendChild(newElementFiltered)
+            newElementFiltered.addEventListener("click", tagAppliance)
+        })
+
+        console.log("voici les ustensils associés")
+        console.table(ustensilFilter)
+        listingUstensil = []
+        document.querySelectorAll("#box3-ustensils p").forEach(e => e.remove())
+        ustensilFilter.forEach((ustensilFiltered) => {
+            let newElementFiltered = document.createElement("p");
+            newElementFiltered.classList.add("ustensil");
+            newElementFiltered.setAttribute("data-element", ustensilFiltered);
+            newElementFiltered.innerText = ustensilFiltered;
+            UstensilContainer.appendChild(newElementFiltered)
+            newElementFiltered.addEventListener("click", tagUstensil)
+        })    
 }
 
 //création d'une carte recette
 function card(recipe) {
     let CardRecipe = "";
-    CardRecipe += `<figure class="result-recipe>
+    CardRecipe += `<figure class="result-recipe">
     <img class="recette">
     <figcaption>
         <aside class="title">
@@ -606,19 +611,27 @@ function card(recipe) {
 
 
 //recherche dans la barre principale
-// mainSearch.addEventListener("input", principalSearch)
+mainSearch.addEventListener("input", principalSearch)
 
-// function principalSearch() {
-//     allRecipesOfObject.forEach((oneOfRecipe) => {
-//         if (mainSearch.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(oneOfRecipe.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
-//             console.log("une recette est trouvée" + (oneOfRecipe.name))
-//         }
-
-//         else {
-//             console.log("aucune recette n'est disponible")
-//         }
-//     })
-// }
+function principalSearch() {
+    document.querySelectorAll('.result-recipe').forEach((showCards) => {
+        showCards.remove()
+    })
+    allRecipesOfObject.forEach((oneOfRecipe) => {
+        if (oneOfRecipe.hasFilters === totalFilters) {            
+            if (mainSearch.value.length > 2) {
+                if ((oneOfRecipe.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(mainSearch.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")))) {
+                    console.log("une recette est trouvée" + (oneOfRecipe.name))
+                    card(oneOfRecipe)
+                                       
+                }
+            }
+        }
+        else {
+            console.log("aucune recette n'est disponible")
+        }
+    })
+}
 
 
 

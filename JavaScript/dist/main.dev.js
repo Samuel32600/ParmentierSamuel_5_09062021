@@ -20,8 +20,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 var allRecipesOfObject = [];
 var allIngredients = [];
 var allAppliances = [];
-var allUstensils = [];
-var recipesfound = []; // tableau avec données triées et doublon supprimé
+var allUstensils = []; // let recipesfound = []
+// tableau avec données triées et doublon supprimé
 
 var listingIngredient = [];
 var listingAppliance = [];
@@ -466,7 +466,7 @@ function downUstensil() {
     newElement.classList.add("ustensil");
     newElement.setAttribute("data-element", Ustensil);
     newElement.innerText = Ustensil;
-    UstensilContainer.appendChild(newElement); //ecoute pour la creation du tag
+    UstensilContainer.appendChild(newElement); // ecoute pour la creation du tag
 
     newElement.addEventListener("click", tagUstensil); //ecoute de l'input
 
@@ -583,6 +583,9 @@ function getValidRecipe() {
   console.log("voici les ingredients associés");
   console.table(ingredientFilter);
   listingIngredient = [];
+  document.querySelectorAll("#box1-ingredients p").forEach(function (e) {
+    return e.remove();
+  });
   ingredientFilter.forEach(function (ingredientFiltered) {
     var newElementFiltered = document.createElement("p");
     newElementFiltered.classList.add("ingredient");
@@ -594,6 +597,9 @@ function getValidRecipe() {
   console.log("voici les appareils associés");
   console.table(applianceFilter);
   listingAppliance = [];
+  document.querySelectorAll("#box2-appliance p").forEach(function (e) {
+    return e.remove();
+  });
   applianceFilter.forEach(function (applianceFiltered) {
     var newElementFiltered = document.createElement("p");
     newElementFiltered.classList.add("appliance");
@@ -605,6 +611,9 @@ function getValidRecipe() {
   console.log("voici les ustensils associés");
   console.table(ustensilFilter);
   listingUstensil = [];
+  document.querySelectorAll("#box3-ustensils p").forEach(function (e) {
+    return e.remove();
+  });
   ustensilFilter.forEach(function (ustensilFiltered) {
     var newElementFiltered = document.createElement("p");
     newElementFiltered.classList.add("ustensil");
@@ -618,19 +627,29 @@ function getValidRecipe() {
 
 function card(recipe) {
   var CardRecipe = "";
-  CardRecipe += "<figure class=\"result-recipe>\n    <img class=\"recette\">\n    <figcaption>\n        <aside class=\"title\">\n            <p class=\"name\">".concat(recipe.name, "</p>\n            <div class=\"duration\">\n                <i class=\"far fa-clock\"></i>\n                <p class=\"time\">").concat(recipe.time, " min</p>\n            </div>\n        </aside>\n        <div class=\"text\">\n            <ul class=\"ingredients\">               \n                ").concat(recipe.ingredients.map(function (elementOfIngredient) {
+  CardRecipe += "<figure class=\"result-recipe\">\n    <img class=\"recette\">\n    <figcaption>\n        <aside class=\"title\">\n            <p class=\"name\">".concat(recipe.name, "</p>\n            <div class=\"duration\">\n                <i class=\"far fa-clock\"></i>\n                <p class=\"time\">").concat(recipe.time, " min</p>\n            </div>\n        </aside>\n        <div class=\"text\">\n            <ul class=\"ingredients\">               \n                ").concat(recipe.ingredients.map(function (elementOfIngredient) {
     return "\n                <li>\n                    <span>".concat(elementOfIngredient.name, " : </span>").concat(elementOfIngredient.quantity, " ").concat(elementOfIngredient.unit, "\n                </li>");
   }).join(""), "\n            </ul>\n            <p class=\"description\">").concat(recipe.description, "</p>\n        </div>\n    </figcaption>\n</figure>");
   mainRecipes.insertAdjacentHTML('beforeend', CardRecipe);
 } //recherche dans la barre principale
-// mainSearch.addEventListener("input", principalSearch)
-// function principalSearch() {
-//     allRecipesOfObject.forEach((oneOfRecipe) => {
-//         if (mainSearch.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(oneOfRecipe.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
-//             console.log("une recette est trouvée" + (oneOfRecipe.name))
-//         }
-//         else {
-//             console.log("aucune recette n'est disponible")
-//         }
-//     })
-// }
+
+
+mainSearch.addEventListener("input", principalSearch);
+
+function principalSearch() {
+  document.querySelectorAll('.result-recipe').forEach(function (showCards) {
+    showCards.remove();
+  });
+  allRecipesOfObject.forEach(function (oneOfRecipe) {
+    if (oneOfRecipe.hasFilters === totalFilters) {
+      if (mainSearch.value.length > 2) {
+        if (oneOfRecipe.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(mainSearch.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
+          console.log("une recette est trouvée" + oneOfRecipe.name);
+          card(oneOfRecipe);
+        }
+      }
+    } else {
+      console.log("aucune recette n'est disponible");
+    }
+  });
+}

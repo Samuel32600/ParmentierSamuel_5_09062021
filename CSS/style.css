@@ -257,7 +257,7 @@ figure {
     margin: 0;
     margin-bottom: 50px;
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
     background-color: #C7BEBE;
     margin-right: 32px;
     
