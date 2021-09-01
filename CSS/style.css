@@ -127,8 +127,7 @@ button img {
 }
 
 .box-extend {
-    width: 450px;
-   
+    width: 450px;   
     border-radius: 5px 5px 0 0;   
 }
 
@@ -183,7 +182,7 @@ button img {
     display: grid;
     grid-template-columns: repeat(3, 150px);
     border-radius: 0 0 5px 5px;
-    overflow-y: scroll;    
+    overflow-y: scroll;   
 }
 
 ::-webkit-scrollbar{

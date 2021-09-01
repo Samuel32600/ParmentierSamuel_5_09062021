@@ -459,7 +459,7 @@ function downUstensil() {
   box3Extended.classList.add("box-extend");
   up3.classList.remove("hidden");
   down3.classList.add("hidden");
-  document.getElementsByName('USTENSIL')[0].placeholder = 'Recherche un ustensile'; //creation de chaque paragraphe venant du listing
+  document.getElementsByName('USTENSIL')[0].placeholder = 'Recherche un ustensile'; //creation de chaque paragraphe venant du listing    
 
   listingUstensil.forEach(function (Ustensil) {
     var newElement = document.createElement("p");
@@ -558,7 +558,7 @@ function getValidRecipe() {
   ustensilFilter = [];
   allRecipesOfObject.forEach(function (oneOfRecipe) {
     if (oneOfRecipe.hasFilters === totalFilters) {
-      console.log("la recette trouvée est " + oneOfRecipe.name);
+      // console.log("la recette trouvée est " + oneOfRecipe.name)
       card(oneOfRecipe);
       oneOfRecipe.ingredients.forEach(function (ingr) {
         if (ingredientFilter.includes(ingr.name) === false) {
@@ -579,9 +579,9 @@ function getValidRecipe() {
         }
       });
     }
-  });
-  console.log("voici les ingredients associés");
-  console.table(ingredientFilter);
+  }); // console.log("voici les ingredients associés")
+  // console.table(ingredientFilter)
+
   listingIngredient = [];
   document.querySelectorAll("#box1-ingredients p").forEach(function (e) {
     return e.remove();
@@ -593,9 +593,9 @@ function getValidRecipe() {
     newElementFiltered.innerText = ingredientFiltered;
     IngredientContainer.appendChild(newElementFiltered);
     newElementFiltered.addEventListener("click", tagIngredient);
-  });
-  console.log("voici les appareils associés");
-  console.table(applianceFilter);
+  }); // console.log("voici les appareils associés")
+  // console.table(applianceFilter)
+
   listingAppliance = [];
   document.querySelectorAll("#box2-appliance p").forEach(function (e) {
     return e.remove();
@@ -607,9 +607,9 @@ function getValidRecipe() {
     newElementFiltered.innerText = applianceFiltered;
     ApplianceContainer.appendChild(newElementFiltered);
     newElementFiltered.addEventListener("click", tagAppliance);
-  });
-  console.log("voici les ustensils associés");
-  console.table(ustensilFilter);
+  }); // console.log("voici les ustensils associés")
+  // console.table(ustensilFilter)
+
   listingUstensil = [];
   document.querySelectorAll("#box3-ustensils p").forEach(function (e) {
     return e.remove();
@@ -644,12 +644,16 @@ function principalSearch() {
     if (oneOfRecipe.hasFilters === totalFilters) {
       if (mainSearch.value.length > 2) {
         if (oneOfRecipe.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(mainSearch.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
-          console.log("une recette est trouvée" + oneOfRecipe.name);
           card(oneOfRecipe);
-        }
+        } else if (oneOfRecipe.description.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(mainSearch.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
+          card(oneOfRecipe);
+        } // else if (oneOfRecipe.ingredients.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(mainSearch.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
+        //     card(oneOfRecipe)
+        // }
+
+      } else {
+        console.log("aucune recette n'est disponible");
       }
-    } else {
-      console.log("aucune recette n'est disponible");
     }
   });
 }
