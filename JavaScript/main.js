@@ -204,7 +204,7 @@ function downIngredient() {
         IngredientContainer.appendChild(newElement);
         //ecoute pour la creation du tag
         newElement.addEventListener("click", tagIngredient);
-        //ecoute de l'input
+        //ecoute de l'input de recherche
         inputIngredient.addEventListener("input", function () {
             if (!Ingredient.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(inputIngredient.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
                 newElement.remove()
@@ -231,8 +231,8 @@ function tagIngredient() {
     newElementSelect.classList.add("box__text");
     newElementSelect.innerText = ingredientName;
     newDivSelect.appendChild(newElementSelect);
-    //texte barré
-    this.classList.add("ingredient-hide");
+    //texte barré dans le filtre
+    // this.classList.add("ingredient-hide");
     //creation de l'icone
     let newIconSelect = document.createElement("i");
     newIconSelect.classList.add("far", "fa-times-circle");
@@ -244,7 +244,7 @@ function tagIngredient() {
         newDivSelect.remove();
         let newElement = document.querySelector(`[data-element="${ingredientName}"]`)
         newElement.addEventListener("click", tagIngredient)
-        newElement.classList.remove("ingredient-hide")
+        // newElement.classList.remove("ingredient-hide")
         // lancement de la fonction pour supprimer la selection de l'ingredient cliqué
         removeIngredient(ingredientName)
     })
@@ -302,6 +302,7 @@ function downAppliance() {
     up2.classList.remove("hidden");
     down2.classList.add("hidden");
     document.getElementsByName('APPAREIL')[0].placeholder = 'Recherche un appareil';
+
     //creation de chaque paragraphe venant du listing
     listingAppliance.forEach((Appliance) => {
         let newElement = document.createElement("p");
@@ -317,12 +318,10 @@ function downAppliance() {
                 newElement.remove()
             }
             else {
-
                 ApplianceContainer.appendChild(newElement)
             }
         })
     })
-
 }
 
 //creation du tag Appareil + fermeture
@@ -339,8 +338,8 @@ function tagAppliance() {
     newElementSelect.classList.add("box__text");
     newElementSelect.innerText = applianceName;
     newDivSelect.appendChild(newElementSelect);
-    //texte barré
-    this.classList.add("appliance-hide");
+    //texte barré dans le filtre
+    // this.classList.add("appliance-hide");
     //creation de l'icone
     let newIconSelect = document.createElement("i");
     newIconSelect.classList.add("far", "fa-times-circle");
@@ -352,7 +351,7 @@ function tagAppliance() {
         newDivSelect.remove();
         let newElement = document.querySelector(`[data-element="${applianceName}"]`)
         newElement.addEventListener("click", tagAppliance)
-        newElement.classList.remove("appliance-hide")
+        // newElement.classList.remove("appliance-hide")
         // lancement de la fonction pour supprimer la selection de l'appareil cliqué
         removeAppliance(applianceName)
     })
@@ -367,7 +366,6 @@ function upAppliance() {
     document.getElementsByName('APPAREIL')[0].placeholder = 'Appareil';
     listingAppliance = [];
 }
-
 // fonction de selection d'un Appareil
 function addAppliance(applianceName) {
     totalFilters += 1
@@ -421,7 +419,6 @@ function downUstensil() {
         UstensilContainer.appendChild(newElement);
         // ecoute pour la creation du tag
         newElement.addEventListener("click", tagUstensil);
-
         //ecoute de l'input
         inputUstensil.addEventListener("input", function () {
             if (!Ustensil.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(inputUstensil.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
@@ -485,6 +482,7 @@ function addUstensil(ustensilName) {
         oneOfRecipe._addUstensilFilter(ustensilName)
     })
     getValidRecipe()
+
 }
 
 // fonction de déselection d'un Ustensil
@@ -518,21 +516,18 @@ function getValidRecipe() {
         if (oneOfRecipe.hasFilters === totalFilters) {
             // console.log("la recette trouvée est " + oneOfRecipe.name)
             card(oneOfRecipe)
-
             oneOfRecipe.ingredients.forEach((ingr) => {
                 if (ingredientFilter.includes(ingr.name) === false) {
                     ingredientFilter.push(ingr.name)
                     ingredientFilter.sort()
                 }
             })
-
             oneOfRecipe.appliances.forEach((appl) => {
                 if (applianceFilter.includes(appl.name) === false) {
                     applianceFilter.push(appl.name)
                     applianceFilter.sort()
                 }
             })
-
             oneOfRecipe.ustensils.forEach((ust) => {
                 if (ustensilFilter.includes(ust.name) === false) {
                     ustensilFilter.push(ust.name)
@@ -542,8 +537,7 @@ function getValidRecipe() {
         }
     })
 
-    // console.log("voici les ingredients associés")
-    // console.table(ingredientFilter)
+    // nouveau tableau Ingrédient mis à jour
     listingIngredient = []
     document.querySelectorAll("#box1-ingredients p").forEach(e => e.remove())
     ingredientFilter.forEach((ingredientFiltered) => {
@@ -555,8 +549,7 @@ function getValidRecipe() {
         newElementFiltered.addEventListener("click", tagIngredient);
     })
 
-    // console.log("voici les appareils associés")
-    // console.table(applianceFilter)
+    // nouveau tableau Appareil mis à jour
     listingAppliance = []
     document.querySelectorAll("#box2-appliance p").forEach(e => e.remove())
     applianceFilter.forEach((applianceFiltered) => {
@@ -565,13 +558,11 @@ function getValidRecipe() {
         newElementFiltered.setAttribute("data-element", applianceFiltered);
         newElementFiltered.innerText = applianceFiltered;
         ApplianceContainer.appendChild(newElementFiltered)
-        newElementFiltered.addEventListener("click", tagAppliance)
     })
 
-    // console.log("voici les ustensils associés")
-    // console.table(ustensilFilter)
-    listingUstensil = []
-    document.querySelectorAll("#box3-ustensils p").forEach(e => e.remove())
+    // nouveau tableau Ustensils mis à jour    
+    listingUstensil = []   
+    document.querySelectorAll("#box3-ustensils p").forEach(e => e.remove())     
     ustensilFilter.forEach((ustensilFiltered) => {
         let newElementFiltered = document.createElement("p");
         newElementFiltered.classList.add("ustensil");
@@ -579,9 +570,44 @@ function getValidRecipe() {
         newElementFiltered.innerText = ustensilFiltered;
         UstensilContainer.appendChild(newElementFiltered)
         newElementFiltered.addEventListener("click", tagUstensil)
-
     })
 }
+
+//recherche dans la barre principale
+mainSearch.addEventListener("input", principalSearch)
+
+function principalSearch() {
+    document.querySelectorAll('.result-recipe').forEach((showCards) => {
+        showCards.remove()
+    })
+    allRecipesOfObject.forEach((oneOfRecipe) => {
+        if (oneOfRecipe.hasFilters === totalFilters) {
+            if (mainSearch.value.length > 2) {
+                if (oneOfRecipe.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(mainSearch.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
+                    card(oneOfRecipe)
+                    recipesfound.push(oneOfRecipe.name)
+                }
+                // else if (oneOfRecipe.description.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(mainSearch.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
+                //     card(oneOfRecipe)
+
+                // }
+                // else {
+                //     oneOfRecipe.ingredients.forEach(function (ingr) {
+                //         if (ingr.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(mainSearch.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
+                //             card(oneOfRecipe)
+                //         }
+                //     })
+                // }
+            }
+            else {
+                console.log("aucune recette n'est disponible")
+            }
+        }
+    })
+}
+console.log(recipesfound)
+console.log(allRecipesOfObject)
+
 
 
 
@@ -611,41 +637,3 @@ function card(recipe) {
 </figure>`
     mainRecipes.insertAdjacentHTML('beforeend', CardRecipe)
 }
-
-
-//recherche dans la barre principale
-mainSearch.addEventListener("input", principalSearch)
-
-function principalSearch() {
-    document.querySelectorAll('.result-recipe').forEach((showCards) => {
-        showCards.remove()
-    })
-    allRecipesOfObject.forEach((oneOfRecipe) => {
-        if (oneOfRecipe.hasFilters === totalFilters) {
-            if (mainSearch.value.length > 2) {
-                if (oneOfRecipe.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(mainSearch.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
-                    card(oneOfRecipe)
-                }                
-                else if(oneOfRecipe.description.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(mainSearch.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
-                    card(oneOfRecipe)
-                }
-                else {
-                    oneOfRecipe.ingredients.forEach(function(ingr){
-                        if (ingr.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(mainSearch.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
-                            card(oneOfRecipe)                            
-                        }
-                    })
-                }               
-            }
-            else {
-                console.log("aucune recette n'est disponible")
-            }
-        }
-    })
-}
-
-
-
-
-
-

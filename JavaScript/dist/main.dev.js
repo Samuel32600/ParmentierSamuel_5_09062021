@@ -259,7 +259,7 @@ function downIngredient() {
     newElement.innerText = Ingredient;
     IngredientContainer.appendChild(newElement); //ecoute pour la creation du tag
 
-    newElement.addEventListener("click", tagIngredient); //ecoute de l'input
+    newElement.addEventListener("click", tagIngredient); //ecoute de l'input de recherche
 
     inputIngredient.addEventListener("input", function () {
       if (!Ingredient.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(inputIngredient.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
@@ -285,9 +285,9 @@ function tagIngredient() {
   var ingredientName = this.innerText;
   newElementSelect.classList.add("box__text");
   newElementSelect.innerText = ingredientName;
-  newDivSelect.appendChild(newElementSelect); //texte barré
-
-  this.classList.add("ingredient-hide"); //creation de l'icone
+  newDivSelect.appendChild(newElementSelect); //texte barré dans le filtre
+  // this.classList.add("ingredient-hide");
+  //creation de l'icone
 
   var newIconSelect = document.createElement("i");
   newIconSelect.classList.add("far", "fa-times-circle");
@@ -298,8 +298,8 @@ function tagIngredient() {
   newIconSelect.addEventListener("click", function () {
     newDivSelect.remove();
     var newElement = document.querySelector("[data-element=\"".concat(ingredientName, "\"]"));
-    newElement.addEventListener("click", tagIngredient);
-    newElement.classList.remove("ingredient-hide"); // lancement de la fonction pour supprimer la selection de l'ingredient cliqué
+    newElement.addEventListener("click", tagIngredient); // newElement.classList.remove("ingredient-hide")
+    // lancement de la fonction pour supprimer la selection de l'ingredient cliqué
 
     removeIngredient(ingredientName);
   });
@@ -389,9 +389,9 @@ function tagAppliance() {
   var applianceName = this.innerText;
   newElementSelect.classList.add("box__text");
   newElementSelect.innerText = applianceName;
-  newDivSelect.appendChild(newElementSelect); //texte barré
-
-  this.classList.add("appliance-hide"); //creation de l'icone
+  newDivSelect.appendChild(newElementSelect); //texte barré dans le filtre
+  // this.classList.add("appliance-hide");
+  //creation de l'icone
 
   var newIconSelect = document.createElement("i");
   newIconSelect.classList.add("far", "fa-times-circle");
@@ -402,8 +402,8 @@ function tagAppliance() {
   newIconSelect.addEventListener("click", function () {
     newDivSelect.remove();
     var newElement = document.querySelector("[data-element=\"".concat(applianceName, "\"]"));
-    newElement.addEventListener("click", tagAppliance);
-    newElement.classList.remove("appliance-hide"); // lancement de la fonction pour supprimer la selection de l'appareil cliqué
+    newElement.addEventListener("click", tagAppliance); // newElement.classList.remove("appliance-hide")
+    // lancement de la fonction pour supprimer la selection de l'appareil cliqué
 
     removeAppliance(applianceName);
   });
@@ -579,8 +579,7 @@ function getValidRecipe() {
         }
       });
     }
-  }); // console.log("voici les ingredients associés")
-  // console.table(ingredientFilter)
+  }); // nouveau tableau Ingrédient mis à jour
 
   listingIngredient = [];
   document.querySelectorAll("#box1-ingredients p").forEach(function (e) {
@@ -593,8 +592,7 @@ function getValidRecipe() {
     newElementFiltered.innerText = ingredientFiltered;
     IngredientContainer.appendChild(newElementFiltered);
     newElementFiltered.addEventListener("click", tagIngredient);
-  }); // console.log("voici les appareils associés")
-  // console.table(applianceFilter)
+  }); // nouveau tableau Appareil mis à jour
 
   listingAppliance = [];
   document.querySelectorAll("#box2-appliance p").forEach(function (e) {
@@ -606,9 +604,7 @@ function getValidRecipe() {
     newElementFiltered.setAttribute("data-element", applianceFiltered);
     newElementFiltered.innerText = applianceFiltered;
     ApplianceContainer.appendChild(newElementFiltered);
-    newElementFiltered.addEventListener("click", tagAppliance);
-  }); // console.log("voici les ustensils associés")
-  // console.table(ustensilFilter)
+  }); // nouveau tableau Ustensils mis à jour    
 
   listingUstensil = [];
   document.querySelectorAll("#box3-ustensils p").forEach(function (e) {
@@ -622,15 +618,6 @@ function getValidRecipe() {
     UstensilContainer.appendChild(newElementFiltered);
     newElementFiltered.addEventListener("click", tagUstensil);
   });
-} //création d'une carte recette
-
-
-function card(recipe) {
-  var CardRecipe = "";
-  CardRecipe += "<figure class=\"result-recipe\">\n    <img class=\"recette\">\n    <figcaption>\n        <aside class=\"title\">\n            <p class=\"name\">".concat(recipe.name, "</p>\n            <div class=\"duration\">\n                <i class=\"far fa-clock\"></i>\n                <p class=\"time\">").concat(recipe.time, " min</p>\n            </div>\n        </aside>\n        <div class=\"text\">\n            <ul class=\"ingredients\">               \n                ").concat(recipe.ingredients.map(function (elementOfIngredient) {
-    return "\n                <li>\n                    <span>".concat(elementOfIngredient.name, " : </span>").concat(elementOfIngredient.quantity, " ").concat(elementOfIngredient.unit, "\n                </li>");
-  }).join(""), "\n            </ul>\n            <p class=\"description\">").concat(recipe.description, "</p>\n        </div>\n    </figcaption>\n</figure>");
-  mainRecipes.insertAdjacentHTML('beforeend', CardRecipe);
 } //recherche dans la barre principale
 
 
@@ -645,18 +632,32 @@ function principalSearch() {
       if (mainSearch.value.length > 2) {
         if (oneOfRecipe.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(mainSearch.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
           card(oneOfRecipe);
-        } else if (oneOfRecipe.description.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(mainSearch.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
-          card(oneOfRecipe);
-        } else {
-          oneOfRecipe.ingredients.forEach(function (ingr) {
-            if (ingr.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(mainSearch.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
-              card(oneOfRecipe);
-            }
-          });
-        }
+          recipesfound.push(oneOfRecipe.name);
+        } // else if (oneOfRecipe.description.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(mainSearch.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
+        //     card(oneOfRecipe)
+        // }
+        // else {
+        //     oneOfRecipe.ingredients.forEach(function (ingr) {
+        //         if (ingr.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(mainSearch.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
+        //             card(oneOfRecipe)
+        //         }
+        //     })
+        // }
+
       } else {
         console.log("aucune recette n'est disponible");
       }
     }
   });
+}
+
+console.log(recipesfound);
+console.log(allRecipesOfObject); //création d'une carte recette
+
+function card(recipe) {
+  var CardRecipe = "";
+  CardRecipe += "<figure class=\"result-recipe\">\n    <img class=\"recette\">\n    <figcaption>\n        <aside class=\"title\">\n            <p class=\"name\">".concat(recipe.name, "</p>\n            <div class=\"duration\">\n                <i class=\"far fa-clock\"></i>\n                <p class=\"time\">").concat(recipe.time, " min</p>\n            </div>\n        </aside>\n        <div class=\"text\">\n            <ul class=\"ingredients\">               \n                ").concat(recipe.ingredients.map(function (elementOfIngredient) {
+    return "\n                <li>\n                    <span>".concat(elementOfIngredient.name, " : </span>").concat(elementOfIngredient.quantity, " ").concat(elementOfIngredient.unit, "\n                </li>");
+  }).join(""), "\n            </ul>\n            <p class=\"description\">").concat(recipe.description, "</p>\n        </div>\n    </figcaption>\n</figure>");
+  mainRecipes.insertAdjacentHTML('beforeend', CardRecipe);
 }
