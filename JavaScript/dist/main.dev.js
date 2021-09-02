@@ -20,8 +20,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 var allRecipesOfObject = [];
 var allIngredients = [];
 var allAppliances = [];
-var allUstensils = []; // let recipesfound = []
-// tableau avec données triées et doublon supprimé
+var allUstensils = [];
+var recipesfound = []; // tableau avec données triées et doublon supprimé
 
 var listingIngredient = [];
 var listingAppliance = [];
@@ -647,10 +647,13 @@ function principalSearch() {
           card(oneOfRecipe);
         } else if (oneOfRecipe.description.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(mainSearch.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
           card(oneOfRecipe);
-        } // else if (oneOfRecipe.ingredients.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(mainSearch.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
-        //     card(oneOfRecipe)
-        // }
-
+        } else {
+          oneOfRecipe.ingredients.forEach(function (ingr) {
+            if (ingr.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(mainSearch.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
+              card(oneOfRecipe);
+            }
+          });
+        }
       } else {
         console.log("aucune recette n'est disponible");
       }
