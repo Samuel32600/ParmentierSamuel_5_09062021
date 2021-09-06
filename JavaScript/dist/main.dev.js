@@ -542,83 +542,7 @@ function removeUstensil(ustensilName) {
   });
   getValidRecipe();
 } //------------------------------------------------------------------------------------------
-
-
-var ingredientFilter = [];
-var applianceFilter = [];
-var ustensilFilter = []; //affichage des recettes en fonction des filtres selectionnés
-
-function getValidRecipe() {
-  document.querySelectorAll('.result-recipe').forEach(function (showCards) {
-    showCards.remove();
-  }); // console.log("les recettes disponibles avec les", totalFilters, "filtres selectionnés")
-
-  ingredientFilter = [];
-  applianceFilter = [];
-  ustensilFilter = [];
-  allRecipesOfObject.forEach(function (oneOfRecipe) {
-    if (oneOfRecipe.hasFilters === totalFilters) {
-      // console.log("la recette trouvée est " + oneOfRecipe.name)
-      card(oneOfRecipe);
-      oneOfRecipe.ingredients.forEach(function (ingr) {
-        if (ingredientFilter.includes(ingr.name) === false) {
-          ingredientFilter.push(ingr.name);
-          ingredientFilter.sort();
-        }
-      });
-      oneOfRecipe.appliances.forEach(function (appl) {
-        if (applianceFilter.includes(appl.name) === false) {
-          applianceFilter.push(appl.name);
-          applianceFilter.sort();
-        }
-      });
-      oneOfRecipe.ustensils.forEach(function (ust) {
-        if (ustensilFilter.includes(ust.name) === false) {
-          ustensilFilter.push(ust.name);
-          ustensilFilter.sort();
-        }
-      });
-    }
-  }); // nouveau tableau Ingrédient mis à jour
-
-  listingIngredient = [];
-  document.querySelectorAll("#box1-ingredients p").forEach(function (e) {
-    return e.remove();
-  });
-  ingredientFilter.forEach(function (ingredientFiltered) {
-    var newElementFiltered = document.createElement("p");
-    newElementFiltered.classList.add("ingredient");
-    newElementFiltered.setAttribute("data-element", ingredientFiltered);
-    newElementFiltered.innerText = ingredientFiltered;
-    IngredientContainer.appendChild(newElementFiltered);
-    newElementFiltered.addEventListener("click", tagIngredient);
-  }); // nouveau tableau Appareil mis à jour
-
-  listingAppliance = [];
-  document.querySelectorAll("#box2-appliance p").forEach(function (e) {
-    return e.remove();
-  });
-  applianceFilter.forEach(function (applianceFiltered) {
-    var newElementFiltered = document.createElement("p");
-    newElementFiltered.classList.add("appliance");
-    newElementFiltered.setAttribute("data-element", applianceFiltered);
-    newElementFiltered.innerText = applianceFiltered;
-    ApplianceContainer.appendChild(newElementFiltered);
-  }); // nouveau tableau Ustensils mis à jour    
-
-  listingUstensil = [];
-  document.querySelectorAll("#box3-ustensils p").forEach(function (e) {
-    return e.remove();
-  });
-  ustensilFilter.forEach(function (ustensilFiltered) {
-    var newElementFiltered = document.createElement("p");
-    newElementFiltered.classList.add("ustensil");
-    newElementFiltered.setAttribute("data-element", ustensilFiltered);
-    newElementFiltered.innerText = ustensilFiltered;
-    UstensilContainer.appendChild(newElementFiltered);
-    newElementFiltered.addEventListener("click", tagUstensil);
-  });
-} //recherche dans la barre principale
+//recherche dans la barre principale
 
 
 mainSearch.addEventListener("input", principalSearch);
@@ -631,28 +555,135 @@ function principalSearch() {
     if (oneOfRecipe.hasFilters === totalFilters) {
       if (mainSearch.value.length > 2) {
         if (oneOfRecipe.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(mainSearch.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
-          card(oneOfRecipe);
-          recipesfound.push(oneOfRecipe.name);
+          recipesfound.push(oneOfRecipe);
+          allRecipesOfObject = recipesfound;
+          getValidRecipe();
         } // else if (oneOfRecipe.description.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(mainSearch.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
-        //     card(oneOfRecipe)
+        //     recipesfound.push(oneOfRecipe)
+        //     allRecipesOfObject = recipesfound
+        //     getValidRecipe()
         // }
         // else {
         //     oneOfRecipe.ingredients.forEach(function (ingr) {
         //         if (ingr.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(mainSearch.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
-        //             card(oneOfRecipe)
+        //             recipesfound.push(oneOfRecipe)
+        //             allRecipesOfObject = recipesfound
+        //             getValidRecipe()
         //         }
         //     })
         // }
 
-      } else {
-        console.log("aucune recette n'est disponible");
       }
     }
   });
-}
+} //affichage des recettes en fonction des filtres selectionnés
 
-console.log(recipesfound);
-console.log(allRecipesOfObject); //création d'une carte recette
+
+var ingredientFilter = [];
+var applianceFilter = [];
+var ustensilFilter = [];
+
+function getValidRecipe() {
+  document.querySelectorAll('.result-recipe').forEach(function (showCards) {
+    return showCards.remove();
+  });
+  ingredientFilter = [];
+  applianceFilter = [];
+  ustensilFilter = [];
+  allRecipesOfObject.forEach(function (oneOfRecipe) {
+    if (oneOfRecipe.hasFilters === totalFilters) {
+      //mise a jour des ingredients
+      oneOfRecipe.ingredients.forEach(function (ingr) {
+        if (ingredientFilter.includes(ingr.name) === false) {
+          ingredientFilter.push(ingr.name);
+          ingredientFilter.sort();
+        }
+      }); //mise a jour des appareils
+
+      oneOfRecipe.appliances.forEach(function (appl) {
+        if (applianceFilter.includes(appl.name) === false) {
+          applianceFilter.push(appl.name);
+          applianceFilter.sort();
+        }
+      }); //mise a jour des ustensiles
+
+      oneOfRecipe.ustensils.forEach(function (ust) {
+        if (ustensilFilter.includes(ust.name) === false) {
+          ustensilFilter.push(ust.name);
+          ustensilFilter.sort();
+        }
+      });
+    }
+
+    card(oneOfRecipe);
+  }); // nouveau tableau Ingrédient mis à jour
+
+  listingIngredient = [];
+  document.querySelectorAll("#box1-ingredients p").forEach(function (e) {
+    return e.remove();
+  });
+  ingredientFilter.forEach(function (ingredientFiltered) {
+    var newElementFiltered = document.createElement("p");
+    newElementFiltered.classList.add("ingredient");
+    newElementFiltered.setAttribute("data-element", ingredientFiltered);
+    newElementFiltered.innerText = ingredientFiltered;
+    IngredientContainer.appendChild(newElementFiltered);
+    newElementFiltered.addEventListener("click", tagIngredient); //ecoute de l'input de recherche
+
+    inputIngredient.addEventListener("input", function () {
+      listingAppliance = [];
+
+      if (!ingredientFiltered.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(inputIngredient.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
+        newElementFiltered.remove();
+      } else {
+        IngredientContainer.appendChild(newElementFiltered);
+      }
+    });
+  }); // nouveau tableau Appareil mis à jour
+
+  listingAppliance = [];
+  document.querySelectorAll("#box2-appliance p").forEach(function (e) {
+    return e.remove();
+  });
+  applianceFilter.forEach(function (applianceFiltered) {
+    var newElementFiltered = document.createElement("p");
+    newElementFiltered.classList.add("appliance");
+    newElementFiltered.setAttribute("data-element", applianceFiltered);
+    newElementFiltered.innerText = applianceFiltered;
+    ApplianceContainer.appendChild(newElementFiltered);
+    newElementFiltered.addEventListener("click", tagAppliance); //ecoute de l'input
+
+    inputAppliance.addEventListener("input", function () {
+      if (!applianceFiltered.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(inputAppliance.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
+        newElementFiltered.remove();
+      } else {
+        ApplianceContainer.appendChild(newElementFiltered);
+      }
+    });
+  }); // nouveau tableau Ustensils mis à jour    
+
+  listingUstensil = [];
+  document.querySelectorAll("#box3-ustensils p").forEach(function (e) {
+    return e.remove();
+  });
+  ustensilFilter.forEach(function (ustensilFiltered) {
+    var newElementFiltered = document.createElement("p");
+    newElementFiltered.classList.add("ustensil");
+    newElementFiltered.setAttribute("data-element", ustensilFiltered);
+    newElementFiltered.innerText = ustensilFiltered;
+    UstensilContainer.appendChild(newElementFiltered);
+    newElementFiltered.addEventListener("click", tagUstensil); //ecoute de l'input
+
+    inputUstensil.addEventListener("input", function () {
+      if (!ustensilFiltered.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(inputUstensil.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
+        newElementFiltered.remove();
+      } else {
+        UstensilContainer.appendChild(newElementFiltered);
+      }
+    });
+  });
+} //création d'une carte recette
+
 
 function card(recipe) {
   var CardRecipe = "";
