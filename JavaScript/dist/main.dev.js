@@ -494,8 +494,8 @@ function tagUstensil() {
   newElementSelect.classList.add("box__text");
   newElementSelect.innerText = ustensilName;
   newDivSelect.appendChild(newElementSelect); //texte barré
-
-  this.classList.add("ustensil-hide"); //creation de l'icone
+  // this.classList.add("ustensil-hide");
+  //creation de l'icone
 
   var newIconSelect = document.createElement("i");
   newIconSelect.classList.add("far", "fa-times-circle");
@@ -506,8 +506,8 @@ function tagUstensil() {
   newIconSelect.addEventListener("click", function () {
     newDivSelect.remove();
     var newElement = document.querySelector("[data-element=\"".concat(ustensilName, "\"]"));
-    newElement.addEventListener("click", tagUstensil);
-    newElement.classList.remove("ustensil-hide"); // lancement de la fonction pour supprimer la selection de l'ustensil cliqué
+    newElement.addEventListener("click", tagUstensil); // newElement.classList.remove("ustensil-hide")
+    // lancement de la fonction pour supprimer la selection de l'ustensil cliqué
 
     removeUstensil(ustensilName);
   });

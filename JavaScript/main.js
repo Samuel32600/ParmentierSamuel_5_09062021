@@ -86,7 +86,7 @@ class Recipe {
         this.ustensils.forEach((oneOfUstensil) => {
             if (oneOfUstensil.name === ustensilName) {
                 oneOfUstensil.isChecked = true
-                this.hasFilters += 1
+                this.hasFilters += 1                
             }
         })
     }
@@ -446,7 +446,7 @@ function tagUstensil() {
     newElementSelect.innerText = ustensilName;
     newDivSelect.appendChild(newElementSelect);
     //texte barré
-    this.classList.add("ustensil-hide");
+    // this.classList.add("ustensil-hide");
     //creation de l'icone
     let newIconSelect = document.createElement("i");
     newIconSelect.classList.add("far", "fa-times-circle");
@@ -458,7 +458,7 @@ function tagUstensil() {
         newDivSelect.remove();
         let newElement = document.querySelector(`[data-element="${ustensilName}"]`)
         newElement.addEventListener("click", tagUstensil)
-        newElement.classList.remove("ustensil-hide")
+        // newElement.classList.remove("ustensil-hide")
         // lancement de la fonction pour supprimer la selection de l'ustensil cliqué
         removeUstensil(ustensilName)
     })
@@ -481,8 +481,8 @@ function addUstensil(ustensilName) {
     allRecipesOfObject.forEach((oneOfRecipe) => {
         oneOfRecipe._addUstensilFilter(ustensilName)
     })
-    getValidRecipe()
 
+    getValidRecipe()
 }
 
 // fonction de déselection d'un Ustensil
@@ -539,16 +539,16 @@ let applianceFilter = []
 let ustensilFilter = []
 
 function getValidRecipe() {
-    
+
     document.querySelectorAll('.result-recipe').forEach((showCards) => showCards.remove())
-    
-    
+
+
     ingredientFilter = []
     applianceFilter = []
     ustensilFilter = []
     allRecipesOfObject.forEach((oneOfRecipe) => {
-        if (oneOfRecipe.hasFilters === totalFilters) {          
-            
+        if (oneOfRecipe.hasFilters === totalFilters) {
+
             //mise a jour des ingredients
             oneOfRecipe.ingredients.forEach((ingr) => {
                 if (ingredientFilter.includes(ingr.name) === false) {

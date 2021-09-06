@@ -182,7 +182,7 @@ button img {
     display: grid;
     grid-template-columns: repeat(3, 150px);
     border-radius: 0 0 5px 5px;
-    overflow-y: scroll;   
+    overflow: scroll;
 }
 
 ::-webkit-scrollbar{
