@@ -548,6 +548,15 @@ function removeUstensil(ustensilName) {
 }
 
 // mise a jour du listing Ustensil
+// newElementFiltered.addEventListener("click", hide)
+
+//         function hide(){
+//             if( newElementFiltered.isChecked = true){
+//                 ustensilFiltered.classList.add("ustensil-hide")}  
+//             else{
+//                 ustensilFiltered.classList.remove("ustensil-hide")
+//             }
+//         }
 function updateFilterUstensil() {
     listingUstensil = []
     document.querySelectorAll("#box3-ustensils p").forEach(e => e.remove())
@@ -605,6 +614,7 @@ function principalSearch() {
                     })
                 }
             }
+
         }
     })
 }
@@ -616,9 +626,10 @@ function getValidRecipe() {
     document.querySelectorAll('.result-recipe').forEach((showCards) => showCards.remove())
     ingredientFilter = []
     applianceFilter = []
-    ustensilFilter = []
+    ustensilFilter = []    
 
     allRecipesOfObject.forEach((oneOfRecipe) => {
+        
         if (oneOfRecipe.hasFilters === totalFilters) {
             card(oneOfRecipe)
 
@@ -647,10 +658,8 @@ function getValidRecipe() {
     })
     // nouveau tableau Ingrédient mis à jour
     updateFilterIngredient()
-
     // nouveau tableau Appareil mis à jour
     updateFilterAppliance()
-
     // nouveau tableau Ustensils mis à jour 
     updateFilterUstensil()
 }

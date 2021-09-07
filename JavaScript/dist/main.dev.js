@@ -591,6 +591,14 @@ function removeUstensil(ustensilName) {
   });
   getValidRecipe();
 } // mise a jour du listing Ustensil
+// newElementFiltered.addEventListener("click", hide)
+//         function hide(){
+//             if( newElementFiltered.isChecked = true){
+//                 ustensilFiltered.classList.add("ustensil-hide")}  
+//             else{
+//                 ustensilFiltered.classList.remove("ustensil-hide")
+//             }
+//         }
 
 
 function updateFilterUstensil() {
