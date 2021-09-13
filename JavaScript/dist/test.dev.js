@@ -18,10 +18,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 //tableau avec l'ensemble des données
 var allRecipesOfObject = [];
-var allRecipesFounded = [];
 var allIngredients = [];
 var allAppliances = [];
-var allUstensils = []; // tableau avec données triées et doublon supprimé
+var allUstensils = [];
+var recipesfound = []; // tableau avec données triées et doublon supprimé
 
 var listingIngredient = [];
 var listingAppliance = [];
@@ -29,11 +29,7 @@ var listingUstensil = []; //nouveau tableau apres les selections des filtres
 
 var ingredientFilter = [];
 var applianceFilter = [];
-var ustensilFilter = []; //tableau suite selection d'un tag
-
-var taggedIngredients = [];
-var taggedAppliance = [];
-var taggedUstensils = [];
+var ustensilFilter = [];
 var mainRecipes = document.getElementById("allRecipes");
 var mainSearch = document.getElementById("main-search");
 var totalFilters = 0;
@@ -179,9 +175,9 @@ function () {
   }]);
 
   return Recipe;
-}(); //***************************************
-//  definition des classes des 3 Filtres
-//***************************************
+}(); //************************************
+//  definition des classes des tags
+//************************************
 
 
 var Ingredient =
@@ -263,12 +259,11 @@ _recipes.recipes.forEach(function (oneOfRecipe) {
     newRecipe._addUstensil(newUstensil);
   });
   allRecipesOfObject.push(newRecipe);
-});
-
-allRecipesFounded = allRecipesOfObject; //************************************
+}); //************************************
 //            Ingredients
 //************************************
 //suppression doublon + trier alphabetiquement
+
 
 listingIngredient = _toConsumableArray(new Set(allIngredients));
 listingIngredient.sort(); // fonction au clic sur le chevron bas
@@ -278,12 +273,8 @@ function downIngredient() {
   box1Extended.classList.add("box-extend");
   up1.classList.remove("hidden");
   down1.classList.add("hidden");
-  document.getElementsByName('INGREDIENT')[0].placeholder = 'Recherche un ingrédient';
-  createIngredientListing();
-} //creation de chaque paragraphe venant du listing
+  document.getElementsByName('INGREDIENT')[0].placeholder = 'Recherche un ingrédient'; //creation de chaque paragraphe venant du listing
 
-
-function createIngredientListing() {
   listingIngredient.forEach(function (Ingredient) {
     var newElement = document.createElement("p");
     newElement.classList.add("ingredient");
@@ -302,14 +293,14 @@ function createIngredientListing() {
     });
   });
 } //creation du tag Ingredient + fermeture
+//fonction tag
 
 
 function tagIngredient() {
-  taggedIngredients.push(this.innerText);
   this.removeEventListener("click", tagIngredient); //creation de la div
 
   var newDivSelect = document.createElement("div");
-  newDivSelect.setAttribute("id", "box-tag-ingredient-" + this.innerText);
+  newDivSelect.setAttribute("id", "box-tag-ingredient");
   newDivSelect.classList.add("box1-select-ingredients", "box1");
   selectContainerIngredient.appendChild(newDivSelect); //creation du texte
 
@@ -317,13 +308,24 @@ function tagIngredient() {
   var ingredientName = this.innerText;
   newElementSelect.classList.add("box__text");
   newElementSelect.innerText = ingredientName;
-  newDivSelect.appendChild(newElementSelect); //creation de l'icone
+  newDivSelect.appendChild(newElementSelect); //texte barré dans le filtre
+
+  this.classList.add("ingredient-hide"); //creation de l'icone
 
   var newIconSelect = document.createElement("i");
   newIconSelect.classList.add("far", "fa-times-circle");
   newDivSelect.appendChild(newIconSelect); //lancement de la fonction pour selection une recette en fonction de l'ingredient cliqué
 
-  addIngredient(ingredientName);
+  addIngredient(ingredientName); //fermeture du tag par la croix  
+
+  newIconSelect.addEventListener("click", function () {
+    newDivSelect.remove();
+    var newElement = document.querySelector("[data-element=\"".concat(ingredientName, "\"]"));
+    newElement.addEventListener("click", tagIngredient);
+    newElement.classList.remove("ingredient-hide"); // lancement de la fonction pour supprimer la selection de l'ingredient cliqué
+
+    removeIngredient(ingredientName);
+  });
 } // fonction au clic sur le chevron haut
 
 
@@ -366,27 +368,7 @@ function updateFilterIngredient() {
     newElementFiltered.setAttribute("data-element", ingredientFiltered);
     newElementFiltered.innerText = ingredientFiltered;
     IngredientContainer.appendChild(newElementFiltered);
-    newElementFiltered.addEventListener("click", tagIngredient);
-
-    if (taggedIngredients.includes(ingredientFiltered)) {
-      newElementFiltered.classList.add("ingredient-hide");
-      newElementFiltered.removeEventListener("click", tagIngredient);
-      var newDivSelect = document.getElementById("box-tag-ingredient-" + ingredientFiltered);
-      newDivSelect.addEventListener("click", function () {
-        taggedIngredients.forEach(function (oneTaggedIngredient, index) {
-          if (oneTaggedIngredient === ingredientFiltered) {
-            taggedIngredients.splice(index, 1);
-          }
-        });
-        newDivSelect.remove();
-        var newElement = document.querySelector("[data-element=\"".concat(ingredientFiltered, "\"]"));
-        newElement.addEventListener("click", tagIngredient);
-        newElement.classList.remove("ingredient-hide"); // lancement de la fonction pour supprimer la selection de l'ustensil cliqué
-
-        removeIngredient(ingredientFiltered);
-      });
-    } //ecoute de l'input de recherche
-
+    newElementFiltered.addEventListener("click", tagIngredient); //ecoute de l'input de recherche
 
     inputIngredient.addEventListener("input", function () {
       if (!ingredientFiltered.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(inputIngredient.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
@@ -410,12 +392,8 @@ function downAppliance() {
   box2Extended.classList.add("box-extend");
   up2.classList.remove("hidden");
   down2.classList.add("hidden");
-  document.getElementsByName('APPAREIL')[0].placeholder = 'Recherche un appareil';
-  createApplianceListing();
-} //creation de chaque paragraphe venant du listing
+  document.getElementsByName('APPAREIL')[0].placeholder = 'Recherche un appareil'; //creation de chaque paragraphe venant du listing
 
-
-function createApplianceListing() {
   listingAppliance.forEach(function (Appliance) {
     var newElement = document.createElement("p");
     newElement.classList.add("appliance");
@@ -437,11 +415,10 @@ function createApplianceListing() {
 
 
 function tagAppliance() {
-  taggedAppliance.push(this.innerText);
   this.removeEventListener("click", tagAppliance); //creation de la div
 
   var newDivSelect = document.createElement("div");
-  newDivSelect.setAttribute("id", "box-tag-appliance-" + this.innerText);
+  newDivSelect.setAttribute("id", "box-tag-appliance");
   newDivSelect.classList.add("box2-select-appliances", "box2");
   selectContainerAppliance.appendChild(newDivSelect); //creation du texte
 
@@ -449,13 +426,24 @@ function tagAppliance() {
   var applianceName = this.innerText;
   newElementSelect.classList.add("box__text");
   newElementSelect.innerText = applianceName;
-  newDivSelect.appendChild(newElementSelect); //creation de l'icone
+  newDivSelect.appendChild(newElementSelect); //texte barré dans le filtre
+
+  this.classList.add("appliance-hide"); //creation de l'icone
 
   var newIconSelect = document.createElement("i");
   newIconSelect.classList.add("far", "fa-times-circle");
   newDivSelect.appendChild(newIconSelect); //lancement de la fonction pour selection une recette en fonction de l'ustensil cliqué
 
-  addAppliance(applianceName);
+  addAppliance(applianceName); //fermeture du tag par la croix  
+
+  newIconSelect.addEventListener("click", function () {
+    newDivSelect.remove();
+    var newElement = document.querySelector("[data-element=\"".concat(applianceName, "\"]"));
+    newElement.addEventListener("click", tagAppliance);
+    newElement.classList.remove("appliance-hide"); // lancement de la fonction pour supprimer la selection de l'appareil cliqué
+
+    removeAppliance(applianceName);
+  });
 } // fonction au clic sur le chevron haut
 
 
@@ -498,27 +486,7 @@ function updateFilterAppliance() {
     newElementFiltered.setAttribute("data-element", applianceFiltered);
     newElementFiltered.innerText = applianceFiltered;
     ApplianceContainer.appendChild(newElementFiltered);
-    newElementFiltered.addEventListener("click", tagAppliance);
-
-    if (taggedAppliance.includes(applianceFiltered)) {
-      newElementFiltered.classList.add("appliance-hide");
-      newElementFiltered.removeEventListener("click", tagAppliance);
-      var newDivSelect = document.getElementById("box-tag-appliance-" + applianceFiltered);
-      newDivSelect.addEventListener("click", function () {
-        taggedAppliance.forEach(function (oneTaggedAppliance, index) {
-          if (oneTaggedAppliance === applianceFiltered) {
-            taggedAppliance.splice(index, 1);
-          }
-        });
-        newDivSelect.remove();
-        var newElement = document.querySelector("[data-element=\"".concat(applianceFiltered, "\"]"));
-        newElement.addEventListener("click", tagAppliance);
-        newElement.classList.remove("appliance-hide"); // lancement de la fonction pour supprimer la selection de l'ustensil cliqué
-
-        removeAppliance(applianceFiltered);
-      });
-    } //ecoute de l'input
-
+    newElementFiltered.addEventListener("click", tagAppliance); //ecoute de l'input
 
     inputAppliance.addEventListener("input", function () {
       if (!applianceFiltered.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(inputAppliance.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
@@ -542,12 +510,8 @@ function downUstensil() {
   box3Extended.classList.add("box-extend");
   up3.classList.remove("hidden");
   down3.classList.add("hidden");
-  document.getElementsByName('USTENSIL')[0].placeholder = 'Recherche un ustensile';
-  createUstensilListing();
-} //creation de chaque paragraphe venant du listing    
+  document.getElementsByName('USTENSIL')[0].placeholder = 'Recherche un ustensile'; //creation de chaque paragraphe venant du listing    
 
-
-function createUstensilListing() {
   listingUstensil.forEach(function (Ustensil) {
     var newElement = document.createElement("p");
     newElement.classList.add("ustensil");
@@ -569,11 +533,10 @@ function createUstensilListing() {
 
 
 function tagUstensil() {
-  taggedUstensils.push(this.innerText);
   this.removeEventListener("click", tagUstensil); //creation de la div
 
   var newDivSelect = document.createElement("div");
-  newDivSelect.setAttribute("id", "box-tag-ustensil-" + this.innerText);
+  newDivSelect.setAttribute("id", "box-tag-ustensil");
   newDivSelect.classList.add("box3-select-ustensils", "box3");
   selectContainerUstensils.appendChild(newDivSelect); //creation du texte
 
@@ -581,13 +544,24 @@ function tagUstensil() {
   var ustensilName = this.innerText;
   newElementSelect.classList.add("box__text");
   newElementSelect.innerText = ustensilName;
-  newDivSelect.appendChild(newElementSelect); //creation de l'icone
+  newDivSelect.appendChild(newElementSelect); //texte barré
+
+  this.classList.add("ustensil-hide"); //creation de l'icone
 
   var newIconSelect = document.createElement("i");
   newIconSelect.classList.add("far", "fa-times-circle");
   newDivSelect.appendChild(newIconSelect); //lancement de la fonction pour selection une recette en fonction de l'ustensil cliqué
 
-  addUstensil(ustensilName);
+  addUstensil(ustensilName); //fermeture du tag par la croix  
+
+  newIconSelect.addEventListener("click", function () {
+    newDivSelect.remove();
+    var newElement = document.querySelector("[data-element=\"".concat(ustensilName, "\"]"));
+    newElement.addEventListener("click", tagUstensil);
+    newElement.classList.remove("ustensil-hide"); // lancement de la fonction pour supprimer la selection de l'ustensil cliqué
+
+    removeUstensil(ustensilName);
+  });
 } // fonction au clic sur le chevron haut
 
 
@@ -617,6 +591,14 @@ function removeUstensil(ustensilName) {
   });
   getValidRecipe();
 } // mise a jour du listing Ustensil
+// newElementFiltered.addEventListener("click", hide)
+//         function hide(){
+//             if( newElementFiltered.isChecked = true){
+//                 ustensilFiltered.classList.add("ustensil-hide")}  
+//             else{
+//                 ustensilFiltered.classList.remove("ustensil-hide")
+//             }
+//         }
 
 
 function updateFilterUstensil() {
@@ -630,27 +612,7 @@ function updateFilterUstensil() {
     newElementFiltered.setAttribute("data-element", ustensilFiltered);
     newElementFiltered.innerText = ustensilFiltered;
     UstensilContainer.appendChild(newElementFiltered);
-    newElementFiltered.addEventListener("click", tagUstensil);
-
-    if (taggedUstensils.includes(ustensilFiltered)) {
-      newElementFiltered.classList.add("ustensil-hide");
-      newElementFiltered.removeEventListener("click", tagUstensil);
-      var newDivSelect = document.getElementById("box-tag-ustensil-" + ustensilFiltered);
-      newDivSelect.addEventListener("click", function () {
-        taggedUstensils.forEach(function (oneTaggedUstensil, index) {
-          if (oneTaggedUstensil === ustensilFiltered) {
-            taggedUstensils.splice(index, 1);
-          }
-        });
-        newDivSelect.remove();
-        var newElement = document.querySelector("[data-element=\"".concat(ustensilFiltered, "\"]"));
-        newElement.addEventListener("click", tagUstensil);
-        newElement.classList.remove("ustensil-hide"); // lancement de la fonction pour supprimer la selection de l'ustensil cliqué
-
-        removeUstensil(ustensilFiltered);
-      });
-    } //ecoute de l'input
-
+    newElementFiltered.addEventListener("click", tagUstensil); //ecoute de l'input
 
     inputUstensil.addEventListener("input", function () {
       if (!ustensilFiltered.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(inputUstensil.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
@@ -668,92 +630,31 @@ function updateFilterUstensil() {
 mainSearch.addEventListener("input", principalSearch);
 
 function principalSearch() {
-  var operationCount = 0;
   document.querySelectorAll('.result-recipe').forEach(function (showCards) {
     return showCards.remove();
   });
-  allRecipesOfObject = [];
-
-  if (mainSearch.value.length > 2) {
-    // document.querySelectorAll('.result-recipe').forEach((showCards) => showCards.remove())
-    // allRecipesOfObject = []
-    allRecipesFounded.forEach(function (oneOfRecipe) {
-      operationCount++;
-
-      if (oneOfRecipe.hasFilters === totalFilters) {
+  recipesfound = [];
+  allRecipesOfObject.forEach(function (oneOfRecipe) {
+    if (oneOfRecipe.hasFilters === totalFilters) {
+      if (mainSearch.value.length > 2) {
         if (oneOfRecipe.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(mainSearch.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
-          allRecipesOfObject.push(oneOfRecipe);
+          recipesfound.push(oneOfRecipe);
+          allRecipesOfObject = recipesfound;
         } else if (oneOfRecipe.description.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(mainSearch.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
-          allRecipesOfObject.push(oneOfRecipe);
+          recipesfound.push(oneOfRecipe);
+          allRecipesOfObject = recipesfound;
         } else {
           oneOfRecipe.ingredients.forEach(function (ingr) {
             if (ingr.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(mainSearch.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
-              allRecipesOfObject.push(oneOfRecipe);
+              recipesfound.push(oneOfRecipe);
+              allRecipesOfObject = recipesfound;
             }
           });
         }
       }
-    });
-    getValidRecipe();
-  } else {
-    console.log("je vide les tableaux");
-    document.querySelectorAll("#box1-ingredients p").forEach(function (e) {
-      return e.remove();
-    });
-    listingIngredient = _toConsumableArray(new Set(allIngredients));
-    listingIngredient.sort();
-    createIngredientListing();
-    document.querySelectorAll("#box2-appliance p").forEach(function (e) {
-      return e.remove();
-    });
-    listingAppliance = _toConsumableArray(new Set(allAppliances));
-    listingAppliance.sort();
-    createApplianceListing();
-    document.querySelectorAll("#box3-ustensils p").forEach(function (e) {
-      return e.remove();
-    });
-    listingUstensil = _toConsumableArray(new Set(allUstensils));
-    listingUstensil.sort();
-    createUstensilListing();
-  }
-
-  console.log("Voici le nombre d'opérations : ", operationCount);
-}
-
-function principalSearchV2() {
-  var operationCount = 0;
-
-  if (mainSearch.value.length > 2) {
-    document.querySelectorAll('.result-recipe').forEach(function (showCards) {
-      return showCards.remove();
-    });
-    allRecipesOfObject = [];
-    allRecipesFounded.forEach(function (oneOfRecipe) {
-      operationCount++;
-
-      if (oneOfRecipe.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(mainSearch.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
-        allRecipesOfObject.push(oneOfRecipe);
-      } else if (oneOfRecipe.description.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(mainSearch.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
-        allRecipesOfObject.push(oneOfRecipe);
-      } else {
-        oneOfRecipe.ingredients.forEach(function (ingr) {
-          if (ingr.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(mainSearch.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
-            allRecipesOfObject.push(oneOfRecipe);
-          }
-        });
-      }
-    });
-    allRecipesOfObject.forEach(function (oneSemiValidatedRecipe, index) {
-      operationCount++;
-
-      if (oneSemiValidatedRecipe.hasFilters !== totalFilters) {
-        allRecipesOfObject.splice(index, 1);
-      }
-    });
-    getValidRecipe();
-  }
-
-  console.log("Voici le nombre d'opérations : ", operationCount);
+    }
+  });
+  getValidRecipe();
 } //*************************************************************
 // affichage des recettes en fonction des filtres selectionnés
 //*************************************************************
