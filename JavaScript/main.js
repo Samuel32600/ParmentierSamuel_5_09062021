@@ -69,6 +69,7 @@ class Recipe {
     //************************************
     //       ajout des ingredients     
     //************************************
+
     _addIngredient(IngredientAdded) {
         this.ingredients.push(IngredientAdded)
     }
@@ -332,14 +333,14 @@ function updateFilterIngredient() {
                 taggedIngredients.forEach(function (oneTaggedIngredient, index) {
                     if (oneTaggedIngredient === ingredientFiltered) {
                         taggedIngredients.splice(index, 1)
+                        newDivSelect.remove();
+                        let newElement = document.querySelector(`[data-element="${ingredientFiltered}"]`)
+                        newElement.addEventListener("click", tagIngredient)
+                        newElement.classList.remove("ingredient-hide")
+                        // lancement de la fonction pour supprimer la selection de l'ustensil cliqué
+                        removeIngredient(ingredientFiltered)
                     }
                 })
-                newDivSelect.remove();
-                let newElement = document.querySelector(`[data-element="${ingredientFiltered}"]`)
-                newElement.addEventListener("click", tagIngredient)
-                newElement.classList.remove("ingredient-hide")
-                // lancement de la fonction pour supprimer la selection de l'ustensil cliqué
-                removeIngredient(ingredientFiltered)
             })
         }
         //ecoute de l'input de recherche
@@ -464,14 +465,15 @@ function updateFilterAppliance() {
                 taggedAppliance.forEach(function (oneTaggedAppliance, index) {
                     if (oneTaggedAppliance === applianceFiltered) {
                         taggedAppliance.splice(index, 1)
+                        newDivSelect.remove();
+                        let newElement = document.querySelector(`[data-element="${applianceFiltered}"]`)
+                        newElement.addEventListener("click", tagAppliance)
+                        newElement.classList.remove("appliance-hide")
+                        // lancement de la fonction pour supprimer la selection de l'ustensil cliqué
+                        removeAppliance(applianceFiltered)
                     }
                 })
-                newDivSelect.remove();
-                let newElement = document.querySelector(`[data-element="${applianceFiltered}"]`)
-                newElement.addEventListener("click", tagAppliance)
-                newElement.classList.remove("appliance-hide")
-                // lancement de la fonction pour supprimer la selection de l'ustensil cliqué
-                removeAppliance(applianceFiltered)
+
             })
         }
         //ecoute de l'input
@@ -524,6 +526,8 @@ function createUstensilListing() {
         })
     })
 }
+
+
 
 
 //creation du tag Ustensil + fermeture
@@ -596,14 +600,15 @@ function updateFilterUstensil() {
                 taggedUstensils.forEach(function (oneTaggedUstensil, index) {
                     if (oneTaggedUstensil === ustensilFiltered) {
                         taggedUstensils.splice(index, 1)
+                        newDivSelect.remove();
+                        let newElement = document.querySelector(`[data-element="${ustensilFiltered}"]`)
+                        newElement.addEventListener("click", tagUstensil)
+                        newElement.classList.remove("ustensil-hide")
+                        // lancement de la fonction pour supprimer la selection de l'ustensil cliqué
+                        removeUstensil(ustensilFiltered)
                     }
                 })
-                newDivSelect.remove();
-                let newElement = document.querySelector(`[data-element="${ustensilFiltered}"]`)
-                newElement.addEventListener("click", tagUstensil)
-                newElement.classList.remove("ustensil-hide")
-                // lancement de la fonction pour supprimer la selection de l'ustensil cliqué
-                removeUstensil(ustensilFiltered)
+
             })
         }
         //ecoute de l'input
@@ -618,10 +623,11 @@ function updateFilterUstensil() {
     })
 }
 
+
 //************************************
 // recherche dans la barre principale
 //************************************
-mainSearch.addEventListener("input", principalSearch)
+mainSearch.addEventListener("input", principalSearchV2)
 
 function principalSearch() {
     let operationCount = 0
@@ -631,8 +637,6 @@ function principalSearch() {
 
 
     if (mainSearch.value.length > 2) {
-        // document.querySelectorAll('.result-recipe').forEach((showCards) => showCards.remove())
-        // allRecipesOfObject = []
 
         allRecipesFounded.forEach((oneOfRecipe) => {
             operationCount++
@@ -741,6 +745,8 @@ function getValidRecipe() {
                 }
             })
         }
+        // console.log(oneOfRecipe.hasFilters)
+        // console.log(totalFilters)
     })
     // nouveau tableau Ingrédient mis à jour
     updateFilterIngredient()

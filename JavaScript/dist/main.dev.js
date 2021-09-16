@@ -376,14 +376,14 @@ function updateFilterIngredient() {
         taggedIngredients.forEach(function (oneTaggedIngredient, index) {
           if (oneTaggedIngredient === ingredientFiltered) {
             taggedIngredients.splice(index, 1);
+            newDivSelect.remove();
+            var newElement = document.querySelector("[data-element=\"".concat(ingredientFiltered, "\"]"));
+            newElement.addEventListener("click", tagIngredient);
+            newElement.classList.remove("ingredient-hide"); // lancement de la fonction pour supprimer la selection de l'ustensil cliqué
+
+            removeIngredient(ingredientFiltered);
           }
         });
-        newDivSelect.remove();
-        var newElement = document.querySelector("[data-element=\"".concat(ingredientFiltered, "\"]"));
-        newElement.addEventListener("click", tagIngredient);
-        newElement.classList.remove("ingredient-hide"); // lancement de la fonction pour supprimer la selection de l'ustensil cliqué
-
-        removeIngredient(ingredientFiltered);
       });
     } //ecoute de l'input de recherche
 
@@ -508,14 +508,14 @@ function updateFilterAppliance() {
         taggedAppliance.forEach(function (oneTaggedAppliance, index) {
           if (oneTaggedAppliance === applianceFiltered) {
             taggedAppliance.splice(index, 1);
+            newDivSelect.remove();
+            var newElement = document.querySelector("[data-element=\"".concat(applianceFiltered, "\"]"));
+            newElement.addEventListener("click", tagAppliance);
+            newElement.classList.remove("appliance-hide"); // lancement de la fonction pour supprimer la selection de l'ustensil cliqué
+
+            removeAppliance(applianceFiltered);
           }
         });
-        newDivSelect.remove();
-        var newElement = document.querySelector("[data-element=\"".concat(applianceFiltered, "\"]"));
-        newElement.addEventListener("click", tagAppliance);
-        newElement.classList.remove("appliance-hide"); // lancement de la fonction pour supprimer la selection de l'ustensil cliqué
-
-        removeAppliance(applianceFiltered);
       });
     } //ecoute de l'input
 
@@ -640,14 +640,14 @@ function updateFilterUstensil() {
         taggedUstensils.forEach(function (oneTaggedUstensil, index) {
           if (oneTaggedUstensil === ustensilFiltered) {
             taggedUstensils.splice(index, 1);
+            newDivSelect.remove();
+            var newElement = document.querySelector("[data-element=\"".concat(ustensilFiltered, "\"]"));
+            newElement.addEventListener("click", tagUstensil);
+            newElement.classList.remove("ustensil-hide"); // lancement de la fonction pour supprimer la selection de l'ustensil cliqué
+
+            removeUstensil(ustensilFiltered);
           }
         });
-        newDivSelect.remove();
-        var newElement = document.querySelector("[data-element=\"".concat(ustensilFiltered, "\"]"));
-        newElement.addEventListener("click", tagUstensil);
-        newElement.classList.remove("ustensil-hide"); // lancement de la fonction pour supprimer la selection de l'ustensil cliqué
-
-        removeUstensil(ustensilFiltered);
       });
     } //ecoute de l'input
 
@@ -665,7 +665,7 @@ function updateFilterUstensil() {
 //************************************
 
 
-mainSearch.addEventListener("input", principalSearch);
+mainSearch.addEventListener("input", principalSearchV2);
 
 function principalSearch() {
   var operationCount = 0;
@@ -675,8 +675,6 @@ function principalSearch() {
   allRecipesOfObject = [];
 
   if (mainSearch.value.length > 2) {
-    // document.querySelectorAll('.result-recipe').forEach((showCards) => showCards.remove())
-    // allRecipesOfObject = []
     allRecipesFounded.forEach(function (oneOfRecipe) {
       operationCount++;
 
@@ -790,7 +788,9 @@ function getValidRecipe() {
           ustensilFilter.sort();
         }
       });
-    }
+    } // console.log(oneOfRecipe.hasFilters)
+    // console.log(totalFilters)
+
   }); // nouveau tableau Ingrédient mis à jour
 
   updateFilterIngredient(); // nouveau tableau Appareil mis à jour
