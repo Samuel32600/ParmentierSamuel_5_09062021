@@ -16,6 +16,8 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+function _readOnlyError(name) { throw new Error("\"" + name + "\" is read-only"); }
+
 //tableau avec l'ensemble des données
 var allRecipesOfObject = [];
 var allRecipesFounded = [];
@@ -653,6 +655,9 @@ function updateFilterUstensil() {
 
 
     inputUstensil.addEventListener("input", function () {
+      console.log(ustensilFiltered);
+      UstensilContainer = (_readOnlyError("UstensilContainer"), ustensilFiltered);
+
       if (!ustensilFiltered.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(inputUstensil.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
         newElementFiltered.remove();
       } else {
@@ -665,7 +670,7 @@ function updateFilterUstensil() {
 //************************************
 
 
-mainSearch.addEventListener("input", principalSearchV2);
+mainSearch.addEventListener("input", principalSearch);
 
 function principalSearch() {
   var operationCount = 0;
@@ -785,12 +790,10 @@ function getValidRecipe() {
       oneOfRecipe.ustensils.forEach(function (ust) {
         if (ustensilFilter.includes(ust.name) === false) {
           ustensilFilter.push(ust.name);
-          ustensilFilter.sort();
+          ustensilFilter.sort(); // console.log(ustensilFilter)
         }
       });
-    } // console.log(oneOfRecipe.hasFilters)
-    // console.log(totalFilters)
-
+    }
   }); // nouveau tableau Ingrédient mis à jour
 
   updateFilterIngredient(); // nouveau tableau Appareil mis à jour

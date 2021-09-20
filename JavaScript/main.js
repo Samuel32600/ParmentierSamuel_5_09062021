@@ -613,6 +613,8 @@ function updateFilterUstensil() {
         }
         //ecoute de l'input
         inputUstensil.addEventListener("input", function () {
+            console.log(ustensilFiltered)
+            UstensilContainer = ustensilFiltered
             if (!ustensilFiltered.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(inputUstensil.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
                 newElementFiltered.remove()
             } else {
@@ -627,7 +629,7 @@ function updateFilterUstensil() {
 //************************************
 // recherche dans la barre principale
 //************************************
-mainSearch.addEventListener("input", principalSearchV2)
+mainSearch.addEventListener("input", principalSearch)
 
 function principalSearch() {
     let operationCount = 0
@@ -742,11 +744,10 @@ function getValidRecipe() {
                 if (ustensilFilter.includes(ust.name) === false) {
                     ustensilFilter.push(ust.name)
                     ustensilFilter.sort()
+                    // console.log(ustensilFilter)
                 }
             })
         }
-        // console.log(oneOfRecipe.hasFilters)
-        // console.log(totalFilters)
     })
     // nouveau tableau Ingrédient mis à jour
     updateFilterIngredient()
