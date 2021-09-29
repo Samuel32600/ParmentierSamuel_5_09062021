@@ -1,7 +1,5 @@
 "use strict";
 
-var _recipes = require("./recipes.js");
-
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -18,6 +16,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _readOnlyError(name) { throw new Error("\"" + name + "\" is read-only"); }
 
+// import { recipes } from './recipes.js';
 //tableau avec l'ensemble des données
 var allRecipesOfObject = [];
 var allRecipesFounded = [];
@@ -242,7 +241,7 @@ var Ustensil = function Ustensil(name) {
 }; //extraire les elements de chaque recette (le nom, le temps et la description)
 
 
-_recipes.recipes.forEach(function (oneOfRecipe) {
+recipes.forEach(function (oneOfRecipe) {
   var newRecipe = new Recipe(oneOfRecipe.name, oneOfRecipe.time, oneOfRecipe.description); //-----extraire les ingredients de recipes + sous tableaux ingredients-----
 
   oneOfRecipe.ingredients.forEach(function (oneOfIngredient) {
@@ -266,14 +265,12 @@ _recipes.recipes.forEach(function (oneOfRecipe) {
   });
   allRecipesOfObject.push(newRecipe);
 });
-
 allRecipesFounded = allRecipesOfObject; //************************************
 //            Ingredients
 //************************************
 //suppression doublon + trier alphabetiquement
 
-listingIngredient = _toConsumableArray(new Set(allIngredients));
-listingIngredient.sort(); // fonction au clic sur le chevron bas
+listingIngredient = _toConsumableArray(new Set(allIngredients)).sort(); // fonction au clic sur le chevron bas
 
 function downIngredient() {
   IngredientContainer.classList.remove("hidden");
@@ -404,8 +401,7 @@ function updateFilterIngredient() {
 //suppression doublon + trier alphabetiquement
 
 
-listingAppliance = _toConsumableArray(new Set(allAppliances));
-listingAppliance.sort(); // fonction au clic sur le chevron bas
+listingAppliance = _toConsumableArray(new Set(allAppliances)).sort(); // fonction au clic sur le chevron bas
 
 function downAppliance() {
   ApplianceContainer.classList.remove("hidden");
@@ -721,43 +717,36 @@ function principalSearch() {
   }
 
   console.log("Voici le nombre d'opérations : ", operationCount);
-}
-
-function principalSearchV2() {
-  var operationCount = 0;
-
-  if (mainSearch.value.length > 2) {
-    document.querySelectorAll('.result-recipe').forEach(function (showCards) {
-      return showCards.remove();
-    });
-    allRecipesOfObject = [];
-    allRecipesFounded.forEach(function (oneOfRecipe) {
-      operationCount++;
-
-      if (oneOfRecipe.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(mainSearch.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
-        allRecipesOfObject.push(oneOfRecipe);
-      } else if (oneOfRecipe.description.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(mainSearch.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
-        allRecipesOfObject.push(oneOfRecipe);
-      } else {
-        oneOfRecipe.ingredients.forEach(function (ingr) {
-          if (ingr.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(mainSearch.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
-            allRecipesOfObject.push(oneOfRecipe);
-          }
-        });
-      }
-    });
-    allRecipesOfObject.forEach(function (oneSemiValidatedRecipe, index) {
-      operationCount++;
-
-      if (oneSemiValidatedRecipe.hasFilters !== totalFilters) {
-        allRecipesOfObject.splice(index, 1);
-      }
-    });
-    getValidRecipe();
-  }
-
-  console.log("Voici le nombre d'opérations : ", operationCount);
-} //*************************************************************
+} // function principalSearchV2() {
+//     let operationCount = 0
+//     if (mainSearch.value.length > 2) {
+//         document.querySelectorAll('.result-recipe').forEach((showCards) => showCards.remove())
+//         allRecipesOfObject = []
+//         allRecipesFounded.forEach((oneOfRecipe) => {
+//             operationCount++
+//             if (oneOfRecipe.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(mainSearch.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
+//                 allRecipesOfObject.push(oneOfRecipe)
+//             } else if (oneOfRecipe.description.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(mainSearch.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
+//                 allRecipesOfObject.push(oneOfRecipe)
+//             } else {
+//                 oneOfRecipe.ingredients.forEach(function (ingr) {
+//                     if (ingr.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(mainSearch.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
+//                         allRecipesOfObject.push(oneOfRecipe)
+//                     }
+//                 })
+//             }
+//         })
+//         allRecipesOfObject.forEach(function (oneSemiValidatedRecipe, index) {
+//             operationCount++
+//             if (oneSemiValidatedRecipe.hasFilters !== totalFilters) {
+//                 allRecipesOfObject.splice(index, 1)
+//             }
+//         })
+//         getValidRecipe()
+//     }
+//     console.log("Voici le nombre d'opérations : ", operationCount)
+// }
+//*************************************************************
 // affichage des recettes en fonction des filtres selectionnés
 //*************************************************************
 
