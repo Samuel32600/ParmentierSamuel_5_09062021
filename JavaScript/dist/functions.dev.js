@@ -55,7 +55,7 @@ function createFilters() {
         listingAppliance.push(oneOfAppliance.name);
         listingAppliance.sort();
       }
-    }); //tableau ustensil
+    }); // //tableau ustensil
 
     oneOfRecipe.ustensils.forEach(function (oneOfUstensil) {
       if (listingUstensil.includes(oneOfUstensil.name) === false) {
@@ -78,6 +78,7 @@ function seeFilters() {
   var configFilter = ["box1-ingredients", "box2-appliance", "box3-ustensils"];
   configFilter.forEach(function (containerName, index) {
     var containerFilter = document.getElementById(containerName);
+    containerFilter.innerHTML = "";
     threeFilters[index].forEach(function (oneOfElement) {
       var newElement = document.createElement("p");
       newElement.classList.add("element");
@@ -108,7 +109,85 @@ function seeFilters() {
   //     newElement.innerText = oneOfUstensil;
   //     UstensilContainer.appendChild(newElement);
   // })
+} //********************************
+// action sur chevron haut ou bas
+//********************************
+
+
+function showHideListingFilter() {
+  //ingredient
+  var IngredientContainer = document.getElementById("box1-ingredients");
+  var box1Extended = document.getElementById("box1-display-content");
+  var down1 = document.getElementById("chevron-down-1");
+  var up1 = document.getElementById("chevron-up-1");
+  down1.addEventListener("click", downIngredient);
+  up1.addEventListener("click", upIngredient);
+
+  function downIngredient() {
+    IngredientContainer.classList.remove("hidden");
+    box1Extended.classList.add("box-extend");
+    up1.classList.remove("hidden");
+    down1.classList.add("hidden");
+    document.getElementsByName('INGREDIENT')[0].placeholder = 'Recherche un ingrédient';
+  }
+
+  function upIngredient() {
+    IngredientContainer.classList.add("hidden");
+    box1Extended.classList.remove("box-extend");
+    up1.classList.add("hidden");
+    down1.classList.remove("hidden");
+    document.getElementsByName('INGREDIENT')[0].placeholder = 'Ingredients';
+  } //appareil
+
+
+  var ApplianceContainer = document.getElementById("box2-appliance");
+  var box2Extended = document.getElementById("box2-display-content");
+  var down2 = document.getElementById("chevron-down-2");
+  var up2 = document.getElementById("chevron-up-2");
+  down2.addEventListener("click", downAppliance);
+  up2.addEventListener("click", upAppliance);
+
+  function downAppliance() {
+    ApplianceContainer.classList.remove("hidden");
+    box2Extended.classList.add("box-extend");
+    up2.classList.remove("hidden");
+    down2.classList.add("hidden");
+    document.getElementsByName('APPAREIL')[0].placeholder = 'Recherche un appareil';
+  }
+
+  function upAppliance() {
+    ApplianceContainer.classList.add("hidden");
+    box2Extended.classList.remove("box-extend");
+    up2.classList.add("hidden");
+    down2.classList.remove("hidden");
+    document.getElementsByName('APPAREIL')[0].placeholder = 'Appareil';
+  } //ustensil
+
+
+  var UstensilContainer = document.getElementById("box3-ustensils");
+  var box3Extended = document.getElementById("box3-display-content");
+  var down3 = document.getElementById("chevron-down-3");
+  var up3 = document.getElementById("chevron-up-3");
+  down3.addEventListener("click", downUstensil);
+  up3.addEventListener("click", upUstensil);
+
+  function downUstensil() {
+    UstensilContainer.classList.remove("hidden");
+    box3Extended.classList.add("box-extend");
+    up3.classList.remove("hidden");
+    down3.classList.add("hidden");
+    document.getElementsByName('USTENSIL')[0].placeholder = 'Recherche un ustensile';
+  }
+
+  function upUstensil() {
+    UstensilContainer.classList.add("hidden");
+    box3Extended.classList.remove("box-extend");
+    up3.classList.add("hidden");
+    down3.classList.remove("hidden");
+    document.getElementsByName('USTENSIL')[0].placeholder = 'Ustensiles';
+  }
 }
 
 createAllRecipes();
 createFilters();
+showHideListingFilter();

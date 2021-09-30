@@ -37,7 +37,6 @@ function createAllRecipes() {
     allRecipesFounded = allRecipesOfObject
 }
 
-
 //*****************************************
 // recuperation des elements des 3 filtres
 //*****************************************
@@ -48,6 +47,7 @@ function createFilters() {
     let listingUstensil = [];
 
     allRecipesOfObject.forEach((oneOfRecipe) => {
+
         //tableau ingredient
         oneOfRecipe.ingredients.forEach((oneOfIngredient) => {
             if (listingIngredient.includes(oneOfIngredient.name) === false) {
@@ -55,6 +55,7 @@ function createFilters() {
                 listingIngredient.sort()
             }
         })
+
         //tableau appliance
         oneOfRecipe.appliances.forEach((oneOfAppliance) => {
             if (listingAppliance.includes(oneOfAppliance.name) === false) {
@@ -62,13 +63,15 @@ function createFilters() {
                 listingAppliance.sort()
             }
         })
-        //tableau ustensil
+
+        // //tableau ustensil
         oneOfRecipe.ustensils.forEach((oneOfUstensil) => {
             if (listingUstensil.includes(oneOfUstensil.name) === false) {
                 listingUstensil.push(oneOfUstensil.name)
                 listingUstensil.sort()
             }
         })
+
     })
     // console.table(listingIngredient)
     // console.table(listingAppliance)
@@ -91,6 +94,8 @@ function seeFilters() {
 
     configFilter.forEach((containerName, index) => {
         let containerFilter = document.getElementById(containerName)
+        containerFilter.innerHTML = ""
+
         threeFilters[index].forEach((oneOfElement) => {
             let newElement = document.createElement("p");
             newElement.classList.add("element");
@@ -98,7 +103,6 @@ function seeFilters() {
             containerFilter.appendChild(newElement);
         })
     })
-
 
     // const IngredientContainer = document.getElementById("box1-ingredients")
     // threeFilters[0].forEach((oneOfIngredient) => {
@@ -129,7 +133,84 @@ function seeFilters() {
 
 }
 
+//********************************
+// action sur chevron haut ou bas
+//********************************
+function showHideListingFilter() {
+    //ingredient
+    const IngredientContainer = document.getElementById("box1-ingredients");
+    const box1Extended = document.getElementById("box1-display-content");
+    const down1 = document.getElementById("chevron-down-1");
+    const up1 = document.getElementById("chevron-up-1");
+    down1.addEventListener("click", downIngredient);
+    up1.addEventListener("click", upIngredient);
 
+    function downIngredient() {
+        IngredientContainer.classList.remove("hidden");
+        box1Extended.classList.add("box-extend");
+        up1.classList.remove("hidden");
+        down1.classList.add("hidden");
+        document.getElementsByName('INGREDIENT')[0].placeholder = 'Recherche un ingrédient';
+    }
+
+    function upIngredient() {
+        IngredientContainer.classList.add("hidden");
+        box1Extended.classList.remove("box-extend");
+        up1.classList.add("hidden");
+        down1.classList.remove("hidden");
+        document.getElementsByName('INGREDIENT')[0].placeholder = 'Ingredients';
+    }
+
+    //appareil
+    const ApplianceContainer = document.getElementById("box2-appliance");
+    const box2Extended = document.getElementById("box2-display-content");
+    const down2 = document.getElementById("chevron-down-2");
+    const up2 = document.getElementById("chevron-up-2");
+    down2.addEventListener("click", downAppliance);
+    up2.addEventListener("click", upAppliance);
+
+    function downAppliance() {
+        ApplianceContainer.classList.remove("hidden");
+        box2Extended.classList.add("box-extend");
+        up2.classList.remove("hidden");
+        down2.classList.add("hidden");
+        document.getElementsByName('APPAREIL')[0].placeholder = 'Recherche un appareil';
+    }
+
+    function upAppliance() {
+        ApplianceContainer.classList.add("hidden");
+        box2Extended.classList.remove("box-extend");
+        up2.classList.add("hidden");
+        down2.classList.remove("hidden");
+        document.getElementsByName('APPAREIL')[0].placeholder = 'Appareil';
+    }
+
+    //ustensil
+    const UstensilContainer = document.getElementById("box3-ustensils");
+    const box3Extended = document.getElementById("box3-display-content");
+    const down3 = document.getElementById("chevron-down-3");
+    const up3 = document.getElementById("chevron-up-3");
+    down3.addEventListener("click", downUstensil);
+    up3.addEventListener("click", upUstensil);
+
+    function downUstensil() {
+        UstensilContainer.classList.remove("hidden");
+        box3Extended.classList.add("box-extend");
+        up3.classList.remove("hidden");
+        down3.classList.add("hidden");
+        document.getElementsByName('USTENSIL')[0].placeholder = 'Recherche un ustensile';
+    }
+
+    function upUstensil() {
+        UstensilContainer.classList.add("hidden");
+        box3Extended.classList.remove("box-extend");
+        up3.classList.add("hidden");
+        down3.classList.remove("hidden");
+        document.getElementsByName('USTENSIL')[0].placeholder = 'Ustensiles';
+    }
+
+}
 
 createAllRecipes()
 createFilters()
+showHideListingFilter()
