@@ -73,9 +73,7 @@ button img {
 }
 
 /*boite pour chacun des  3 filtres*/
-.box1-select-ingredients,
-.box2-select-appliances,
-.box3-select-ustensils {
+.box-newTag {
     width: 107px;
     height: 37px;
     border-radius: 5px;
@@ -85,6 +83,7 @@ button img {
     color: white;
     margin-bottom: 20px;
     margin-right: 10px;
+    background-color: #ED6454;
 }
 
 /*logo de fermeture*/
@@ -229,9 +228,7 @@ button img {
     margin: 5px 0 5px 15px;
 }
 
-.ingredient-hide,
-.appliance-hide,
-.ustensil-hide {
+.element-hide {
     text-decoration: line-through black;
     background-color: white;
     border-radius: 5px;

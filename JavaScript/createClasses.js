@@ -7,7 +7,7 @@ class Recipe {
         this.ingredients = []
         this.appliances = []
         this.ustensils = []
-        this.hasFilters = 0;
+        this.isSelected = 0;
     }
 
     //ajout des ingredients     
@@ -33,7 +33,6 @@ class Ingredient {
         this.name = name;
         this.quantity = this._validFormatQuantity(quantity);
         this.unit = this._validFormatUnit(unit);
-        this.isChecked = false;
         this._validFormatUnit()
     }
 
@@ -62,7 +61,6 @@ class Ingredient {
 class Appliance {
     constructor(name) {
         this.name = name;
-        this.isChecked = false;
     }
 }
 
@@ -71,6 +69,5 @@ class Appliance {
 class Ustensil {
     constructor(name) {
         this.name = name;
-        this.isChecked = false;
     }
 }

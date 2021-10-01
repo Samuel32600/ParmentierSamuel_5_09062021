@@ -19,7 +19,7 @@ function () {
     this.ingredients = [];
     this.appliances = [];
     this.ustensils = [];
-    this.hasFilters = 0;
+    this.isSelected = 0;
   } //ajout des ingredients     
 
 
@@ -55,7 +55,6 @@ function () {
     this.name = name;
     this.quantity = this._validFormatQuantity(quantity);
     this.unit = this._validFormatUnit(unit);
-    this.isChecked = false;
 
     this._validFormatUnit();
   } //mettre la valeur de quantity en forme
@@ -92,7 +91,6 @@ var Appliance = function Appliance(name) {
   _classCallCheck(this, Appliance);
 
   this.name = name;
-  this.isChecked = false;
 }; //creation de la sous classe ustensil
 
 
@@ -100,5 +98,4 @@ var Ustensil = function Ustensil(name) {
   _classCallCheck(this, Ustensil);
 
   this.name = name;
-  this.isChecked = false;
 };

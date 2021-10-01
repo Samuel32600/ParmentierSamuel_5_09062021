@@ -3,7 +3,8 @@
 var allRecipesOfObject = [];
 var allRecipesFounded = [];
 var threeFilters = [];
-var totalFilters = 0; //***************************
+var totalFilters = 0;
+var elementSelectededinFilter = []; //***************************
 // recuperation des recettes
 //***************************
 
@@ -84,6 +85,16 @@ function seeFilters() {
       newElement.classList.add("element");
       newElement.innerText = oneOfElement;
       containerFilter.appendChild(newElement);
+
+      if (elementSelectededinFilter.includes(oneOfElement) === false) {
+        newElement.addEventListener("click", function () {
+          console.log(oneOfElement);
+          newElement.classList.add("element-hide");
+          elementSelectededinFilter.push(oneOfElement);
+          console.log("voici l'ensemble des elements selectionnés", elementSelectededinFilter);
+          addOneFilter(oneOfElement, index);
+        });
+      } else {}
     });
   }); // const IngredientContainer = document.getElementById("box1-ingredients")
   // threeFilters[0].forEach((oneOfIngredient) => {
@@ -186,6 +197,126 @@ function showHideListingFilter() {
     down3.classList.remove("hidden");
     document.getElementsByName('USTENSIL')[0].placeholder = 'Ustensiles';
   }
+}
+
+function addOneFilter(elementSelected, categoryOfElement) {
+  totalFilters += 1;
+  console.log(categoryOfElement);
+  var category = ["ingredients", "appliances", "ustensils"];
+  console.log("on a cliqué sur", elementSelected, "et c'est un element de type", category[categoryOfElement]);
+  allRecipesOfObject.forEach(function (oneOfRecipe) {
+    //recette apres selection d'un ingredient
+    if (category[categoryOfElement] === "ingredients") {
+      oneOfRecipe.ingredients.forEach(function (oneOfIngredient) {
+        if (elementSelected === oneOfIngredient.name) {
+          oneOfRecipe.isSelected += 1;
+          console.log("la recette trouvée est " + oneOfRecipe.name);
+        }
+      });
+    } //recette apres selection d'un appareil
+
+
+    if (category[categoryOfElement] === "appliances") {
+      oneOfRecipe.appliances.forEach(function (oneOfAppliance) {
+        if (elementSelected === oneOfAppliance.name) {
+          oneOfRecipe.isSelected += 1;
+          console.log("la recette trouvée est " + oneOfRecipe.name);
+        }
+      });
+    } //recette apres selection d'un ustensil
+
+
+    if (category[categoryOfElement] === "ustensils") {
+      oneOfRecipe.ustensils.forEach(function (oneOfUstensil) {
+        if (elementSelected === oneOfUstensil.name) {
+          oneOfRecipe.isSelected += 1;
+          console.log("la recette trouvée est " + oneOfRecipe.name);
+        }
+      });
+    }
+  });
+  console.log(totalFilters);
+  createTag(elementSelected, categoryOfElement);
+  getValidRecipe();
+}
+
+function removeOneFilter(elementSelected, categoryOfElement) {
+  totalFilters -= 1;
+  var category = ["ingredients", "appliances", "ustensils"];
+  console.log("on a déselctionné", elementSelected, "et c'est un element de type", category[categoryOfElement]);
+  allRecipesOfObject.forEach(function (oneOfRecipe) {
+    //recette apres deselection d'un ingredient
+    if (category[categoryOfElement] === "ingredients") {
+      oneOfRecipe.ingredients.forEach(function (oneOfIngredient) {
+        if (elementSelected === oneOfIngredient.name) {
+          oneOfRecipe.isSelected -= 1;
+          console.log("la recette trouvée est " + oneOfRecipe.name);
+        }
+      });
+    } //recette apres deselection d'un appareil
+
+
+    if (category[categoryOfElement] === "appliances") {
+      oneOfRecipe.appliances.forEach(function (oneOfAppliance) {
+        if (elementSelected === oneOfAppliance.name) {
+          oneOfRecipe.isSelected -= 1;
+          console.log("la recette trouvée est " + oneOfRecipe.name);
+        }
+      });
+    } //recette apres deselection d'un ustensil
+
+
+    if (category[categoryOfElement] === "ustensils") {
+      oneOfRecipe.ustensils.forEach(function (oneOfUstensil) {
+        if (elementSelected === oneOfUstensil.name) {
+          oneOfRecipe.isSelected -= 1;
+          console.log("la recette trouvée est " + oneOfRecipe.name);
+        }
+      });
+    }
+  });
+  console.log(totalFilters);
+  getValidRecipe();
+}
+
+function getValidRecipe() {
+  allRecipesOfObject.forEach(function (oneOfRecipe) {
+    if (oneOfRecipe.isSelected === totalFilters) {
+      card(oneOfRecipe);
+    }
+  });
+}
+
+function card(recipe) {
+  var mainRecipes = document.getElementById("allRecipes");
+  var CardRecipe = "";
+  CardRecipe += "<figure class=\"result-recipe\">\n    <img class=\"recette\">\n    <figcaption>\n        <aside class=\"title\">\n            <p class=\"name\">".concat(recipe.name, "</p>\n            <div class=\"duration\">\n                <i class=\"far fa-clock\"></i>\n                <p class=\"time\">").concat(recipe.time, " min</p>\n            </div>\n        </aside>\n        <div class=\"text\">\n            <ul class=\"ingredients\">               \n                ").concat(recipe.ingredients.map(function (elementOfIngredient) {
+    return "\n                <li>\n                    <span>".concat(elementOfIngredient.name, " : </span>").concat(elementOfIngredient.quantity, " ").concat(elementOfIngredient.unit, "\n                </li>");
+  }).join(""), "\n            </ul>\n            <p class=\"description\">").concat(recipe.description, "</p>\n        </div>\n    </figcaption>\n</figure>");
+  mainRecipes.insertAdjacentHTML('beforeend', CardRecipe);
+}
+
+function createTag(elementSelected, index) {
+  console.log("la fonction tag est appelée");
+  console.log(elementSelected);
+  console.log(index);
+  var colorTag = ["box1", "box2", "box3"];
+  var selectContainer = document.getElementById("box-select"); //creation de la div
+
+  var newDivSelect = document.createElement("div");
+  newDivSelect.setAttribute("id", "box-tag-" + elementSelected);
+  newDivSelect.classList.add("box-newTag", colorTag[index]);
+  selectContainer.appendChild(newDivSelect); //creation du texte
+
+  var newElementSelect = document.createElement("p");
+  var textTag = elementSelected;
+  newElementSelect.classList.add("box__text");
+  newElementSelect.innerText = textTag;
+  newDivSelect.appendChild(newElementSelect); //creation de l'icone
+
+  var newIconSelect = document.createElement("i");
+  newIconSelect.classList.add("far", "fa-times-circle");
+  newDivSelect.appendChild(newIconSelect);
 }
 
 createAllRecipes();
