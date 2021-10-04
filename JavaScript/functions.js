@@ -338,7 +338,7 @@ function removeOneFilter(elementSelected, categoryOfElement) {
 
     // console.log("on a déselctionné", elementSelected, "et c'est un element de type", category[categoryOfElement])
 
-    allRecipesOfObject.forEach(function (oneOfRecipe) {
+    allRecipesAvailable.forEach(function (oneOfRecipe) {
 
         //recette apres deselection d'un ingredient
         if (category[categoryOfElement] === "ingredients") {
@@ -425,32 +425,31 @@ function card(recipe) {
 //************************************
 // recherche dans la barre principale
 //************************************
-const mainSearch = document.getElementById("main-search");
-mainSearch.addEventListener("input", principalSearch)
+// const mainSearch = document.getElementById("main-search");
+// mainSearch.addEventListener("input", principalSearch)
 
-function principalSearch() {
-    console.log("je suis dans la fonction")
-    let operationCount = 0
+// function principalSearch() {
+//     let operationCount = 0
 
-    document.querySelectorAll('.result-recipe').forEach((showCards) => showCards.remove())
-    allRecipesOfObject = []
+//     document.querySelectorAll('.result-recipe').forEach((showCards) => showCards.remove())
+//     allRecipesAvailable = []
 
 
-    if (mainSearch.value.length > 2) {
+//     if (mainSearch.value.length > 2) {
 
-        allRecipesOfObject.forEach((oneOfRecipe) => {
-            operationCount++
+//         allRecipesOfObject.forEach((oneOfRecipe) => {
+//             operationCount++
 
-            if (oneOfRecipe.isSelected === totalFilters) {
-                if (oneOfRecipe.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(mainSearch.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
-                    allRecipesAvailable.push(oneOfRecipe)
-                }                
-            }
-        })
-        getValidRecipe()
-    }
-    console.log("Voici le nombre d'opérations : ", operationCount)
-}
+//             if (oneOfRecipe.isSelected === totalFilters) {
+//                 if (oneOfRecipe.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(mainSearch.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
+//                     allRecipesAvailable.push(oneOfRecipe)
+//                 }                
+//             }
+//         })
+//         getValidRecipe()
+//     }
+//     console.log("Voici le nombre d'opérations : ", operationCount)
+// }
 
 
 

@@ -290,7 +290,7 @@ function removeOneFilter(elementSelected, categoryOfElement) {
   totalFilters -= 1;
   var category = ["ingredients", "appliances", "ustensils"]; // console.log("on a déselctionné", elementSelected, "et c'est un element de type", category[categoryOfElement])
 
-  allRecipesOfObject.forEach(function (oneOfRecipe) {
+  allRecipesAvailable.forEach(function (oneOfRecipe) {
     //recette apres deselection d'un ingredient
     if (category[categoryOfElement] === "ingredients") {
       oneOfRecipe.ingredients.forEach(function (oneOfIngredient) {
@@ -353,34 +353,26 @@ function card(recipe) {
 } //************************************
 // recherche dans la barre principale
 //************************************
+// const mainSearch = document.getElementById("main-search");
+// mainSearch.addEventListener("input", principalSearch)
+// function principalSearch() {
+//     let operationCount = 0
+//     document.querySelectorAll('.result-recipe').forEach((showCards) => showCards.remove())
+//     allRecipesAvailable = []
+//     if (mainSearch.value.length > 2) {
+//         allRecipesOfObject.forEach((oneOfRecipe) => {
+//             operationCount++
+//             if (oneOfRecipe.isSelected === totalFilters) {
+//                 if (oneOfRecipe.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(mainSearch.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
+//                     allRecipesAvailable.push(oneOfRecipe)
+//                 }                
+//             }
+//         })
+//         getValidRecipe()
+//     }
+//     console.log("Voici le nombre d'opérations : ", operationCount)
+// }
 
-
-var mainSearch = document.getElementById("main-search");
-mainSearch.addEventListener("input", principalSearch);
-
-function principalSearch() {
-  console.log("je suis dans la fonction");
-  var operationCount = 0;
-  document.querySelectorAll('.result-recipe').forEach(function (showCards) {
-    return showCards.remove();
-  });
-  allRecipesOfObject = [];
-
-  if (mainSearch.value.length > 2) {
-    allRecipesOfObject.forEach(function (oneOfRecipe) {
-      operationCount++;
-
-      if (oneOfRecipe.isSelected === totalFilters) {
-        if (oneOfRecipe.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(mainSearch.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
-          allRecipesAvailable.push(oneOfRecipe);
-        }
-      }
-    });
-    getValidRecipe();
-  }
-
-  console.log("Voici le nombre d'opérations : ", operationCount);
-}
 
 createAllRecipes();
 createFilters();
