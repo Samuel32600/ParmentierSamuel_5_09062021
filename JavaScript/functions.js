@@ -1,5 +1,5 @@
 let allRecipesOfObject = [];
-let allRecipesFounded = [];
+let allRecipesAvailable = [];
 let threeFilters = []
 let totalFilters = 0;
 let elementSelectededinFilter = []
@@ -35,7 +35,7 @@ function createAllRecipes() {
         allRecipesOfObject.push(newRecipe)
     })
     // console.table(allRecipesOfObject)
-    allRecipesFounded = allRecipesOfObject
+    allRecipesAvailable = allRecipesOfObject
 }
 
 //*****************************************
@@ -103,17 +103,17 @@ function seeFilters() {
             newElement.innerText = oneOfElement;
             containerFilter.appendChild(newElement);
 
+            //verification si l'element est deja dans le tableau des elements selectionnés
             if ((elementSelectededinFilter).includes(oneOfElement) === false) {
 
                 newElement.addEventListener("click", function () {
-                    console.log(oneOfElement)
-                    newElement.classList.add("element-hide")
+                    // console.log(oneOfElement)
                     elementSelectededinFilter.push(oneOfElement)
-                    console.log("voici l'ensemble des elements selectionnés", elementSelectededinFilter)
+                    // console.log("voici l'ensemble des elements selectionnés", elementSelectededinFilter)
                     addOneFilter(oneOfElement, index)
                 })
             } else {
-
+                newElement.classList.add("element-hide")
             }
         })
     })
@@ -144,7 +144,6 @@ function seeFilters() {
     //     newElement.innerText = oneOfUstensil;
     //     UstensilContainer.appendChild(newElement);
     // })
-
 }
 
 //********************************
@@ -222,12 +221,14 @@ function showHideListingFilter() {
         down3.classList.remove("hidden");
         document.getElementsByName('USTENSIL')[0].placeholder = 'Ustensiles';
     }
-
 }
 
+//******************************************************
+// action suite a la selection d'un element des filtres
+//******************************************************
 function addOneFilter(elementSelected, categoryOfElement) {
     totalFilters += 1
-    console.log(categoryOfElement)
+    // console.log(categoryOfElement)
 
     let category = [
         "ingredients",
@@ -235,9 +236,10 @@ function addOneFilter(elementSelected, categoryOfElement) {
         "ustensils",
     ]
 
-    console.log("on a cliqué sur", elementSelected, "et c'est un element de type", category[categoryOfElement])
+    // console.log("on a cliqué sur", elementSelected, "et c'est un element de type", category[categoryOfElement])
 
-    allRecipesOfObject.forEach(function (oneOfRecipe) {
+    //boucle sur l'ensemble des recettes disponibles
+    allRecipesAvailable.forEach(function (oneOfRecipe) {
 
         //recette apres selection d'un ingredient
         if (category[categoryOfElement] === "ingredients") {
@@ -270,13 +272,61 @@ function addOneFilter(elementSelected, categoryOfElement) {
             })
         }
     })
-    console.log(totalFilters)
+    // console.log(totalFilters)
 
     createTag(elementSelected, categoryOfElement)
     getValidRecipe()
 
 }
 
+//*************************************************
+// creation d'un tag + ecoute pour refermer le tag
+//*************************************************
+function createTag(elementSelected, color) {
+    // console.log("la fonction tag est appelée")
+    // console.log(elementSelected)
+    // console.log(index) 
+
+    let colorTag = [
+        "box1",
+        "box2",
+        "box3"
+    ]
+
+    const selectContainer = document.getElementById("box-select")
+    //creation de la div
+    let newDivSelect = document.createElement("div");
+    newDivSelect.setAttribute("id", "box-tag-" + elementSelected);
+    newDivSelect.classList.add("box-newTag", colorTag[color]);
+    selectContainer.appendChild(newDivSelect);
+    //creation du texte
+    let newElementSelect = document.createElement("p");
+    let textTag = elementSelected
+    newElementSelect.classList.add("box__text");
+    newElementSelect.innerText = textTag;
+    newDivSelect.appendChild(newElementSelect);
+    //creation de l'icone
+    let newIconSelect = document.createElement("i");
+    newIconSelect.classList.add("far", "fa-times-circle");
+    newDivSelect.appendChild(newIconSelect);
+
+    //suppression du tag suite a la selection de la croix
+    let tagRemove = document.getElementById("box-tag-" + elementSelected)
+    tagRemove.addEventListener("click", function () {
+        // console.log("je veux fermer la div" + elementSelected)
+        tagRemove.remove()
+        elementSelectededinFilter.forEach(function (element, index) {
+            if (element === elementSelected) {
+                elementSelectededinFilter.splice(index, 1)
+            }
+        })
+        removeOneFilter(elementSelected, color)
+    })
+}
+
+//********************************************************
+// action suite a la déselection d'un element des filtres
+//********************************************************
 function removeOneFilter(elementSelected, categoryOfElement) {
     totalFilters -= 1
 
@@ -286,7 +336,7 @@ function removeOneFilter(elementSelected, categoryOfElement) {
         "ustensils",
     ]
 
-    console.log("on a déselctionné", elementSelected, "et c'est un element de type", category[categoryOfElement])
+    // console.log("on a déselctionné", elementSelected, "et c'est un element de type", category[categoryOfElement])
 
     allRecipesOfObject.forEach(function (oneOfRecipe) {
 
@@ -295,7 +345,6 @@ function removeOneFilter(elementSelected, categoryOfElement) {
             oneOfRecipe.ingredients.forEach(function (oneOfIngredient) {
                 if (elementSelected === oneOfIngredient.name) {
                     oneOfRecipe.isSelected -= 1
-                    console.log("la recette trouvée est " + oneOfRecipe.name)
                 }
             })
         }
@@ -305,7 +354,6 @@ function removeOneFilter(elementSelected, categoryOfElement) {
             oneOfRecipe.appliances.forEach(function (oneOfAppliance) {
                 if (elementSelected === oneOfAppliance.name) {
                     oneOfRecipe.isSelected -= 1
-                    console.log("la recette trouvée est " + oneOfRecipe.name)
                 }
             })
         }
@@ -315,25 +363,37 @@ function removeOneFilter(elementSelected, categoryOfElement) {
             oneOfRecipe.ustensils.forEach(function (oneOfUstensil) {
                 if (elementSelected === oneOfUstensil.name) {
                     oneOfRecipe.isSelected -= 1
-                    console.log("la recette trouvée est " + oneOfRecipe.name)
                 }
             })
         }
     })
-    console.log(totalFilters)
+    // console.log(totalFilters)
     getValidRecipe()
 }
 
+//*******************************
+// affichage des recettes valide
+//*******************************
 function getValidRecipe() {
+    document.querySelectorAll('.result-recipe').forEach((showCards) => showCards.remove())
+    let allRecipesFounded = []
 
-    allRecipesOfObject.forEach((oneOfRecipe) => {
+
+    allRecipesAvailable.forEach((oneOfRecipe) => {
 
         if (oneOfRecipe.isSelected === totalFilters) {
+            allRecipesFounded.push(oneOfRecipe)
             card(oneOfRecipe)
         }
     })
+    allRecipesOfObject = allRecipesFounded
+    createFilters()
+
 }
 
+//******************************
+// creation d'une carte recette
+//******************************
 function card(recipe) {
 
     const mainRecipes = document.getElementById("allRecipes")
@@ -362,34 +422,34 @@ function card(recipe) {
     mainRecipes.insertAdjacentHTML('beforeend', CardRecipe)
 }
 
+//************************************
+// recherche dans la barre principale
+//************************************
+const mainSearch = document.getElementById("main-search");
+mainSearch.addEventListener("input", principalSearch)
 
-function createTag(elementSelected, index) {
-console.log("la fonction tag est appelée")
-console.log(elementSelected)
-console.log(index)  
-let colorTag = [
-        "box1",
-        "box2",
-        "box3"
-    ]
+function principalSearch() {
+    console.log("je suis dans la fonction")
+    let operationCount = 0
 
-    const selectContainer = document.getElementById("box-select")
-    
-    //creation de la div
-    let newDivSelect = document.createElement("div");
-    newDivSelect.setAttribute("id", "box-tag-" + elementSelected);    
-    newDivSelect.classList.add("box-newTag", colorTag [index] );
-    selectContainer.appendChild(newDivSelect);
-    //creation du texte
-    let newElementSelect = document.createElement("p");
-    let textTag = elementSelected
-    newElementSelect.classList.add("box__text");
-    newElementSelect.innerText = textTag;
-    newDivSelect.appendChild(newElementSelect);
-    //creation de l'icone
-    let newIconSelect = document.createElement("i");
-    newIconSelect.classList.add("far", "fa-times-circle");
-    newDivSelect.appendChild(newIconSelect);
+    document.querySelectorAll('.result-recipe').forEach((showCards) => showCards.remove())
+    allRecipesOfObject = []
+
+
+    if (mainSearch.value.length > 2) {
+
+        allRecipesOfObject.forEach((oneOfRecipe) => {
+            operationCount++
+
+            if (oneOfRecipe.isSelected === totalFilters) {
+                if (oneOfRecipe.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(mainSearch.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
+                    allRecipesAvailable.push(oneOfRecipe)
+                }                
+            }
+        })
+        getValidRecipe()
+    }
+    console.log("Voici le nombre d'opérations : ", operationCount)
 }
 
 
@@ -400,3 +460,4 @@ let colorTag = [
 createAllRecipes()
 createFilters()
 showHideListingFilter()
+principalSearch()

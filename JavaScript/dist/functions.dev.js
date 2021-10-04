@@ -1,7 +1,7 @@
 "use strict";
 
 var allRecipesOfObject = [];
-var allRecipesFounded = [];
+var allRecipesAvailable = [];
 var threeFilters = [];
 var totalFilters = 0;
 var elementSelectededinFilter = []; //***************************
@@ -32,7 +32,7 @@ function createAllRecipes() {
     allRecipesOfObject.push(newRecipe);
   }); // console.table(allRecipesOfObject)
 
-  allRecipesFounded = allRecipesOfObject;
+  allRecipesAvailable = allRecipesOfObject;
 } //*****************************************
 // recuperation des elements des 3 filtres
 //*****************************************
@@ -84,17 +84,18 @@ function seeFilters() {
       var newElement = document.createElement("p");
       newElement.classList.add("element");
       newElement.innerText = oneOfElement;
-      containerFilter.appendChild(newElement);
+      containerFilter.appendChild(newElement); //verification si l'element est deja dans le tableau des elements selectionnés
 
       if (elementSelectededinFilter.includes(oneOfElement) === false) {
         newElement.addEventListener("click", function () {
-          console.log(oneOfElement);
-          newElement.classList.add("element-hide");
-          elementSelectededinFilter.push(oneOfElement);
-          console.log("voici l'ensemble des elements selectionnés", elementSelectededinFilter);
+          // console.log(oneOfElement)
+          elementSelectededinFilter.push(oneOfElement); // console.log("voici l'ensemble des elements selectionnés", elementSelectededinFilter)
+
           addOneFilter(oneOfElement, index);
         });
-      } else {}
+      } else {
+        newElement.classList.add("element-hide");
+      }
     });
   }); // const IngredientContainer = document.getElementById("box1-ingredients")
   // threeFilters[0].forEach((oneOfIngredient) => {
@@ -197,14 +198,18 @@ function showHideListingFilter() {
     down3.classList.remove("hidden");
     document.getElementsByName('USTENSIL')[0].placeholder = 'Ustensiles';
   }
-}
+} //******************************************************
+// action suite a la selection d'un element des filtres
+//******************************************************
+
 
 function addOneFilter(elementSelected, categoryOfElement) {
-  totalFilters += 1;
-  console.log(categoryOfElement);
-  var category = ["ingredients", "appliances", "ustensils"];
-  console.log("on a cliqué sur", elementSelected, "et c'est un element de type", category[categoryOfElement]);
-  allRecipesOfObject.forEach(function (oneOfRecipe) {
+  totalFilters += 1; // console.log(categoryOfElement)
+
+  var category = ["ingredients", "appliances", "ustensils"]; // console.log("on a cliqué sur", elementSelected, "et c'est un element de type", category[categoryOfElement])
+  //boucle sur l'ensemble des recettes disponibles
+
+  allRecipesAvailable.forEach(function (oneOfRecipe) {
     //recette apres selection d'un ingredient
     if (category[categoryOfElement] === "ingredients") {
       oneOfRecipe.ingredients.forEach(function (oneOfIngredient) {
@@ -234,78 +239,25 @@ function addOneFilter(elementSelected, categoryOfElement) {
         }
       });
     }
-  });
-  console.log(totalFilters);
+  }); // console.log(totalFilters)
+
   createTag(elementSelected, categoryOfElement);
   getValidRecipe();
-}
-
-function removeOneFilter(elementSelected, categoryOfElement) {
-  totalFilters -= 1;
-  var category = ["ingredients", "appliances", "ustensils"];
-  console.log("on a déselctionné", elementSelected, "et c'est un element de type", category[categoryOfElement]);
-  allRecipesOfObject.forEach(function (oneOfRecipe) {
-    //recette apres deselection d'un ingredient
-    if (category[categoryOfElement] === "ingredients") {
-      oneOfRecipe.ingredients.forEach(function (oneOfIngredient) {
-        if (elementSelected === oneOfIngredient.name) {
-          oneOfRecipe.isSelected -= 1;
-          console.log("la recette trouvée est " + oneOfRecipe.name);
-        }
-      });
-    } //recette apres deselection d'un appareil
+} //*************************************************
+// creation d'un tag + ecoute pour refermer le tag
+//*************************************************
 
 
-    if (category[categoryOfElement] === "appliances") {
-      oneOfRecipe.appliances.forEach(function (oneOfAppliance) {
-        if (elementSelected === oneOfAppliance.name) {
-          oneOfRecipe.isSelected -= 1;
-          console.log("la recette trouvée est " + oneOfRecipe.name);
-        }
-      });
-    } //recette apres deselection d'un ustensil
-
-
-    if (category[categoryOfElement] === "ustensils") {
-      oneOfRecipe.ustensils.forEach(function (oneOfUstensil) {
-        if (elementSelected === oneOfUstensil.name) {
-          oneOfRecipe.isSelected -= 1;
-          console.log("la recette trouvée est " + oneOfRecipe.name);
-        }
-      });
-    }
-  });
-  console.log(totalFilters);
-  getValidRecipe();
-}
-
-function getValidRecipe() {
-  allRecipesOfObject.forEach(function (oneOfRecipe) {
-    if (oneOfRecipe.isSelected === totalFilters) {
-      card(oneOfRecipe);
-    }
-  });
-}
-
-function card(recipe) {
-  var mainRecipes = document.getElementById("allRecipes");
-  var CardRecipe = "";
-  CardRecipe += "<figure class=\"result-recipe\">\n    <img class=\"recette\">\n    <figcaption>\n        <aside class=\"title\">\n            <p class=\"name\">".concat(recipe.name, "</p>\n            <div class=\"duration\">\n                <i class=\"far fa-clock\"></i>\n                <p class=\"time\">").concat(recipe.time, " min</p>\n            </div>\n        </aside>\n        <div class=\"text\">\n            <ul class=\"ingredients\">               \n                ").concat(recipe.ingredients.map(function (elementOfIngredient) {
-    return "\n                <li>\n                    <span>".concat(elementOfIngredient.name, " : </span>").concat(elementOfIngredient.quantity, " ").concat(elementOfIngredient.unit, "\n                </li>");
-  }).join(""), "\n            </ul>\n            <p class=\"description\">").concat(recipe.description, "</p>\n        </div>\n    </figcaption>\n</figure>");
-  mainRecipes.insertAdjacentHTML('beforeend', CardRecipe);
-}
-
-function createTag(elementSelected, index) {
-  console.log("la fonction tag est appelée");
-  console.log(elementSelected);
-  console.log(index);
+function createTag(elementSelected, color) {
+  // console.log("la fonction tag est appelée")
+  // console.log(elementSelected)
+  // console.log(index) 
   var colorTag = ["box1", "box2", "box3"];
   var selectContainer = document.getElementById("box-select"); //creation de la div
 
   var newDivSelect = document.createElement("div");
   newDivSelect.setAttribute("id", "box-tag-" + elementSelected);
-  newDivSelect.classList.add("box-newTag", colorTag[index]);
+  newDivSelect.classList.add("box-newTag", colorTag[color]);
   selectContainer.appendChild(newDivSelect); //creation du texte
 
   var newElementSelect = document.createElement("p");
@@ -316,9 +268,121 @@ function createTag(elementSelected, index) {
 
   var newIconSelect = document.createElement("i");
   newIconSelect.classList.add("far", "fa-times-circle");
-  newDivSelect.appendChild(newIconSelect);
+  newDivSelect.appendChild(newIconSelect); //suppression du tag suite a la selection de la croix
+
+  var tagRemove = document.getElementById("box-tag-" + elementSelected);
+  tagRemove.addEventListener("click", function () {
+    // console.log("je veux fermer la div" + elementSelected)
+    tagRemove.remove();
+    elementSelectededinFilter.forEach(function (element, index) {
+      if (element === elementSelected) {
+        elementSelectededinFilter.splice(index, 1);
+      }
+    });
+    removeOneFilter(elementSelected, color);
+  });
+} //********************************************************
+// action suite a la déselection d'un element des filtres
+//********************************************************
+
+
+function removeOneFilter(elementSelected, categoryOfElement) {
+  totalFilters -= 1;
+  var category = ["ingredients", "appliances", "ustensils"]; // console.log("on a déselctionné", elementSelected, "et c'est un element de type", category[categoryOfElement])
+
+  allRecipesOfObject.forEach(function (oneOfRecipe) {
+    //recette apres deselection d'un ingredient
+    if (category[categoryOfElement] === "ingredients") {
+      oneOfRecipe.ingredients.forEach(function (oneOfIngredient) {
+        if (elementSelected === oneOfIngredient.name) {
+          oneOfRecipe.isSelected -= 1;
+        }
+      });
+    } //recette apres deselection d'un appareil
+
+
+    if (category[categoryOfElement] === "appliances") {
+      oneOfRecipe.appliances.forEach(function (oneOfAppliance) {
+        if (elementSelected === oneOfAppliance.name) {
+          oneOfRecipe.isSelected -= 1;
+        }
+      });
+    } //recette apres deselection d'un ustensil
+
+
+    if (category[categoryOfElement] === "ustensils") {
+      oneOfRecipe.ustensils.forEach(function (oneOfUstensil) {
+        if (elementSelected === oneOfUstensil.name) {
+          oneOfRecipe.isSelected -= 1;
+        }
+      });
+    }
+  }); // console.log(totalFilters)
+
+  getValidRecipe();
+} //*******************************
+// affichage des recettes valide
+//*******************************
+
+
+function getValidRecipe() {
+  document.querySelectorAll('.result-recipe').forEach(function (showCards) {
+    return showCards.remove();
+  });
+  var allRecipesFounded = [];
+  allRecipesAvailable.forEach(function (oneOfRecipe) {
+    if (oneOfRecipe.isSelected === totalFilters) {
+      allRecipesFounded.push(oneOfRecipe);
+      card(oneOfRecipe);
+    }
+  });
+  allRecipesOfObject = allRecipesFounded;
+  createFilters();
+} //******************************
+// creation d'une carte recette
+//******************************
+
+
+function card(recipe) {
+  var mainRecipes = document.getElementById("allRecipes");
+  var CardRecipe = "";
+  CardRecipe += "<figure class=\"result-recipe\">\n    <img class=\"recette\">\n    <figcaption>\n        <aside class=\"title\">\n            <p class=\"name\">".concat(recipe.name, "</p>\n            <div class=\"duration\">\n                <i class=\"far fa-clock\"></i>\n                <p class=\"time\">").concat(recipe.time, " min</p>\n            </div>\n        </aside>\n        <div class=\"text\">\n            <ul class=\"ingredients\">               \n                ").concat(recipe.ingredients.map(function (elementOfIngredient) {
+    return "\n                <li>\n                    <span>".concat(elementOfIngredient.name, " : </span>").concat(elementOfIngredient.quantity, " ").concat(elementOfIngredient.unit, "\n                </li>");
+  }).join(""), "\n            </ul>\n            <p class=\"description\">").concat(recipe.description, "</p>\n        </div>\n    </figcaption>\n</figure>");
+  mainRecipes.insertAdjacentHTML('beforeend', CardRecipe);
+} //************************************
+// recherche dans la barre principale
+//************************************
+
+
+var mainSearch = document.getElementById("main-search");
+mainSearch.addEventListener("input", principalSearch);
+
+function principalSearch() {
+  console.log("je suis dans la fonction");
+  var operationCount = 0;
+  document.querySelectorAll('.result-recipe').forEach(function (showCards) {
+    return showCards.remove();
+  });
+  allRecipesOfObject = [];
+
+  if (mainSearch.value.length > 2) {
+    allRecipesOfObject.forEach(function (oneOfRecipe) {
+      operationCount++;
+
+      if (oneOfRecipe.isSelected === totalFilters) {
+        if (oneOfRecipe.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(mainSearch.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
+          allRecipesAvailable.push(oneOfRecipe);
+        }
+      }
+    });
+    getValidRecipe();
+  }
+
+  console.log("Voici le nombre d'opérations : ", operationCount);
 }
 
 createAllRecipes();
 createFilters();
 showHideListingFilter();
+principalSearch();
