@@ -4,7 +4,6 @@ let threeFilters = []
 let totalFilters = 0;
 let elementSelectededinFilter = []
 
-
 //***************************
 // recuperation des recettes
 //***************************
@@ -53,25 +52,25 @@ function createFilters() {
         oneOfRecipe.ingredients.forEach((oneOfIngredient) => {
             if (listingIngredient.includes(oneOfIngredient.name) === false) {
                 listingIngredient.push(oneOfIngredient.name)
-                listingIngredient.sort()
             }
         })
+        listingIngredient.sort()
 
         //tableau appliance
         oneOfRecipe.appliances.forEach((oneOfAppliance) => {
             if (listingAppliance.includes(oneOfAppliance.name) === false) {
                 listingAppliance.push(oneOfAppliance.name)
-                listingAppliance.sort()
             }
         })
+        listingAppliance.sort()
 
         // //tableau ustensil
         oneOfRecipe.ustensils.forEach((oneOfUstensil) => {
             if (listingUstensil.includes(oneOfUstensil.name) === false) {
                 listingUstensil.push(oneOfUstensil.name)
-                listingUstensil.sort()
             }
         })
+        listingUstensil.sort()
 
     })
     // console.table(listingIngredient)
@@ -118,6 +117,9 @@ function seeFilters() {
         })
     })
 
+
+
+
     // const IngredientContainer = document.getElementById("box1-ingredients")
     // threeFilters[0].forEach((oneOfIngredient) => {
     //     let newElement = document.createElement("p");
@@ -155,72 +157,66 @@ function showHideListingFilter() {
     const box1Extended = document.getElementById("box1-display-content");
     const down1 = document.getElementById("chevron-down-1");
     const up1 = document.getElementById("chevron-up-1");
-    down1.addEventListener("click", downIngredient);
-    up1.addEventListener("click", upIngredient);
 
-    function downIngredient() {
+    down1.addEventListener("click", function () {
         IngredientContainer.classList.remove("hidden");
         box1Extended.classList.add("box-extend");
         up1.classList.remove("hidden");
         down1.classList.add("hidden");
         document.getElementsByName('INGREDIENT')[0].placeholder = 'Recherche un ingrédient';
-    }
+    })
 
-    function upIngredient() {
+    up1.addEventListener("click", function () {
         IngredientContainer.classList.add("hidden");
         box1Extended.classList.remove("box-extend");
         up1.classList.add("hidden");
         down1.classList.remove("hidden");
         document.getElementsByName('INGREDIENT')[0].placeholder = 'Ingredients';
-    }
+    })
 
     //appareil
     const ApplianceContainer = document.getElementById("box2-appliance");
     const box2Extended = document.getElementById("box2-display-content");
     const down2 = document.getElementById("chevron-down-2");
     const up2 = document.getElementById("chevron-up-2");
-    down2.addEventListener("click", downAppliance);
-    up2.addEventListener("click", upAppliance);
 
-    function downAppliance() {
+    down2.addEventListener("click", function () {
         ApplianceContainer.classList.remove("hidden");
         box2Extended.classList.add("box-extend");
         up2.classList.remove("hidden");
         down2.classList.add("hidden");
         document.getElementsByName('APPAREIL')[0].placeholder = 'Recherche un appareil';
-    }
+    })
 
-    function upAppliance() {
+    up2.addEventListener("click", function () {
         ApplianceContainer.classList.add("hidden");
         box2Extended.classList.remove("box-extend");
         up2.classList.add("hidden");
         down2.classList.remove("hidden");
         document.getElementsByName('APPAREIL')[0].placeholder = 'Appareil';
-    }
+    })
 
     //ustensil
     const UstensilContainer = document.getElementById("box3-ustensils");
     const box3Extended = document.getElementById("box3-display-content");
     const down3 = document.getElementById("chevron-down-3");
     const up3 = document.getElementById("chevron-up-3");
-    down3.addEventListener("click", downUstensil);
-    up3.addEventListener("click", upUstensil);
 
-    function downUstensil() {
+    down3.addEventListener("click", function () {
         UstensilContainer.classList.remove("hidden");
         box3Extended.classList.add("box-extend");
         up3.classList.remove("hidden");
         down3.classList.add("hidden");
         document.getElementsByName('USTENSIL')[0].placeholder = 'Recherche un ustensile';
-    }
+    })
 
-    function upUstensil() {
+    up3.addEventListener("click", function () {
         UstensilContainer.classList.add("hidden");
         box3Extended.classList.remove("box-extend");
         up3.classList.add("hidden");
         down3.classList.remove("hidden");
         document.getElementsByName('USTENSIL')[0].placeholder = 'Ustensiles';
-    }
+    })
 }
 
 //******************************************************
@@ -246,7 +242,6 @@ function addOneFilter(elementSelected, categoryOfElement) {
             oneOfRecipe.ingredients.forEach(function (oneOfIngredient) {
                 if (elementSelected === oneOfIngredient.name) {
                     oneOfRecipe.isSelected += 1
-                    console.log("la recette trouvée est " + oneOfRecipe.name)
                 }
             })
         }
@@ -257,7 +252,6 @@ function addOneFilter(elementSelected, categoryOfElement) {
             oneOfRecipe.appliances.forEach(function (oneOfAppliance) {
                 if (elementSelected === oneOfAppliance.name) {
                     oneOfRecipe.isSelected += 1
-                    console.log("la recette trouvée est " + oneOfRecipe.name)
                 }
             })
         }
@@ -267,7 +261,6 @@ function addOneFilter(elementSelected, categoryOfElement) {
             oneOfRecipe.ustensils.forEach(function (oneOfUstensil) {
                 if (elementSelected === oneOfUstensil.name) {
                     oneOfRecipe.isSelected += 1
-                    console.log("la recette trouvée est " + oneOfRecipe.name)
                 }
             })
         }
@@ -374,89 +367,123 @@ function removeOneFilter(elementSelected, categoryOfElement) {
 //*******************************
 // affichage des recettes valide
 //*******************************
-function getValidRecipe() {
-    document.querySelectorAll('.result-recipe').forEach((showCards) => showCards.remove())
-    let allRecipesFounded = []
+// function getValidRecipe() {
+//     document.querySelectorAll('.result-recipe').forEach((showCards) => showCards.remove())
+//     let allRecipesFounded = []
 
+
+//     allRecipesAvailable.forEach((oneOfRecipe) => {
+
+//         if (oneOfRecipe.isSelected === totalFilters) {
+//             allRecipesFounded.push(oneOfRecipe)
+//             card(oneOfRecipe)
+//         }
+//     })
+//     allRecipesOfObject = allRecipesFounded
+//     createFilters()
+
+// }
+function getValidRecipe(input = false) {
+    console.log(input)
+    let allRecipesFounded = []
 
     allRecipesAvailable.forEach((oneOfRecipe) => {
 
         if (oneOfRecipe.isSelected === totalFilters) {
-            allRecipesFounded.push(oneOfRecipe)
-            card(oneOfRecipe)
+            if (input !== false) {
+                if (oneOfRecipe.name.includes(input)) {
+                    allRecipesFounded.push(oneOfRecipe)
+                }
+            } else {
+                allRecipesFounded.push(oneOfRecipe)
+            }
         }
     })
-    allRecipesOfObject = allRecipesFounded
-    createFilters()
 
+    allRecipesOfObject = allRecipesFounded
+    card()
+    createFilters()
 }
 
 //******************************
 // creation d'une carte recette
 //******************************
-function card(recipe) {
-
+function card() {
     const mainRecipes = document.getElementById("allRecipes")
-    let CardRecipe = "";
-    CardRecipe += `<figure class="result-recipe">
-    <img class="recette">
-    <figcaption>
-        <aside class="title">
-            <p class="name">${recipe.name}</p>
-            <div class="duration">
-                <i class="far fa-clock"></i>
-                <p class="time">${recipe.time} min</p>
+    mainRecipes.innerText = ""
+    allRecipesOfObject.forEach(function (recipe) {
+        let CardRecipe = "";
+        CardRecipe += `
+    <figure class="result-recipe">
+        <img class="recette">
+        <figcaption>
+            <aside class="title">
+                <p class="name">${recipe.name}</p>
+                <div class="duration">
+                    <i class="far fa-clock"></i>
+                    <p class="time">${recipe.time} min</p>
+                </div>
+            </aside>
+            <div class="text">
+                <ul class="ingredients">               
+                    ${recipe.ingredients.map(elementOfIngredient => `
+                    <li>
+                        <span>${elementOfIngredient.name} : </span>${elementOfIngredient.quantity} ${elementOfIngredient.unit}
+                    </li>`).join("")}
+                </ul>
+                    <p class="description">${recipe.description}</p>
             </div>
-        </aside>
-        <div class="text">
-            <ul class="ingredients">               
-                ${recipe.ingredients.map(elementOfIngredient => `
-                <li>
-                    <span>${elementOfIngredient.name} : </span>${elementOfIngredient.quantity} ${elementOfIngredient.unit}
-                </li>`).join("")}
-            </ul>
-            <p class="description">${recipe.description}</p>
-        </div>
-    </figcaption>
-</figure>`
-    mainRecipes.insertAdjacentHTML('beforeend', CardRecipe)
+        </figcaption>
+    </figure>`
+        mainRecipes.insertAdjacentHTML('beforeend', CardRecipe)
+    })
 }
 
 //************************************
 // recherche dans la barre principale
 //************************************
-// const mainSearch = document.getElementById("main-search");
-// mainSearch.addEventListener("input", principalSearch)
-
+//appel pour la recherche principale
 // function principalSearch() {
-//     let operationCount = 0
 
-//     document.querySelectorAll('.result-recipe').forEach((showCards) => showCards.remove())
-//     allRecipesAvailable = []
+//     const mainSearch = document.getElementById("main-search");
+//     mainSearch.addEventListener("input", function () {
 
+//         let operationCount = 0
+//         document.querySelectorAll('.result-recipe').forEach((showCards) => showCards.remove())
+//         allRecipesAvailable = []
 
-//     if (mainSearch.value.length > 2) {
+//         if (mainSearch.value.length > 2) {
+//             allRecipesOfObject.forEach((oneOfRecipe) => {
+//                 operationCount++
 
-//         allRecipesOfObject.forEach((oneOfRecipe) => {
-//             operationCount++
+//                 if (oneOfRecipe.isSelected === totalFilters) {
+//                     if (oneOfRecipe.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(mainSearch.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
+//                         allRecipesAvailable.push(oneOfRecipe)
+//                     }
+//                 }
+//             })
+//             getValidRecipe()
+//         }
 
-//             if (oneOfRecipe.isSelected === totalFilters) {
-//                 if (oneOfRecipe.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(mainSearch.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
-//                     allRecipesAvailable.push(oneOfRecipe)
-//                 }                
-//             }
-//         })
-//         getValidRecipe()
-//     }
-//     console.log("Voici le nombre d'opérations : ", operationCount)
+//         else {
+//             console.log("je dois mettre a jour les filtres")
+//             createFilters()
+//         }
+//         console.log("Voici le nombre d'opérations : ", operationCount)
+
+//     })
 // }
 
-
-
-
-
+function principalSearch() {
+    const mainSearch = document.getElementById("main-search")
+    mainSearch.addEventListener("input", function () {
+        console.log(mainSearch.value)
+        getValidRecipe(mainSearch.value)
+    })
+}
 
 createAllRecipes()
 createFilters()
 showHideListingFilter()
 principalSearch()
+
