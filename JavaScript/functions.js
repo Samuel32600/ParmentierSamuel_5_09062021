@@ -403,16 +403,35 @@ function removeOneFilter(elementSelected, categoryOfElement) {
 function getValidRecipe(input = false) {
     allRecipesOfObject.forEach((oneOfRecipe) => {
         if (oneOfRecipe.isSelected === totalFilters) {
+            console.log(oneOfRecipe.hasInput)
             if (input !== false) {
+
+                // nom des recettes
                 if (oneOfRecipe.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes((input).toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
                     oneOfRecipe.hasInput = true
                 }
+                
+                // description des recettes
+                else if (oneOfRecipe.description.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes((input).toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
+                    oneOfRecipe.hasInput = true
+                }
+
+                // ingredients des recettes
+                // else {
+                //     oneOfRecipe.ingredients.forEach(function (ingr) {
+                //         if (ingr.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes((input).toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
+                //             oneOfRecipe.hasInput = true
+                //         }
+                //     })
+                // }
+
                 else {
                     oneOfRecipe.hasInput = false
                 }
             }
         }
     })
+
     card()
     createFilters()
 }
@@ -462,6 +481,7 @@ function principalSearch() {
     const mainSearch = document.getElementById("main-search")
     mainSearch.addEventListener("input", function () {
         console.log(mainSearch.value)
+
         if (mainSearch.value.length > 2) {
             inputType = true
             getValidRecipe(mainSearch.value)
@@ -471,6 +491,7 @@ function principalSearch() {
             inputType = false
             resetInput()
             getValidRecipe()
+
         }
     })
 }

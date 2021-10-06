@@ -356,12 +356,26 @@ function getValidRecipe() {
   var input = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
   allRecipesOfObject.forEach(function (oneOfRecipe) {
     if (oneOfRecipe.isSelected === totalFilters) {
+      console.log(oneOfRecipe.hasInput);
+
       if (input !== false) {
+        // nom des recettes
         if (oneOfRecipe.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(input.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
           oneOfRecipe.hasInput = true;
-        } else {
-          oneOfRecipe.hasInput = false;
-        }
+        } // description des recettes
+        else if (oneOfRecipe.description.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(input.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
+            oneOfRecipe.hasInput = true;
+          } // ingredients des recettes
+          // else {
+          //     oneOfRecipe.ingredients.forEach(function (ingr) {
+          //         if (ingr.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes((input).toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
+          //             oneOfRecipe.hasInput = true
+          //         }
+          //     })
+          // }
+          else {
+              oneOfRecipe.hasInput = false;
+            }
       }
     }
   });
