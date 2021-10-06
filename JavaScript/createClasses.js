@@ -8,6 +8,7 @@ class Recipe {
         this.appliances = []
         this.ustensils = []
         this.isSelected = 0;
+        this.hasInput= false
     }
 
     //ajout des ingredients     

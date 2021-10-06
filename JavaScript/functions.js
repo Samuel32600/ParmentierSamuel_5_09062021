@@ -1,8 +1,8 @@
 let allRecipesOfObject = [];
-let allRecipesAvailable = [];
 let threeFilters = []
 let totalFilters = 0;
 let elementSelectededinFilter = []
+let inputType = false
 
 //***************************
 // recuperation des recettes
@@ -34,7 +34,6 @@ function createAllRecipes() {
         allRecipesOfObject.push(newRecipe)
     })
     // console.table(allRecipesOfObject)
-    allRecipesAvailable = allRecipesOfObject
 }
 
 //*****************************************
@@ -47,31 +46,33 @@ function createFilters() {
     let listingUstensil = [];
 
     allRecipesOfObject.forEach((oneOfRecipe) => {
+        if (oneOfRecipe.isSelected === totalFilters) {
+            if ((oneOfRecipe.hasInput === true && inputType === true) || (inputType === false)) {
+                //tableau ingredient
+                oneOfRecipe.ingredients.forEach((oneOfIngredient) => {
+                    if (listingIngredient.includes(oneOfIngredient.name) === false) {
+                        listingIngredient.push(oneOfIngredient.name)
+                    }
+                })
+                listingIngredient.sort()
 
-        //tableau ingredient
-        oneOfRecipe.ingredients.forEach((oneOfIngredient) => {
-            if (listingIngredient.includes(oneOfIngredient.name) === false) {
-                listingIngredient.push(oneOfIngredient.name)
+                //tableau appliance
+                oneOfRecipe.appliances.forEach((oneOfAppliance) => {
+                    if (listingAppliance.includes(oneOfAppliance.name) === false) {
+                        listingAppliance.push(oneOfAppliance.name)
+                    }
+                })
+                listingAppliance.sort()
+
+                // //tableau ustensil
+                oneOfRecipe.ustensils.forEach((oneOfUstensil) => {
+                    if (listingUstensil.includes(oneOfUstensil.name) === false) {
+                        listingUstensil.push(oneOfUstensil.name)
+                    }
+                })
+                listingUstensil.sort()
             }
-        })
-        listingIngredient.sort()
-
-        //tableau appliance
-        oneOfRecipe.appliances.forEach((oneOfAppliance) => {
-            if (listingAppliance.includes(oneOfAppliance.name) === false) {
-                listingAppliance.push(oneOfAppliance.name)
-            }
-        })
-        listingAppliance.sort()
-
-        // //tableau ustensil
-        oneOfRecipe.ustensils.forEach((oneOfUstensil) => {
-            if (listingUstensil.includes(oneOfUstensil.name) === false) {
-                listingUstensil.push(oneOfUstensil.name)
-            }
-        })
-        listingUstensil.sort()
-
+        }
     })
     // console.table(listingIngredient)
     // console.table(listingAppliance)
@@ -84,7 +85,13 @@ function createFilters() {
 //************************************
 // affichage des elements des filtres
 //************************************
-function seeFilters() {
+function seeFilters(specialFilter = false) {
+
+    let filtersUsed = threeFilters;
+
+    if (specialFilter !== false) {
+        filtersUsed = specialFilter
+    }
 
     let configFilter = [
         "box1-ingredients",
@@ -96,7 +103,7 @@ function seeFilters() {
         let containerFilter = document.getElementById(containerName)
         containerFilter.innerHTML = ""
 
-        threeFilters[index].forEach((oneOfElement) => {
+        filtersUsed[index].forEach((oneOfElement) => {
             let newElement = document.createElement("p");
             newElement.classList.add("element");
             newElement.innerText = oneOfElement;
@@ -116,36 +123,6 @@ function seeFilters() {
             }
         })
     })
-
-
-
-
-    // const IngredientContainer = document.getElementById("box1-ingredients")
-    // threeFilters[0].forEach((oneOfIngredient) => {
-    //     let newElement = document.createElement("p");
-    //     newElement.classList.add("ingredient");
-    //     // newElement.setAttribute("data-element", Ingredient);
-    //     newElement.innerText = oneOfIngredient;
-    //     IngredientContainer.appendChild(newElement);
-    // })
-
-    // const ApplianceContainer = document.getElementById("box2-appliance")
-    // threeFilters[1].forEach((oneOfAppliance) => {
-    //     let newElement = document.createElement("p");
-    //     newElement.classList.add("appliance");
-    //     // newElement.setAttribute("data-element", Appliance);
-    //     newElement.innerText = oneOfAppliance;
-    //     ApplianceContainer.appendChild(newElement);
-    // })
-
-    // const UstensilContainer = document.getElementById("box3-ustensils");
-    // threeFilters[2].forEach((oneOfUstensil) => {
-    //     let newElement = document.createElement("p");
-    //     newElement.classList.add("ustensil");
-    //     // newElement.setAttribute("data-element", Ustensil);
-    //     newElement.innerText = oneOfUstensil;
-    //     UstensilContainer.appendChild(newElement);
-    // })
 }
 
 //********************************
@@ -219,6 +196,64 @@ function showHideListingFilter() {
     })
 }
 
+//************************************
+// recherche dans l'input des filtres
+//************************************
+function searchInFilters() {
+
+    //recherche d'ingredient
+    const inputIngredient = document.getElementById("ingredient-search");
+    inputIngredient.addEventListener("input", function () {
+        let inputType = this.value;
+        let temporaryArray = [];
+        if (inputType.length > -1) {
+            threeFilters[0].forEach(function (oneOfElement) {
+                if (oneOfElement.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(inputType.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
+                    temporaryArray.push(oneOfElement)
+                }
+            })
+        } else {
+            seeFilters()
+        }
+        seeFilters([temporaryArray, threeFilters[1], threeFilters[2]])
+    })
+
+    //recherche d'appareil
+    const inputAppliance = document.getElementById("appliance-search");
+    inputAppliance.addEventListener("input", function () {
+        let inputType = this.value;
+        let temporaryArray = [];
+        if (inputType.length > -1) {
+            threeFilters[1].forEach(function (oneOfElement) {
+                if (oneOfElement.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(inputType.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
+                    temporaryArray.push(oneOfElement)
+                }
+            })
+        } else {
+            seeFilters()
+        }
+        seeFilters([threeFilters[0], temporaryArray, threeFilters[2]])
+    })
+
+    //recherche d'ustensil
+    const inputUstensil = document.getElementById("ustensil-search");
+    inputUstensil.addEventListener("input", function () {
+        let inputType = this.value;
+        let temporaryArray = [];
+        if (inputType.length > -1) {
+            threeFilters[2].forEach(function (oneOfElement) {
+                if (oneOfElement.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(inputType.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
+                    temporaryArray.push(oneOfElement)
+                }
+            })
+        } else {
+            seeFilters()
+        }
+        seeFilters([threeFilters[0], threeFilters[1], temporaryArray])
+    })
+}
+
+
 //******************************************************
 // action suite a la selection d'un element des filtres
 //******************************************************
@@ -235,7 +270,7 @@ function addOneFilter(elementSelected, categoryOfElement) {
     // console.log("on a cliqué sur", elementSelected, "et c'est un element de type", category[categoryOfElement])
 
     //boucle sur l'ensemble des recettes disponibles
-    allRecipesAvailable.forEach(function (oneOfRecipe) {
+    allRecipesOfObject.forEach(function (oneOfRecipe) {
 
         //recette apres selection d'un ingredient
         if (category[categoryOfElement] === "ingredients") {
@@ -265,7 +300,6 @@ function addOneFilter(elementSelected, categoryOfElement) {
             })
         }
     })
-    // console.log(totalFilters)
 
     createTag(elementSelected, categoryOfElement)
     getValidRecipe()
@@ -276,7 +310,6 @@ function addOneFilter(elementSelected, categoryOfElement) {
 // creation d'un tag + ecoute pour refermer le tag
 //*************************************************
 function createTag(elementSelected, color) {
-    // console.log("la fonction tag est appelée")
     // console.log(elementSelected)
     // console.log(index) 
 
@@ -331,7 +364,7 @@ function removeOneFilter(elementSelected, categoryOfElement) {
 
     // console.log("on a déselctionné", elementSelected, "et c'est un element de type", category[categoryOfElement])
 
-    allRecipesAvailable.forEach(function (oneOfRecipe) {
+    allRecipesOfObject.forEach(function (oneOfRecipe) {
 
         //recette apres deselection d'un ingredient
         if (category[categoryOfElement] === "ingredients") {
@@ -367,40 +400,19 @@ function removeOneFilter(elementSelected, categoryOfElement) {
 //*******************************
 // affichage des recettes valide
 //*******************************
-// function getValidRecipe() {
-//     document.querySelectorAll('.result-recipe').forEach((showCards) => showCards.remove())
-//     let allRecipesFounded = []
-
-
-//     allRecipesAvailable.forEach((oneOfRecipe) => {
-
-//         if (oneOfRecipe.isSelected === totalFilters) {
-//             allRecipesFounded.push(oneOfRecipe)
-//             card(oneOfRecipe)
-//         }
-//     })
-//     allRecipesOfObject = allRecipesFounded
-//     createFilters()
-
-// }
 function getValidRecipe(input = false) {
-    console.log(input)
-    let allRecipesFounded = []
-
-    allRecipesAvailable.forEach((oneOfRecipe) => {
-
+    allRecipesOfObject.forEach((oneOfRecipe) => {
         if (oneOfRecipe.isSelected === totalFilters) {
             if (input !== false) {
-                if (oneOfRecipe.name.includes(input)) {
-                    allRecipesFounded.push(oneOfRecipe)
+                if (oneOfRecipe.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes((input).toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
+                    oneOfRecipe.hasInput = true
                 }
-            } else {
-                allRecipesFounded.push(oneOfRecipe)
+                else {
+                    oneOfRecipe.hasInput = false
+                }
             }
         }
     })
-
-    allRecipesOfObject = allRecipesFounded
     card()
     createFilters()
 }
@@ -412,78 +424,65 @@ function card() {
     const mainRecipes = document.getElementById("allRecipes")
     mainRecipes.innerText = ""
     allRecipesOfObject.forEach(function (recipe) {
-        let CardRecipe = "";
-        CardRecipe += `
-    <figure class="result-recipe">
-        <img class="recette">
-        <figcaption>
-            <aside class="title">
-                <p class="name">${recipe.name}</p>
-                <div class="duration">
-                    <i class="far fa-clock"></i>
-                    <p class="time">${recipe.time} min</p>
-                </div>
-            </aside>
-            <div class="text">
-                <ul class="ingredients">               
-                    ${recipe.ingredients.map(elementOfIngredient => `
-                    <li>
-                        <span>${elementOfIngredient.name} : </span>${elementOfIngredient.quantity} ${elementOfIngredient.unit}
-                    </li>`).join("")}
-                </ul>
-                    <p class="description">${recipe.description}</p>
-            </div>
-        </figcaption>
-    </figure>`
-        mainRecipes.insertAdjacentHTML('beforeend', CardRecipe)
+        if (recipe.isSelected === totalFilters) {
+            if ((recipe.hasInput === true && inputType === true) || (inputType === false)) {
+                let CardRecipe = "";
+                CardRecipe += `
+                <figure class="result-recipe">
+                    <img class="recette">
+                    <figcaption>
+                        <aside class="title">
+                            <p class="name">${recipe.name}</p>
+                            <div class="duration">
+                                <i class="far fa-clock"></i>
+                                <p class="time">${recipe.time} min</p>
+                            </div>
+                        </aside>
+                        <div class="text">
+                            <ul class="ingredients">               
+                                ${recipe.ingredients.map(elementOfIngredient => `
+                                <li>
+                                    <span>${elementOfIngredient.name} : </span>${elementOfIngredient.quantity} ${elementOfIngredient.unit}
+                                </li>`).join("")}
+                            </ul>
+                                <p class="description">${recipe.description}</p>
+                        </div>
+                    </figcaption>
+                </figure>`
+                mainRecipes.insertAdjacentHTML('beforeend', CardRecipe)
+            }
+        }
     })
 }
 
 //************************************
 // recherche dans la barre principale
 //************************************
-//appel pour la recherche principale
-// function principalSearch() {
-
-//     const mainSearch = document.getElementById("main-search");
-//     mainSearch.addEventListener("input", function () {
-
-//         let operationCount = 0
-//         document.querySelectorAll('.result-recipe').forEach((showCards) => showCards.remove())
-//         allRecipesAvailable = []
-
-//         if (mainSearch.value.length > 2) {
-//             allRecipesOfObject.forEach((oneOfRecipe) => {
-//                 operationCount++
-
-//                 if (oneOfRecipe.isSelected === totalFilters) {
-//                     if (oneOfRecipe.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(mainSearch.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
-//                         allRecipesAvailable.push(oneOfRecipe)
-//                     }
-//                 }
-//             })
-//             getValidRecipe()
-//         }
-
-//         else {
-//             console.log("je dois mettre a jour les filtres")
-//             createFilters()
-//         }
-//         console.log("Voici le nombre d'opérations : ", operationCount)
-
-//     })
-// }
-
 function principalSearch() {
     const mainSearch = document.getElementById("main-search")
     mainSearch.addEventListener("input", function () {
         console.log(mainSearch.value)
-        getValidRecipe(mainSearch.value)
+        if (mainSearch.value.length > 2) {
+            inputType = true
+            getValidRecipe(mainSearch.value)
+        }
+        else {
+            document.querySelectorAll('.result-recipe').forEach((showCards) => showCards.remove())
+            inputType = false
+            resetInput()
+            getValidRecipe()
+        }
     })
 }
 
-createAllRecipes()
-createFilters()
-showHideListingFilter()
-principalSearch()
+//**********************************************
+// action suite au reset de la barre principale
+//**********************************************
+function resetInput() {
+    allRecipesOfObject.forEach(function (oneOfRecipe) {
+        oneOfRecipe.hasInput = false
+    })
+}
+
+
 

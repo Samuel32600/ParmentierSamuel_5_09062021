@@ -4,4 +4,3 @@ createAllRecipes();
 showHideListingFilter();
 createFilters();
 principalSearch();
-searchInFilters();
