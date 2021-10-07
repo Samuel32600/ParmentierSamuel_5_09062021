@@ -470,10 +470,11 @@ function principalSearch() {
     const mainSearch = document.getElementById("main-search")
     mainSearch.addEventListener("input", function () {
 
-        if (mainSearch.value.length > 2) {
+        if (mainSearch.value.length > 2 ) {
             inputType = true
             getValidRecipe(mainSearch.value)
         }
+
         else {
             document.querySelectorAll('.result-recipe').forEach((showCards) => showCards.remove())
             inputType = false
