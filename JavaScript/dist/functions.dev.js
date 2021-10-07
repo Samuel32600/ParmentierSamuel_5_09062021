@@ -30,7 +30,7 @@ function createAllRecipes() {
       newRecipe._addUstensil(newUstensil);
     });
     allRecipesOfObject.push(newRecipe);
-  }); // console.table(allRecipesOfObject)
+  });
 } //*****************************************
 // recuperation des elements des 3 filtres
 //*****************************************
@@ -66,10 +66,7 @@ function createFilters() {
         listingUstensil.sort();
       }
     }
-  }); // console.table(listingIngredient)
-  // console.table(listingAppliance)
-  // console.table(listingUstensil)
-
+  });
   threeFilters = [listingIngredient, listingAppliance, listingUstensil];
   seeFilters();
 } //************************************
@@ -97,7 +94,6 @@ function seeFilters() {
 
       if (elementSelectededinFilter.includes(oneOfElement) === false) {
         newElement.addEventListener("click", function () {
-          // console.log(oneOfElement)
           elementSelectededinFilter.push(oneOfElement); // console.log("voici l'ensemble des elements selectionnés", elementSelectededinFilter)
 
           addOneFilter(oneOfElement, index);
@@ -277,8 +273,6 @@ function addOneFilter(elementSelected, categoryOfElement) {
 
 
 function createTag(elementSelected, color) {
-  // console.log(elementSelected)
-  // console.log(index) 
   var colorTag = ["box1", "box2", "box3"];
   var selectContainer = document.getElementById("box-select"); //creation de la div
 
@@ -344,8 +338,7 @@ function removeOneFilter(elementSelected, categoryOfElement) {
         }
       });
     }
-  }); // console.log(totalFilters)
-
+  });
   getValidRecipe();
 } //*******************************
 // affichage des recettes valide
@@ -356,8 +349,6 @@ function getValidRecipe() {
   var input = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
   allRecipesOfObject.forEach(function (oneOfRecipe) {
     if (oneOfRecipe.isSelected === totalFilters) {
-      console.log(oneOfRecipe.hasInput);
-
       if (input !== false) {
         // nom des recettes
         if (oneOfRecipe.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(input.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
@@ -366,7 +357,7 @@ function getValidRecipe() {
         else if (oneOfRecipe.description.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(input.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
             oneOfRecipe.hasInput = true;
           } // ingredients des recettes
-          // else {
+          // else if {
           //     oneOfRecipe.ingredients.forEach(function (ingr) {
           //         if (ingr.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes((input).toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
           //             oneOfRecipe.hasInput = true
@@ -408,8 +399,6 @@ function card() {
 function principalSearch() {
   var mainSearch = document.getElementById("main-search");
   mainSearch.addEventListener("input", function () {
-    console.log(mainSearch.value);
-
     if (mainSearch.value.length > 2) {
       inputType = true;
       getValidRecipe(mainSearch.value);

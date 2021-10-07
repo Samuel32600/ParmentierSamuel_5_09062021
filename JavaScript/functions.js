@@ -33,7 +33,6 @@ function createAllRecipes() {
 
         allRecipesOfObject.push(newRecipe)
     })
-    // console.table(allRecipesOfObject)
 }
 
 //*****************************************
@@ -74,9 +73,6 @@ function createFilters() {
             }
         }
     })
-    // console.table(listingIngredient)
-    // console.table(listingAppliance)
-    // console.table(listingUstensil)
     threeFilters = [listingIngredient, listingAppliance, listingUstensil]
 
     seeFilters()
@@ -113,7 +109,6 @@ function seeFilters(specialFilter = false) {
             if ((elementSelectededinFilter).includes(oneOfElement) === false) {
 
                 newElement.addEventListener("click", function () {
-                    // console.log(oneOfElement)
                     elementSelectededinFilter.push(oneOfElement)
                     // console.log("voici l'ensemble des elements selectionnés", elementSelectededinFilter)
                     addOneFilter(oneOfElement, index)
@@ -281,7 +276,6 @@ function addOneFilter(elementSelected, categoryOfElement) {
             })
         }
 
-
         //recette apres selection d'un appareil
         if (category[categoryOfElement] === "appliances") {
             oneOfRecipe.appliances.forEach(function (oneOfAppliance) {
@@ -310,9 +304,7 @@ function addOneFilter(elementSelected, categoryOfElement) {
 // creation d'un tag + ecoute pour refermer le tag
 //*************************************************
 function createTag(elementSelected, color) {
-    // console.log(elementSelected)
-    // console.log(index) 
-
+    
     let colorTag = [
         "box1",
         "box2",
@@ -393,7 +385,6 @@ function removeOneFilter(elementSelected, categoryOfElement) {
             })
         }
     })
-    // console.log(totalFilters)
     getValidRecipe()
 }
 
@@ -403,7 +394,6 @@ function removeOneFilter(elementSelected, categoryOfElement) {
 function getValidRecipe(input = false) {
     allRecipesOfObject.forEach((oneOfRecipe) => {
         if (oneOfRecipe.isSelected === totalFilters) {
-            console.log(oneOfRecipe.hasInput)
             if (input !== false) {
 
                 // nom des recettes
@@ -417,7 +407,7 @@ function getValidRecipe(input = false) {
                 }
 
                 // ingredients des recettes
-                // else {
+                // else if {
                 //     oneOfRecipe.ingredients.forEach(function (ingr) {
                 //         if (ingr.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes((input).toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
                 //             oneOfRecipe.hasInput = true
@@ -431,7 +421,6 @@ function getValidRecipe(input = false) {
             }
         }
     })
-
     card()
     createFilters()
 }
@@ -480,7 +469,6 @@ function card() {
 function principalSearch() {
     const mainSearch = document.getElementById("main-search")
     mainSearch.addEventListener("input", function () {
-        console.log(mainSearch.value)
 
         if (mainSearch.value.length > 2) {
             inputType = true
@@ -491,7 +479,6 @@ function principalSearch() {
             inputType = false
             resetInput()
             getValidRecipe()
-
         }
     })
 }
@@ -504,6 +491,5 @@ function resetInput() {
         oneOfRecipe.hasInput = false
     })
 }
-
 
 
