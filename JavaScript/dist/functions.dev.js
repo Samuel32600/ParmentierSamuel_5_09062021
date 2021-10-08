@@ -398,11 +398,13 @@ function card() {
 
 function principalSearch() {
   var mainSearch = document.getElementById("main-search");
-  mainSearch.addEventListener("input", function () {
+  mainSearch.addEventListener("input", function (oneOfRecipe) {
     if (mainSearch.value.length > 2) {
       inputType = true;
       getValidRecipe(mainSearch.value);
-    } else {
+    }
+
+    if (mainSearch.value.length > 0 && mainSearch.value.length < 3 && inputType === true) {
       document.querySelectorAll('.result-recipe').forEach(function (showCards) {
         return showCards.remove();
       });
@@ -420,4 +422,9 @@ function resetInput() {
   allRecipesOfObject.forEach(function (oneOfRecipe) {
     oneOfRecipe.hasInput = false;
   });
+}
+
+function error() {
+  var error = document.getElementById("text-error");
+  error.classList.remove("hidden");
 }

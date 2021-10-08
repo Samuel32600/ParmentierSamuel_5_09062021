@@ -304,7 +304,7 @@ function addOneFilter(elementSelected, categoryOfElement) {
 // creation d'un tag + ecoute pour refermer le tag
 //*************************************************
 function createTag(elementSelected, color) {
-    
+
     let colorTag = [
         "box1",
         "box2",
@@ -393,6 +393,7 @@ function removeOneFilter(elementSelected, categoryOfElement) {
 //*******************************
 function getValidRecipe(input = false) {
     allRecipesOfObject.forEach((oneOfRecipe) => {
+
         if (oneOfRecipe.isSelected === totalFilters) {
             if (input !== false) {
 
@@ -400,7 +401,7 @@ function getValidRecipe(input = false) {
                 if (oneOfRecipe.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes((input).toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
                     oneOfRecipe.hasInput = true
                 }
-                
+
                 // description des recettes
                 else if (oneOfRecipe.description.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes((input).toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
                     oneOfRecipe.hasInput = true
@@ -468,19 +469,20 @@ function card() {
 //************************************
 function principalSearch() {
     const mainSearch = document.getElementById("main-search")
-    mainSearch.addEventListener("input", function () {
 
-        if (mainSearch.value.length > 2 ) {
-            inputType = true
-            getValidRecipe(mainSearch.value)
-        }
+    mainSearch.addEventListener("input", function (oneOfRecipe) {
 
-        else {
-            document.querySelectorAll('.result-recipe').forEach((showCards) => showCards.remove())
-            inputType = false
-            resetInput()
-            getValidRecipe()
-        }
+            if (mainSearch.value.length > 2) {
+                inputType = true
+                getValidRecipe(mainSearch.value)
+            }
+
+            if (mainSearch.value.length > 0 && mainSearch.value.length < 3 && inputType === true) {
+                document.querySelectorAll('.result-recipe').forEach((showCards) => showCards.remove())
+                inputType = false
+                resetInput()
+                getValidRecipe()
+            }       
     })
 }
 
@@ -492,5 +494,7 @@ function resetInput() {
         oneOfRecipe.hasInput = false
     })
 }
-
-
+function error() {
+    const error = document.getElementById("text-error")
+    error.classList.remove("hidden")
+}
