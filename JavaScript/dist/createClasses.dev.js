@@ -21,6 +21,7 @@ function () {
     this.ustensils = [];
     this.isSelected = 0;
     this.hasInput = false;
+    this.isAvailable = false;
   } //ajout des ingredients     
 
 
