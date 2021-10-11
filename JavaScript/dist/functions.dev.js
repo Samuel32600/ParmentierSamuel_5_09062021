@@ -268,7 +268,7 @@ function addOneFilter(elementSelected, categoryOfElement) {
     }
   });
   createTag(elementSelected, categoryOfElement);
-  getValidRecipe();
+  getValidRecipeV2();
 } //*************************************************
 // creation d'un tag + ecoute pour refermer le tag
 //*************************************************
@@ -341,119 +341,10 @@ function removeOneFilter(elementSelected, categoryOfElement) {
       });
     }
   });
-  getValidRecipe();
-} //*******************************
-// affichage des recettes valide
-//*******************************
-
-
-function getValidRecipe() {
-  var input = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-  recipesFound = false;
-  var operationCount = 0;
-  allRecipesOfObject.forEach(function (oneOfRecipe) {
-    var inputFound = false;
-    operationCount++;
-
-    if (oneOfRecipe.isSelected === totalFilters) {
-      if (input !== false) {
-        // nom des recettes
-        if (oneOfRecipe.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(input.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
-          inputFound = true;
-        } // description des recettes
-
-
-        if (oneOfRecipe.description.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(input.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
-          inputFound = true;
-        } // ingredients des recettes
-
-
-        oneOfRecipe.ingredients.forEach(function (ingr) {
-          if (ingr.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(input.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
-            inputFound = true;
-          }
-        });
-        oneOfRecipe.hasInput = inputFound;
-      }
-    }
-  });
-  console.log("Voici le nombre d'opérations : ", operationCount);
-  card();
-  createFilters();
-} //******************************
-// creation d'une carte recette
-//******************************
-
-
-function card() {
-  var mainRecipes = document.getElementById("allRecipes");
-  mainRecipes.innerText = "";
-  allRecipesOfObject.forEach(function (recipe) {
-    if (recipe.isSelected === totalFilters) {
-      if (recipe.hasInput === true && inputType === true || inputType === false) {
-        recipesFound = true;
-        var CardRecipe = "";
-        CardRecipe += "\n                <figure class=\"result-recipe\">\n                    <img class=\"recette\">\n                    <figcaption>\n                        <aside class=\"title\">\n                            <p class=\"name\">".concat(recipe.name, "</p>\n                            <div class=\"duration\">\n                                <i class=\"far fa-clock\"></i>\n                                <p class=\"time\">").concat(recipe.time, " min</p>\n                            </div>\n                        </aside>\n                        <div class=\"text\">\n                            <ul class=\"ingredients\">               \n                                ").concat(recipe.ingredients.map(function (elementOfIngredient) {
-          return "\n                                <li>\n                                    <span>".concat(elementOfIngredient.name, " : </span>").concat(elementOfIngredient.quantity, " ").concat(elementOfIngredient.unit, "\n                                </li>");
-        }).join(""), "\n                            </ul>\n                                <p class=\"description\">").concat(recipe.description, "</p>\n                        </div>\n                    </figcaption>\n                </figure>");
-        mainRecipes.insertAdjacentHTML('beforeend', CardRecipe);
-      }
-    }
-  });
-} //************************************
-// recherche dans la barre principale
-//************************************
-
-
-function principalSearch() {
-  var mainSearch = document.getElementById("main-search");
-  mainSearch.addEventListener("input", function () {
-    if (mainSearch.value.length > 2) {
-      inputType = true;
-      getValidRecipe(mainSearch.value);
-    } else {
-      document.querySelectorAll('.result-recipe').forEach(function (showCards) {
-        return showCards.remove();
-      });
-      inputType = false;
-      resetInput();
-
-      if (totalFilters > 0) {
-        getValidRecipe();
-      } else {
-        createFilters();
-      }
-    }
-  });
-} //**********************************************
-// action suite au reset de la barre principale
-//**********************************************
-
-
-function resetInput() {
-  allRecipesOfObject.forEach(function (oneOfRecipe) {
-    oneOfRecipe.hasInput = false;
-  });
-} //******************************************
-// message si aucune recette n'est trouvée
-//******************************************
-
-
-function displayError() {
-  var errorMessage = document.getElementById('no-recipe');
-
-  if (totalFilters > 0 || inputType === true) {
-    if (recipesFound === false) {
-      errorMessage.classList.remove("hidden");
-    } else {
-      errorMessage.classList.add("hidden");
-    }
-  } else {
-    errorMessage.classList.add("hidden");
-  }
-} //***********
-// version 2
-//***********
+  getValidRecipeV2();
+} //*****************************************
+// affichage des recettes valide version 2
+//*****************************************
 
 
 function getValidRecipeV2() {
@@ -491,4 +382,75 @@ function getValidRecipeV2() {
   console.log("Voici le nombre d'opérations : ", operationCount);
   card();
   createFilters();
+} //******************************
+// creation d'une carte recette
+//******************************
+
+
+function card() {
+  var mainRecipes = document.getElementById("allRecipes");
+  mainRecipes.innerText = "";
+  allRecipesOfObject.forEach(function (recipe) {
+    if (recipe.isSelected === totalFilters) {
+      if (recipe.hasInput === true && inputType === true || inputType === false) {
+        recipesFound = true;
+        var CardRecipe = "";
+        CardRecipe += "\n                <figure class=\"result-recipe\">\n                    <img class=\"recette\">\n                    <figcaption>\n                        <aside class=\"title\">\n                            <p class=\"name\">".concat(recipe.name, "</p>\n                            <div class=\"duration\">\n                                <i class=\"far fa-clock\"></i>\n                                <p class=\"time\">").concat(recipe.time, " min</p>\n                            </div>\n                        </aside>\n                        <div class=\"text\">\n                            <ul class=\"ingredients\">               \n                                ").concat(recipe.ingredients.map(function (elementOfIngredient) {
+          return "\n                                <li>\n                                    <span>".concat(elementOfIngredient.name, " : </span>").concat(elementOfIngredient.quantity, " ").concat(elementOfIngredient.unit, "\n                                </li>");
+        }).join(""), "\n                            </ul>\n                                <p class=\"description\">").concat(recipe.description, "</p>\n                        </div>\n                    </figcaption>\n                </figure>");
+        mainRecipes.insertAdjacentHTML('beforeend', CardRecipe);
+      }
+    }
+  });
+} //************************************
+// recherche dans la barre principale
+//************************************
+
+
+function principalSearch() {
+  var mainSearch = document.getElementById("main-search");
+  mainSearch.addEventListener("input", function () {
+    if (mainSearch.value.length > 2) {
+      inputType = true;
+      getValidRecipeV2(mainSearch.value);
+    } else {
+      document.querySelectorAll('.result-recipe').forEach(function (showCards) {
+        return showCards.remove();
+      });
+      inputType = false;
+      resetInput();
+
+      if (totalFilters > 0) {
+        getValidRecipeV2();
+      } else {
+        createFilters();
+      }
+    }
+  });
+} //**********************************************
+// action suite au reset de la barre principale
+//**********************************************
+
+
+function resetInput() {
+  allRecipesOfObject.forEach(function (oneOfRecipe) {
+    oneOfRecipe.hasInput = false;
+  });
+} //******************************************
+// message si aucune recette n'est trouvée
+//******************************************
+
+
+function displayError() {
+  var errorMessage = document.getElementById('no-recipe');
+
+  if (totalFilters > 0 || inputType === true) {
+    if (recipesFound === false) {
+      errorMessage.classList.remove("hidden");
+    } else {
+      errorMessage.classList.add("hidden");
+    }
+  } else {
+    errorMessage.classList.add("hidden");
+  }
 }
