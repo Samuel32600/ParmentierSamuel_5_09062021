@@ -451,44 +451,4 @@ function displayError() {
   } else {
     errorMessage.classList.add("hidden");
   }
-} //***********
-// version 2
-//***********
-
-
-function getValidRecipeV2() {
-  var input = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-  recipesFound = false;
-  var operationCount = 0;
-  allRecipesOfObject.forEach(function (oneOfRecipe) {
-    var inputFound = false;
-    operationCount++; // nom des recettes
-
-    if (oneOfRecipe.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(input.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
-      inputFound = true;
-    } // description des recettes
-
-
-    if (oneOfRecipe.description.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(input.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
-      inputFound = true;
-    } // ingredients des recettes
-
-
-    oneOfRecipe.ingredients.forEach(function (ingr) {
-      if (ingr.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(input.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
-        inputFound = true;
-      }
-    });
-    oneOfRecipe.hasInput = inputFound;
-  });
-  allRecipesOfObject.forEach(function (oneOfRecipe) {
-    operationCount++;
-
-    if (oneOfRecipe.isSelected !== totalFilters) {
-      oneOfRecipe.hasInput = false;
-    }
-  });
-  console.log("Voici le nombre d'opérations : ", operationCount);
-  card();
-  createFilters();
 }
