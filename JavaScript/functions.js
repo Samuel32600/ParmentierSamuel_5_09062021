@@ -1,10 +1,3 @@
-let allRecipesOfObject = [];
-let threeFilters = []
-let totalFilters = 0;
-let elementSelectededinFilter = []
-let inputType = false
-let recipesFound = false
-
 //***************************
 // recuperation des recettes
 //***************************
@@ -120,77 +113,6 @@ function seeFilters(specialFilter = false) {
                 newElement.classList.add("element-hide")
             }
         })
-    })
-}
-
-//********************************
-// action sur chevron haut ou bas
-//********************************
-function showHideListingFilter() {
-    //ingredient
-    const IngredientContainer = document.getElementById("box1-ingredients");
-    const box1Extended = document.getElementById("box1-display-content");
-    const down1 = document.getElementById("chevron-down-1");
-    const up1 = document.getElementById("chevron-up-1");
-
-    down1.addEventListener("click", function () {
-        IngredientContainer.classList.remove("hidden");
-        box1Extended.classList.add("box-extend");
-        up1.classList.remove("hidden");
-        down1.classList.add("hidden");
-        document.getElementsByName('INGREDIENT')[0].placeholder = 'Recherche un ingrédient';
-    })
-
-    up1.addEventListener("click", function () {
-        IngredientContainer.classList.add("hidden");
-        box1Extended.classList.remove("box-extend");
-        up1.classList.add("hidden");
-        down1.classList.remove("hidden");
-        document.getElementsByName('INGREDIENT')[0].placeholder = 'Ingredients';
-    })
-
-    //appareil
-    const ApplianceContainer = document.getElementById("box2-appliance");
-    const box2Extended = document.getElementById("box2-display-content");
-    const down2 = document.getElementById("chevron-down-2");
-    const up2 = document.getElementById("chevron-up-2");
-
-    down2.addEventListener("click", function () {
-        ApplianceContainer.classList.remove("hidden");
-        box2Extended.classList.add("box-extend");
-        up2.classList.remove("hidden");
-        down2.classList.add("hidden");
-        document.getElementsByName('APPAREIL')[0].placeholder = 'Recherche un appareil';
-    })
-
-    up2.addEventListener("click", function () {
-        ApplianceContainer.classList.add("hidden");
-        box2Extended.classList.remove("box-extend");
-        up2.classList.add("hidden");
-        down2.classList.remove("hidden");
-        document.getElementsByName('APPAREIL')[0].placeholder = 'Appareil';
-    })
-
-    //ustensil
-    const UstensilContainer = document.getElementById("box3-ustensils");
-    const box3Extended = document.getElementById("box3-display-content");
-    const down3 = document.getElementById("chevron-down-3");
-    const up3 = document.getElementById("chevron-up-3");
-
-    down3.addEventListener("click", function () {
-        UstensilContainer.classList.remove("hidden");
-        box3Extended.classList.add("box-extend");
-        up3.classList.remove("hidden");
-        down3.classList.add("hidden");
-        document.getElementsByName('USTENSIL')[0].placeholder = 'Recherche un ustensile';
-    })
-
-    up3.addEventListener("click", function () {
-        UstensilContainer.classList.add("hidden");
-        box3Extended.classList.remove("box-extend");
-        up3.classList.add("hidden");
-        down3.classList.remove("hidden");
-        document.getElementsByName('USTENSIL')[0].placeholder = 'Ustensiles';
     })
 }
 
@@ -534,6 +456,67 @@ function displayError() {
 
 }
 
+//*********************************
+//action chevron filtre Ingredient
+//*********************************
+function downIng() {
+    IngredientContainer.classList.remove("hidden");
+    box1Extended.classList.add("box-extend");
+    up1.classList.remove("hidden");
+    down1.classList.add("hidden");
+    document.getElementsByName('INGREDIENT')[0].placeholder = 'Recherche un ingrédient';
+    upApp()
+    upUst()
+}
 
+function upIng() {
+    IngredientContainer.classList.add("hidden");
+    box1Extended.classList.remove("box-extend");
+    up1.classList.add("hidden");
+    down1.classList.remove("hidden");
+    document.getElementsByName('INGREDIENT')[0].placeholder = 'Ingredients';
+}
+
+//********************************
+//action chevron filtre appareil
+//********************************
+function downApp() {
+    ApplianceContainer.classList.remove("hidden");
+    box2Extended.classList.add("box-extend");
+    up2.classList.remove("hidden");
+    down2.classList.add("hidden");
+    document.getElementsByName('APPAREIL')[0].placeholder = 'Recherche un appareil';
+    upIng()
+    upUst()
+}
+
+function upApp(){
+    ApplianceContainer.classList.add("hidden");
+    box2Extended.classList.remove("box-extend");
+    up2.classList.add("hidden");
+    down2.classList.remove("hidden");
+    document.getElementsByName('APPAREIL')[0].placeholder = 'Appareil';
+}
+
+//*******************************
+//action chevron filtre ustensil
+//*******************************
+function downUst() {
+    UstensilContainer.classList.remove("hidden");
+    box3Extended.classList.add("box-extend");
+    up3.classList.remove("hidden");
+    down3.classList.add("hidden");
+    document.getElementsByName('USTENSIL')[0].placeholder = 'Recherche un ustensile';
+    upIng()
+    upApp()
+}
+
+function upUst() {
+    UstensilContainer.classList.add("hidden");
+    box3Extended.classList.remove("box-extend");
+    up3.classList.add("hidden");
+    down3.classList.remove("hidden");
+    document.getElementsByName('USTENSIL')[0].placeholder = 'Ustensiles';
+}
 
 
