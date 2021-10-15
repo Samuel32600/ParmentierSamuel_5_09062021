@@ -320,37 +320,37 @@ function getValidRecipeV2(input = false) {
     let operationCount = 0
 
     allRecipesOfObject.forEach((oneOfRecipe) => {
-
         let inputFound = false
-        operationCount ++
+        operationCount++
 
 
-                // nom des recettes
-                if (oneOfRecipe.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes((input).toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
-                    inputFound = true
-                }
+        // nom des recettes
+        if (oneOfRecipe.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes((input).toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
+            inputFound = true
 
-                // description des recettes
-                if (oneOfRecipe.description.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes((input).toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
-                    inputFound = true
-                }
+        }
 
-                // ingredients des recettes
-                oneOfRecipe.ingredients.forEach(function (ingr) {
-                    if (ingr.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes((input).toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
-                        inputFound =true
-                    }
-                })
+        // description des recettes
+        if (oneOfRecipe.description.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes((input).toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
+            inputFound = true
+        }
 
+        // ingredients des recettes
+        oneOfRecipe.ingredients.forEach(function (ingr) {
+            if (ingr.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes((input).toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
+                inputFound = true
+            }
+        })
 
-                oneOfRecipe.hasInput = inputFound
-            
+        oneOfRecipe.hasInput = inputFound
+
     })
+
     allRecipesOfObject.forEach((oneOfRecipe) => {
-        operationCount ++
+        operationCount++
 
         if (oneOfRecipe.isSelected !== totalFilters) {
-                oneOfRecipe.hasInput = false
+            oneOfRecipe.hasInput = false
         }
     })
     console.log("Voici le nombre d'opérations : ", operationCount)
@@ -422,7 +422,6 @@ function principalSearch() {
             else {
                 createFilters()
             }
-
         }
     })
 }
@@ -490,7 +489,7 @@ function downApp() {
     upUst()
 }
 
-function upApp(){
+function upApp() {
     ApplianceContainer.classList.add("hidden");
     box2Extended.classList.remove("box-extend");
     up2.classList.add("hidden");
