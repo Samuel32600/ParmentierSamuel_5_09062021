@@ -326,21 +326,22 @@ function getValidRecipeV2(input = false) {
 
 
                 // nom des recettes
-                if (oneOfRecipe.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(input.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
+                if (oneOfRecipe.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes((input).toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
                     inputFound = true
                 }
 
                 // description des recettes
-                if (oneOfRecipe.description.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(input.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
+                if (oneOfRecipe.description.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes((input).toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
                     inputFound = true
                 }
 
                 // ingredients des recettes
                 oneOfRecipe.ingredients.forEach(function (ingr) {
-                    if (ingr.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(input.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
-                        inputFound = true
+                    if (ingr.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes((input).toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
+                        inputFound =true
                     }
                 })
+
 
                 oneOfRecipe.hasInput = inputFound
             
@@ -517,5 +518,3 @@ function upUst() {
     down3.classList.remove("hidden");
     document.getElementsByName('USTENSIL')[0].placeholder = 'Ustensiles';
 }
-
-
