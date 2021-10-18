@@ -318,11 +318,11 @@ function removeOneFilter(elementSelected, categoryOfElement) {
 function getValidRecipeV2(input = false) {
     recipesFound = false
     let operationCount = 0
-
+    if (input !== false){
     allRecipesOfObject.forEach((oneOfRecipe) => {
         let inputFound = false
         operationCount++
-
+        
 
         // nom des recettes
         if (oneOfRecipe.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes((input).toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
@@ -345,6 +345,7 @@ function getValidRecipeV2(input = false) {
         oneOfRecipe.hasInput = inputFound
 
     })
+}
 
     allRecipesOfObject.forEach((oneOfRecipe) => {
         operationCount++
